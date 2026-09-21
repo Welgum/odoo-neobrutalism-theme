@@ -1,5 +1,10 @@
 # Changelog
 
+## 19.0.1.4.1 — 2026-09-21
+
+- Added color swatches beside all seven accent choices in Settings, including day/night mode and when the personal theme is disabled.
+- Kept native radio controls, color names, keyboard navigation and administrator-only permissions.
+
 ## 19.0.1.4.0 — 2026-09-21
 
 - Prepared Odoo Apps metadata, English listing, cover, and actual Odoo Community screenshots.

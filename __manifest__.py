@@ -1,7 +1,7 @@
 {
     "name": "Neo Brutal Backend Theme",
     "summary": "Seven admin-managed accent presets and personal night mode for Odoo 19",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.4.1",
     "category": "Themes/Backend",
     "author": "alx-projects",
     "license": "LGPL-3",

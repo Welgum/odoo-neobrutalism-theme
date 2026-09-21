@@ -1,4 +1,19 @@
-# Validation — 19.0.1.4.0
+# Validation — 19.0.1.4.1
+
+## Current release: color swatches
+
+Validated on 2026-09-21 with a fresh disposable Odoo 19.0-20260908 Community database and Chrome.
+
+- Installed 19.0.1.4.1; all five existing Odoo integration tests passed, including administrator-only color changes.
+- The existing Node preference/contrast regression suite passed.
+- Verified the rendered swatch colors against the actual JavaScript preset values for all seven options in day mode, night mode, at 390px width, and with the personal theme disabled.
+- Checked clicking a swatch, accessible radio names, arrow-key selection, and persistence after Save/reload. No uncaught browser errors occurred.
+- Visually reviewed desktop, mobile, night and theme-disabled settings; updated the marketplace settings screenshot.
+
+## Previous release validation
+
+The remaining sections record the broader marketplace and lifecycle checks performed for **19.0.1.4.0**. This patch changes only settings presentation, documentation and the version number.
+
 
 ## Marketplace preparation
 

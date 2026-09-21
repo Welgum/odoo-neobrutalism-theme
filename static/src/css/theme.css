@@ -535,6 +535,47 @@
         border-radius: var(--neo-radius);
     }
 
+    /* Show the actual preset colors alongside Odoo's native radio controls.
+       Keep this visible even when the administrator disables the theme. */
+    .o_neo_accent_presets .o_radio_item {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding-inline-start: 0;
+        margin-bottom: 0.6rem;
+    }
+
+    .o_neo_accent_presets .o_radio_input {
+        float: none;
+        flex-shrink: 0;
+        margin: 0;
+    }
+
+    .o_neo_accent_presets .form-check-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+    }
+
+    .o_neo_accent_presets .form-check-label::before {
+        content: "";
+        display: inline-block;
+        flex-shrink: 0;
+        width: 2.75rem;
+        height: 1.65rem;
+        border: 2px solid var(--neo-border, #161616);
+        border-radius: 4px;
+        background-color: var(--neo-preset-swatch);
+    }
+
+    .o_neo_accent_presets [data-value="yellow"] + label { --neo-preset-swatch: #facc00; }
+    .o_neo_accent_presets [data-value="blue"] + label { --neo-preset-swatch: #5294ff; }
+    .o_neo_accent_presets [data-value="green"] + label { --neo-preset-swatch: #5ad9aa; }
+    .o_neo_accent_presets [data-value="purple"] + label { --neo-preset-swatch: #b59aff; }
+    .o_neo_accent_presets [data-value="pink"] + label { --neo-preset-swatch: #ff91bc; }
+    .o_neo_accent_presets [data-value="orange"] + label { --neo-preset-swatch: #ffb15c; }
+    .o_neo_accent_presets [data-value="red"] + label { --neo-preset-swatch: #ff7474; }
+
     /* Appearance remains usable when the theme is switched off. */
     .o_neo_appearance .o_neo_eyebrow {
         font-family: ui-monospace, SFMono-Regular, Consolas, monospace;

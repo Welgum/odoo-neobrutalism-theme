@@ -10,7 +10,7 @@
                      logo="/neobrutalism_theme/static/description/icon.png">
                     <block title="Appearance for all users" name="neo_appearance">
                         <setting id="neo_accent_preset_setting" string="Accent color" help="Choose one of seven presets for navigation, primary buttons and active tabs. Save and reload Odoo to apply it for all users. Only Settings administrators can change this selection.">
-                            <field name="neo_accent_preset" widget="radio"/>
+                            <field name="neo_accent_preset" widget="radio" class="o_neo_accent_presets"/>
                             <div class="text-muted mt-3">
                                 Each preset includes matching highlights and readable button labels. Backgrounds, text, and success, warning and error colors retain their theme defaults.
                             </div>

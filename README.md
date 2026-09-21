@@ -2,7 +2,7 @@
 
 An installable backend theme inspired by [ekmas/neobrutalism-components](https://github.com/ekmas/neobrutalism-components): strong outlines, solid offset shadows, small corner radii, and bright accents.
 
-**Version:** `19.0.1.4.0` · **Technical name:** `neobrutalism_theme` · **Dependencies:** `web`, `base_setup`.
+**Version:** `19.0.1.4.1` · **Technical name:** `neobrutalism_theme` · **Dependencies:** `web`, `base_setup`.
 
 Built for self-hosted **Odoo 19 Community**. It uses shared web-client components, but Enterprise-specific screens and third-party themes have not been verified. It can also be deployed as source through Odoo.sh. Odoo Online does not support installing this filesystem add-on. This is a backend theme, not a Website/eCommerce theme.
 
@@ -36,7 +36,7 @@ The names and paths below are examples. Use your existing Compose project and Od
    ```bash
    cd /path/to/your/compose-project
    mkdir -p addons
-   unzip /path/to/neobrutalism_theme-19.0.1.4.0.zip -d addons
+   unzip /path/to/neobrutalism_theme-19.0.1.4.1.zip -d addons
    ```
 
 2. If your deployment has no custom add-ons mount, **add** this entry to its Odoo service's existing `volumes` list. Preserve its other mounts:
@@ -109,7 +109,7 @@ Copy the `neobrutalism_theme` directory into one of the directories already list
 
 ## Administrator colors and personal night mode
 
-Only Settings administrators can select the shared accent under **Settings → Neo Brutal → Accent color**. Choose a preset, click **Save**, and reload Odoo. Other users receive it when they reload or next sign in.
+Only Settings administrators can select the shared accent under **Settings → Neo Brutal → Accent color**. Each choice shows a swatch of its actual accent color. Choose a preset, click **Save**, and reload Odoo. Other users receive it when they reload or next sign in.
 
 | Preset | Accent |
 | --- | --- |
@@ -143,7 +143,7 @@ The theme intentionally keeps Odoo's layout and widget behavior. It does not red
 
 See `VALIDATION.md` for performed checks and their limits. Marketplace screenshots in `static/description/` show actual Odoo 19 Community views with fictional demonstration records. These records and the Contacts app are not added by this theme. The marketplace description is `static/description/index.html`; user documentation is `doc/index.rst`.
 
-Source compatibility was checked against Odoo's public `19.0` branch, and version `19.0.1.4.0` was installed in a temporary local Odoo 19 Community database. This does not verify your installed third-party modules. Start with your test database, then check a list, an editable form, a many2one dropdown, a kanban board, a modal, mobile navigation and a report from your installed apps.
+Source compatibility was checked against Odoo's public `19.0` branch, and version `19.0.1.4.1` was installed in a temporary local Odoo 19 Community database. This does not verify your installed third-party modules. Start with your test database, then check a list, an editable form, a many2one dropdown, a kanban board, a modal, mobile navigation and a report from your installed apps.
 
 The included storage/initialization regression checks can be run outside Odoo with Node 18+:
 

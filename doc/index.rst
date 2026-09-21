@@ -44,7 +44,8 @@ Users receive the updated accent when they next reload Odoo or sign in.
 The selection applies to all companies and users in that database.
 
 The seven presets are Yellow (default), Blue, Green, Purple, Pink, Orange,
-and Red. Each supplies an accent, contrasting labels, and matching day/night
+and Red. A swatch beside each option demonstrates its actual accent color.
+Each supplies an accent, contrasting labels, and matching day/night
 highlights. Neutral surfaces, body text, and success/warning/error colors
 keep their own values. There is no arbitrary color picker or personal palette.
 
