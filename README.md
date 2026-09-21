@@ -4,18 +4,16 @@
 
 ## Choose your Odoo version
 
-Run **one command below from your server's existing add-ons directory** (the host directory mounted into Odoo, for example `./addons`). Choose the row matching your Odoo server. Requires Git and a POSIX shell on Linux or macOS.
+For a new installation, run the matching command **inside your add-ons directory**. Requires `curl` and `tar`.
 
-| Odoo version | Source branch | Download into the current add-ons directory |
+| Odoo version | Source branch | Download command |
 | --- | --- | --- |
-| Odoo 16 Community | [16.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/16.0) | `(set -eu; test ! -e neobrutalism_theme; test ! -L neobrutalism_theme; neo_tmp=$(mktemp -d); trap 'rm -rf "$neo_tmp"' EXIT; git clone --depth 1 --single-branch --branch 16.0 https://github.com/Welgum/odoo-neobrutalism-theme.git "$neo_tmp"; mv "$neo_tmp/neobrutalism_theme" ./)` |
-| Odoo 17 Community | [17.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/17.0) | `(set -eu; test ! -e neobrutalism_theme; test ! -L neobrutalism_theme; neo_tmp=$(mktemp -d); trap 'rm -rf "$neo_tmp"' EXIT; git clone --depth 1 --single-branch --branch 17.0 https://github.com/Welgum/odoo-neobrutalism-theme.git "$neo_tmp"; mv "$neo_tmp/neobrutalism_theme" ./)` |
-| Odoo 18 Community | [18.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/18.0) | `(set -eu; test ! -e neobrutalism_theme; test ! -L neobrutalism_theme; neo_tmp=$(mktemp -d); trap 'rm -rf "$neo_tmp"' EXIT; git clone --depth 1 --single-branch --branch 18.0 https://github.com/Welgum/odoo-neobrutalism-theme.git "$neo_tmp"; mv "$neo_tmp/neobrutalism_theme" ./)` |
-| Odoo 19 Community | [19.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/19.0) | `(set -eu; test ! -e neobrutalism_theme; test ! -L neobrutalism_theme; neo_tmp=$(mktemp -d); trap 'rm -rf "$neo_tmp"' EXIT; git clone --depth 1 --single-branch --branch 19.0 https://github.com/Welgum/odoo-neobrutalism-theme.git "$neo_tmp"; mv "$neo_tmp/neobrutalism_theme" ./)` |
+| Odoo 16 Community | [16.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/16.0) | `curl -fsSL https://codeload.github.com/Welgum/odoo-neobrutalism-theme/tar.gz/refs/heads/16.0 \| tar -xz --strip-components=1 odoo-neobrutalism-theme-16.0/neobrutalism_theme` |
+| Odoo 17 Community | [17.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/17.0) | `curl -fsSL https://codeload.github.com/Welgum/odoo-neobrutalism-theme/tar.gz/refs/heads/17.0 \| tar -xz --strip-components=1 odoo-neobrutalism-theme-17.0/neobrutalism_theme` |
+| Odoo 18 Community | [18.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/18.0) | `curl -fsSL https://codeload.github.com/Welgum/odoo-neobrutalism-theme/tar.gz/refs/heads/18.0 \| tar -xz --strip-components=1 odoo-neobrutalism-theme-18.0/neobrutalism_theme` |
+| Odoo 19 Community | [19.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/19.0) | `curl -fsSL https://codeload.github.com/Welgum/odoo-neobrutalism-theme/tar.gz/refs/heads/19.0 \| tar -xz --strip-components=1 odoo-neobrutalism-theme-19.0/neobrutalism_theme` |
 
-Each command clones the matching branch into a temporary directory, places only the installable `neobrutalism_theme/` folder in the current directory, and removes the temporary checkout. The result is `ADDONS_PATH/neobrutalism_theme/__manifest__.py`, with no extra repository folder. Commands stop if `neobrutalism_theme` already exists; use the update instructions below for an existing installation.
-
-The module keeps the same technical name across versions. The source repository retains the layout used by the Odoo Apps repository scanner. `main` follows Odoo 19; register the numbered branches for publication.
+This extracts only `neobrutalism_theme/`, giving Odoo the expected `ADDONS_PATH/neobrutalism_theme/__manifest__.py` layout. `main` follows Odoo 19; use the numbered branches for marketplace publication.
 
 ## Theme features
 
