@@ -1,7 +1,7 @@
 {
     "name": "Neo Brutal Backend Theme",
     "summary": "Odoo 16 Community backend theme with dark mode and seven accent colors",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "category": "Themes/Backend",
     "author": "RivetFox",
     "website": "https://rivetfox.pro",
@@ -23,8 +23,10 @@ This module styles the backend only. Enterprise-specific screens and
 third-party themes are not verified. Not compatible with Odoo Online.
 """,
     "images": [
-        "static/description/cover.png",
+        "static/description/cover.gif",
         "static/description/backend_screenshot.png",
+        "static/description/day-night-demo.gif",
+        "static/description/accent-demo.gif",
         "static/description/night-mode.png",
         "static/description/discuss-night.png",
         "static/description/admin-presets.png",
