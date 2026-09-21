@@ -1,6 +1,13 @@
-# Validation — 19.0.1.5.0
+# Validation — 19.0.1.5.1
 
-## Current release: complete night-mode assets
+## Current release: publisher metadata and README
+
+Version **19.0.1.5.1** updates publisher metadata and documentation. Python models, runtime assets, permissions and dependencies are unchanged from 19.0.1.5.0. The runtime checks below describe that release.
+
+- Validated the RivetFox author/website, version consistency, all 17 README local links, anchors and image paths, and the repository clone command.
+- The release builder passed manifest, image, Python/XML syntax and ZIP integrity checks. Compared the manifest against 19.0.1.5.0 to confirm that runtime asset declarations, dependencies, data files and installation flags are unchanged.
+
+## Previous release: complete night-mode assets (19.0.1.5.0)
 
 Validated on 2026-09-21 in a disposable Odoo **19.0-20260908 Community** database, PostgreSQL 17 and headless Google Chrome. No production database was used.
 
@@ -30,7 +37,7 @@ Validated on 2026-09-21 with a fresh disposable Odoo 19.0-20260908 Community dat
 
 ## Previous release validation
 
-The remaining sections record the broader marketplace and lifecycle checks performed for **19.0.1.4.0**. Those checks are historical; the current release also changes asset loading and dark styling.
+The remaining sections record the broader marketplace and lifecycle checks performed for **19.0.1.4.0**. Those checks are historical; version 19.0.1.5.0 also changed asset loading and dark styling.
 
 
 ## Marketplace preparation
@@ -103,7 +110,7 @@ Set `NEO_CHROME_PATH` if using a system Chrome executable instead of Playwright'
 
 ## Remaining deployment checks
 
-The module has not been tested on your VPS/database or with your installed third-party modules. Enterprise-only screens, RTL layouts, specialized editors, Studio, spreadsheets, POS and custom chart renderers have not been verified. Discuss and the standard graph/pivot renderer are covered by the current-release checks above. Public websites and portals are outside the backend theme's scope.
+The module has not been tested on your VPS/database or with your installed third-party modules. Enterprise-only screens, RTL layouts, specialized editors, Studio, spreadsheets, POS and custom chart renderers have not been verified. Discuss and the standard graph/pivot renderer are covered by the 19.0.1.5.0 checks above. Public websites and portals are outside the backend theme's scope.
 
 After upgrading on your test database, check the settings page, a list, an editable form and many2one dropdown, a kanban board, a modal, mobile navigation and a report. Shared settings take effect when users reload Odoo; existing open pages do not receive a live push update.
 

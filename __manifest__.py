@@ -1,17 +1,22 @@
 {
     "name": "Neo Brutal Backend Theme",
-    "summary": "Seven admin-managed accent presets and personal night mode for Odoo 19",
-    "version": "19.0.1.5.0",
+    "summary": "Odoo 19 Community backend theme with dark mode and seven accent colors",
+    "version": "19.0.1.5.1",
     "category": "Themes/Backend",
-    "author": "alx-projects",
+    "author": "RivetFox",
+    "website": "https://rivetfox.pro",
     "license": "LGPL-3",
     "description": """
-A neobrutalist backend theme for Odoo 19 Community with bold outlines,
-solid shadows, and seven administrator-managed accent presets.
+Neo Brutal is an open-source neobrutalism backend theme for Odoo 19 Community,
+developed by RivetFox. Customize the Odoo ERP interface with bold outlines,
+solid shadows, and seven administrator-managed accent color presets.
 
-Each user can switch day/night mode in the top bar, choose comfortable
+Each user can switch light/dark mode in the top bar, choose comfortable
 or compact table spacing, and disable the theme in the Appearance menu.
 Personal preferences stay in the current browser, database, and user.
+
+Includes dark styles for Discuss, Calendar, CRM, Project, forms, lists,
+kanban boards, and standard graph/pivot views.
 
 No external services, fonts, CDNs, or extra Python packages are required.
 This module styles the backend only. Enterprise-specific screens and

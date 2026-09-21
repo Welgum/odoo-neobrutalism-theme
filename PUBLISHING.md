@@ -2,10 +2,11 @@
 
 The module and listing materials are prepared locally. Nothing has been uploaded, registered, or approved by Odoo Apps.
 
+The publisher is **[RivetFox](https://rivetfox.pro)**. The manifest uses `RivetFox` as the author and `https://rivetfox.pro` as the website. Source is hosted in [Welgum/odoo-neobrutalism-theme](https://github.com/Welgum/odoo-neobrutalism-theme); the installable module directory remains `neobrutalism_theme`.
+
 ## Publisher decisions still needed
 
-- Confirm the publisher name. The existing manifest author is **alx-projects**; it has been retained.
-- Provide a support email and, if desired, the publisher's website. Neither is invented or present in the manifest yet.
+- Provide a support email. No support address has been supplied or added to the manifest.
 - Choose free or paid. The current manifest has **no price**, which Odoo Apps treats as free. The existing LGPL-3 license is retained. A paid release needs an explicit `price` and `currency` (EUR or USD) and a reviewed support policy before submission.
 - Register the publisher account and repository with Odoo Apps. Source is tracked at https://github.com/Welgum/odoo-neobrutalism-theme on `main`; an Apps-compatible branch/layout and scanner registration still need to be arranged.
 

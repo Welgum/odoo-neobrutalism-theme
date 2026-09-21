@@ -1,5 +1,12 @@
 # Changelog
 
+## 19.0.1.5.1 — 2026-09-21
+
+- Set the manifest author to RivetFox and the website to https://rivetfox.pro.
+- Clarified the Odoo 19 Community theme summary and description, including personal dark mode and accent colors.
+- Improved the root README with a descriptive title, feature overview, screenshots, navigation, FAQ headings and project links.
+- Documented cloning `Welgum/odoo-neobrutalism-theme` into the required `neobrutalism_theme` add-on directory; updated publishing notes with the confirmed company details.
+
 ## 19.0.1.5.0 — 2026-09-21
 
 - Replaced partial night-mode recoloring with private Odoo dark asset bundles and a complete neutral palette, including native dark component styles from installed apps.

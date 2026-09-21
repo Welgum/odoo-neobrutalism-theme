@@ -1,12 +1,20 @@
-# Neo Brutal for Odoo 19
+# Odoo 19 Neobrutalism Backend Theme
 
-An installable backend theme inspired by [ekmas/neobrutalism-components](https://github.com/ekmas/neobrutalism-components): strong outlines, solid offset shadows, small corner radii, and bright accents.
+**Neo Brutal** is an open-source **Odoo 19 Community backend theme** by [RivetFox](https://rivetfox.pro). It brings neobrutalism design to the Odoo ERP interface with bold outlines, solid shadows, seven accent color presets and personal **dark mode**.
 
-**Version:** `19.0.1.5.0` · **Technical name:** `neobrutalism_theme` · **Dependencies:** `web`, `base_setup`.
+Customize Odoo lists, forms, kanban boards and navigation, with dark styles for Discuss, Calendar, CRM, Project and standard charts. Administrators manage shared colors; each user chooses light or night mode from the top bar without losing unsaved work.
+
+**Repository:** [odoo-neobrutalism-theme](https://github.com/Welgum/odoo-neobrutalism-theme) · **Author:** [RivetFox](https://rivetfox.pro) · **License:** [LGPL-3.0-or-later](LICENSE)
+
+**Version:** `19.0.1.5.1` · **Odoo module:** `neobrutalism_theme` · **Dependencies:** `web`, `base_setup`.
+
+[Features](#odoo-backend-theme-features) · [Screenshots](#odoo-theme-screenshots) · [Installation](#install-the-odoo-theme-with-docker-or-on-a-vps) · [Colors and dark mode](#customize-odoo-theme-colors-and-dark-mode) · [FAQ](#frequently-asked-questions-and-troubleshooting)
+
+## Odoo version and hosting compatibility
 
 Built for self-hosted **Odoo 19 Community**. It uses shared web-client components, but Enterprise-specific screens and third-party themes have not been verified. It can also be deployed as source through Odoo.sh. Odoo Online does not support installing this filesystem add-on. This is a backend theme, not a Website/eCommerce theme.
 
-## Included
+## Odoo backend theme features
 
 - Navigation, control panels, search fields and facets.
 - Primary/secondary buttons with solid shadows and visible keyboard focus.
@@ -21,7 +29,19 @@ Built for self-hosted **Odoo 19 Community**. It uses shared web-client component
 
 The default is **yellow + comfortable + enabled** for each user. The shared accent preset is Yellow initially. Each user can choose day/night mode independently; until then, the theme follows Odoo's loaded color scheme. No external fonts, CDNs, React, Tailwind build step or additional Python packages are required. Shared settings use Odoo's standard settings model and database parameters; only Settings administrators can change them. Odoo's existing menus, permissions, fields, widgets, state colors and business actions are retained. The add-on does not add new sales screens or sample records.
 
-## Install on your Docker / VPS deployment
+## Odoo theme screenshots
+
+### Light mode: Contacts and backend navigation
+
+![Odoo 19 Community Contacts list with the Neo Brutal backend theme, yellow accent, outlined buttons and light mode](static/description/backend_screenshot.png)
+
+### Dark mode: Odoo Discuss
+
+![Odoo 19 Discuss in Neo Brutal dark mode with readable channel names, messages and a dark message composer](static/description/discuss-night.png)
+
+These screenshots show actual Odoo 19 Community screens with demonstration data. More examples are included in the [theme screenshot gallery](static/description/).
+
+## Install the Odoo theme with Docker or on a VPS
 
 The names and paths below are examples. Use your existing Compose project and Odoo service name. Keep your current database volume and configuration.
 
@@ -31,12 +51,22 @@ The names and paths below are examples. Use your existing Compose project and Od
    addons/neobrutalism_theme/__manifest__.py
    ```
 
-   For a deployment whose existing mount is `./addons:/mnt/extra-addons`:
+   Clone the source repository directly into that module directory. For a deployment whose existing mount is `./addons:/mnt/extra-addons`:
 
    ```bash
    cd /path/to/your/compose-project
    mkdir -p addons
-   unzip /path/to/neobrutalism_theme-19.0.1.5.0.zip -d addons
+   git clone https://github.com/Welgum/odoo-neobrutalism-theme.git addons/neobrutalism_theme
+   ```
+
+   The GitHub repository is named `odoo-neobrutalism-theme`; the installed Odoo module directory must be named **`neobrutalism_theme`** so Python imports, asset paths and module references resolve correctly. Use the clone command for a new installation; see [updates and rollback](#update-disable-or-uninstall-the-theme) for an existing installation.
+
+   Alternatively, extract a ZIP produced by the [release builder](#build-an-installable-odoo-add-on-zip):
+
+   ```bash
+   cd /path/to/your/compose-project
+   mkdir -p addons
+   unzip /path/to/neobrutalism_theme-19.0.1.5.1.zip -d addons
    ```
 
 2. If your deployment has no custom add-ons mount, **add** this entry to its Odoo service's existing `volumes` list. Preserve its other mounts:
@@ -81,11 +111,11 @@ The names and paths below are examples. Use your existing Compose project and Od
 
 Do not use `docker compose down -v`; deleting database volumes is not part of installing a theme.
 
-## Non-Docker installation
+## Install on a self-hosted Odoo server without Docker
 
 Copy the `neobrutalism_theme` directory into one of the directories already listed in your Odoo server's `addons_path`, with read access for the Odoo OS user. Restart your Odoo service, then follow steps 4–6 above. No pip or npm installation is needed.
 
-## Updates and rollback
+## Update, disable or uninstall the theme
 
 - To update: replace this module directory with the newer version, restart Odoo, then find the module in Apps and select **Upgrade**. Hard-refresh the browser after asset rebuilds.
 - To disable for yourself: avatar → **Appearance** → clear **Use Neobrutalism theme**. This takes effect immediately in this browser. Clicking the top-bar mode toggle enables the theme again for you.
@@ -93,21 +123,35 @@ Copy the `neobrutalism_theme` directory into one of the directories already list
 - Browser preferences remain after uninstalling; they are harmless. **Reset defaults** resets them if you reinstall.
 - If the browser interface will not load after an update, use your normal Odoo server rollback process to restore the prior module files and rebuild assets. Do not delete core Odoo asset records or your database as a troubleshooting shortcut.
 
-## Troubleshooting
+## Frequently asked questions and troubleshooting
 
-**The module is not listed.** Check that the directory name is exactly `neobrutalism_theme`, that the manifest is one level beneath it, that the mount is readable, and that `addons_path` includes the container directory. Update Apps List and remove the Apps filter.
+### Why is the theme missing from Odoo Apps?
 
-**Installation succeeded but the page is unchanged.** Check **Appearance → Use Neobrutalism theme**, hard-refresh, and verify you are inside the backend, not the login page or a website. Upgrade the module if you replaced its files. Look at `docker compose logs --tail=100 odoo` for actual asset errors.
+Check that the directory name is exactly `neobrutalism_theme`, that the manifest is one level beneath it, that the mount is readable, and that `addons_path` includes the container directory. Update Apps List and remove the Apps filter.
 
-**Another backend theme is installed.** Disable it before evaluating this add-on. Cascading styles from multiple themes can conflict.
+### Why is the Odoo interface unchanged after installation?
 
-**Personal settings disappear in private browsing.** Day/night mode and Appearance preferences use localStorage, scoped to your user/database. If browser storage is blocked, changes still work for the current page and the dialog displays a notice. Personal preferences do not sync between devices; administrator settings do.
+Check **Appearance → Use Neobrutalism theme**, hard-refresh, and verify you are inside the backend, not the login page or a website. Upgrade the module if you replaced its files. Look at `docker compose logs --tail=100 odoo` for actual asset errors.
 
-**Accent settings do not appear yet.** Restart Odoo and **Upgrade** the module after replacing the files; a browser refresh alone does not install the new settings fields and view. After saving shared settings, reload each open browser tab. Shared settings are stored in the database and apply across devices and companies in that database.
+### Can I use Neo Brutal with another Odoo backend theme?
 
-**Night mode does not finish loading.** Upgrade the module and reload after replacing its files. The first switch loads styles from your Odoo server; the toggle shows a spinner while loading. If loading fails, the previous appearance remains and a notification lets you retry. Check Odoo logs for asset compilation errors. Custom widgets with hardcoded colors, Enterprise screens and other backend themes still require testing.
+Disable other backend themes before evaluating this add-on. Cascading styles from multiple themes can conflict.
 
-## Administrator colors and personal night mode
+### Are dark mode preferences saved across devices?
+
+Day/night mode and Appearance preferences use localStorage, scoped to your user/database in the current browser. They do not sync between devices; administrator color settings do. If browser storage is blocked or cleared, including in private browsing, personal changes may last only for the current page or browsing session.
+
+### Why are the Neo Brutal color settings missing?
+
+Restart Odoo and **Upgrade** the module after replacing the files; a browser refresh alone does not install the new settings fields and view. Only Settings administrators can change the shared accent. After saving shared settings, reload each open browser tab. Shared settings are stored in the database and apply across devices and companies in that database.
+
+### What should I do if Odoo dark mode does not load?
+
+Upgrade the module and reload after replacing its files. The first switch loads styles from your Odoo server; the toggle shows a spinner while loading. If loading fails, the previous appearance remains and a notification lets you retry. Check Odoo logs for asset compilation errors. Custom widgets with hardcoded colors, Enterprise screens and other backend themes still require testing.
+
+## Customize Odoo theme colors and dark mode
+
+### Change shared accent colors as an administrator
 
 Only Settings administrators can select the shared accent under **Settings → Neo Brutal → Accent color**. Each choice shows a swatch of its actual accent color. Choose a preset, click **Save**, and reload Odoo. Other users receive it when they reload or next sign in.
 
@@ -124,6 +168,8 @@ Only Settings administrators can select the shared accent under **Settings → N
 Each preset styles navigation, primary buttons and active tabs, with matching highlights for each mode and contrasting labels. Neutral backgrounds, body text, links, borders and Odoo's success/warning/error colors retain their own values. Presets do not recolor business status indicators. All seven presets are checked for readable text on accents and highlights in both day and night mode.
 
 Free-form color pickers and custom surface/text settings have been replaced by this list. Older arbitrary color settings are ignored after upgrading; the default becomes Yellow until an administrator selects a preset. Personal palette controls remain unavailable, and older browser palettes are ignored.
+
+### Enable personal dark mode from the top bar
 
 Every backend user can click the **moon button** in the top bar for night mode and the **sun button** for day mode. Switching loads a complete dark palette for Odoo's components without reloading the page or losing unsaved edits and message drafts. The first switch may briefly show a loading spinner; subsequent switches reuse the loaded styles. It changes only that user's preference in the current browser and database, persists across reloads, and synchronizes between their tabs. It does not change other users' modes or synchronize between devices. If browser storage is unavailable, switching still works for the current page.
 
@@ -143,7 +189,7 @@ Discuss, Calendar, CRM, Project and standard graph/pivot views were checked on O
 
 ## Validation and limits
 
-See `VALIDATION.md` for performed checks and their limits. Marketplace screenshots in `static/description/` show actual Odoo 19 Community views with fictional demonstration records. These records and the Contacts app are not added by this theme. The marketplace description is `static/description/index.html`; user documentation is `doc/index.rst`.
+See the [validation record](VALIDATION.md) for performed checks and their limits. Marketplace screenshots in `static/description/` show actual Odoo 19 Community views with fictional demonstration records. These records and the Contacts app are not added by this theme. The [marketplace description](static/description/index.html) and [user documentation](doc/index.rst) are included in this repository.
 
 Source compatibility was checked against Odoo's public `19.0` branch, and version `19.0.1.5.0` was installed in a temporary local Odoo 19 Community database. This does not verify your installed third-party modules. Start with your test database, then check a list, an editable form, a many2one dropdown, a kanban board, a modal, mobile navigation and a report from your installed apps.
 
@@ -161,9 +207,17 @@ Odoo integration tests cover preset persistence, rejection of arbitrary colors, 
 odoo -d TEST_DATABASE -u neobrutalism_theme --test-enable --test-tags=/neobrutalism_theme --stop-after-init
 ```
 
-## License and references
+## RivetFox and project links
 
-Odoo-specific code: LGPL-3.0-or-later; see `LICENSE`. Upstream design attribution and MIT notice: `THIRD_PARTY_NOTICES.md`.
+Developed by **[RivetFox](https://rivetfox.pro)**. The source repository is **[Welgum/odoo-neobrutalism-theme](https://github.com/Welgum/odoo-neobrutalism-theme)**.
+
+- [Report a bug or request a feature](https://github.com/Welgum/odoo-neobrutalism-theme/issues). Include your Odoo version, installed apps, reproduction steps and a screenshot when relevant.
+- [Read the changelog](CHANGELOG.md) for release changes.
+- [Visit RivetFox](https://rivetfox.pro) for company information.
+
+## License and design references
+
+Odoo-specific code: **LGPL-3.0-or-later**; see [LICENSE](LICENSE). The neobrutalism design is inspired by [ekmas/neobrutalism-components](https://github.com/ekmas/neobrutalism-components). Upstream attribution and the MIT notice are preserved in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 - [Neobrutalism components](https://github.com/ekmas/neobrutalism-components)
 - [Reference styling tokens](https://github.com/ekmas/neobrutalism-components/blob/main/src/styling/globals.css)
@@ -173,6 +227,6 @@ Odoo-specific code: LGPL-3.0-or-later; see `LICENSE`. Upstream design attributio
 - [Odoo 19 user menu registry](https://github.com/odoo/odoo/blob/19.0/addons/web/static/src/webclient/user_menu/user_menu_items.js)
 - [Odoo 19 Dialog](https://github.com/odoo/odoo/blob/19.0/addons/web/static/src/core/dialog/dialog.js)
 
-## Release preparation
+## Build an installable Odoo add-on ZIP
 
 From the publisher's source repository, run `python3 tools/build_release.py` to validate metadata, assets and marketplace HTML, then create a deterministic module ZIP and SHA-256 checksum in `dist/`. The archive contains one `neobrutalism_theme` directory and excludes development tools, release output and local caches. Build tools and the publisher's `PUBLISHING.md` handoff are kept in the source repository; neither is required to install the distribution ZIP.
