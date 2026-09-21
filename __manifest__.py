@@ -1,0 +1,45 @@
+{
+    "name": "Neo Brutal Backend Theme",
+    "summary": "Seven admin-managed accent presets and personal night mode for Odoo 19",
+    "version": "19.0.1.4.0",
+    "category": "Themes/Backend",
+    "author": "alx-projects",
+    "license": "LGPL-3",
+    "description": """
+A neobrutalist backend theme for Odoo 19 Community with bold outlines,
+solid shadows, and seven administrator-managed accent presets.
+
+Each user can switch day/night mode in the top bar, choose comfortable
+or compact table spacing, and disable the theme in the Appearance menu.
+Personal preferences stay in the current browser, database, and user.
+
+No external services, fonts, CDNs, or extra Python packages are required.
+This module styles the backend only. Enterprise-specific screens and
+third-party themes are not verified. Not compatible with Odoo Online.
+""",
+    "images": [
+        "static/description/cover.png",
+        "static/description/backend_screenshot.png",
+        "static/description/night-mode.png",
+        "static/description/admin-presets.png",
+        "static/description/contact-form.png",
+        "static/description/contacts-kanban.png",
+        "static/description/personal-appearance.png",
+    ],
+    "depends": ["web", "base_setup"],
+    "data": ["views/res_config_settings_views.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "neobrutalism_theme/static/src/css/theme.css",
+            "neobrutalism_theme/static/src/js/preferences.js",
+            "neobrutalism_theme/static/src/js/theme_service.js",
+            "neobrutalism_theme/static/src/js/mode_toggle.js",
+            "neobrutalism_theme/static/src/js/appearance_dialog.js",
+            "neobrutalism_theme/static/src/xml/appearance_dialog.xml",
+            "neobrutalism_theme/static/src/xml/mode_toggle.xml",
+        ],
+    },
+    "installable": True,
+    "application": False,
+    "auto_install": False,
+}

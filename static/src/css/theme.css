@@ -1,0 +1,569 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later
+ * Inspired by ekmas/neobrutalism-components (MIT; see THIRD_PARTY_NOTICES.md).
+ * Runtime-scoped, screen-only overrides. No Bootstrap reset, external fonts,
+ * primary-variable changes, report styles, or DOM/layout replacement.
+ */
+
+@media screen {
+    .o_web_client.o_neo_theme {
+        --neo-accent: #facc00;
+        --neo-accent-soft: #fff5bc;
+        --neo-accent-ink: #161616;
+        --neo-bg: #f7f5ee;
+        --neo-surface: #ffffff;
+        --neo-subtle: #f1efe7;
+        --neo-ink: #161616;
+        --neo-muted: #5e605a;
+        --neo-border: #161616;
+        --neo-line: #d4d3c9;
+        --neo-link: #204fc1;
+        --neo-radius: 5px;
+        --neo-shadow: 4px 4px 0 var(--neo-border);
+        --neo-shadow-small: 2px 2px 0 var(--neo-border);
+        --neo-row-padding: 0.7rem;
+        color-scheme: light;
+        color: var(--neo-ink);
+        background-color: var(--neo-bg);
+        accent-color: var(--neo-border);
+    }
+
+    .o_web_client.o_neo_theme[data-neo-density="compact"] {
+        --neo-row-padding: 0.35rem;
+    }
+
+    .o_web_client.o_neo_theme .text-muted {
+        color: var(--neo-muted) !important;
+    }
+
+    .o_web_client.o_neo_theme :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme .form-check-input {
+        border: 2px solid var(--neo-border);
+    }
+
+    .o_web_client.o_neo_theme .form-check-input[type="checkbox"] {
+        border-radius: 3px;
+    }
+
+    .o_web_client.o_neo_theme .form-check-input:checked {
+        background-color: #161616;
+        border-color: var(--neo-border);
+    }
+
+    /* Personal mode changes apply immediately without reloading open forms. */
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] {
+        color-scheme: dark;
+        --neo-bg: #202322;
+        --neo-surface: #292d2b;
+        --neo-subtle: #343a36;
+        --neo-ink: #f5f5ed;
+        --neo-muted: #c1c6be;
+        --neo-border: #dfe4d9;
+        --neo-line: #555d55;
+        --neo-link: #a9c9ff;
+        --neo-accent-soft: #38433a;
+        --neo-shadow: 4px 4px 0 #080a08;
+        --neo-shadow-small: 2px 2px 0 #080a08;
+    }
+
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+
+    /* Unstyled icon buttons inherit Bootstrap's light-bundle ink otherwise.
+       Explicit button variants keep their own semantic colors. */
+    .o_web_client.o_neo_theme .btn:not([class*="btn-"]),
+    .o_web_client.o_neo_theme .btn-link {
+        transition-property: box-shadow, transform;
+    }
+
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .btn:not([class*="btn-"]) {
+        --btn-color: var(--neo-ink);
+        --btn-hover-color: var(--neo-ink);
+        --btn-active-color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .btn-link:not(.btn-success, .btn-warning, .btn-danger, .btn-info) {
+        --btn-color: var(--neo-link);
+        --btn-hover-color: var(--neo-link);
+        --btn-active-color: var(--neo-link);
+    }
+
+    /* Navigation: preserve Odoo's menu measurements and dropdown positioning. */
+    .o_web_client.o_neo_theme .o_main_navbar {
+        --o-navbar-height: 54px;
+        --NavBar-brand-color: var(--neo-accent-ink);
+        --NavBar-entry-color: var(--neo-accent-ink);
+        --NavBar-entry-backgroundColor: transparent;
+        --NavBar-entry-backgroundColor--hover: #ffffff66;
+        --NavBar-entry-backgroundColor--active: #ffffff88;
+        background: var(--neo-accent);
+        border-bottom: 2px solid var(--neo-border);
+        color: var(--neo-accent-ink);
+    }
+
+    .o_web_client.o_neo_theme .o_main_navbar :is(.o_menu_brand, .o_nav_entry, .dropdown-toggle, .o_menu_toggle, .o_navbar_apps_menu > button) {
+        color: var(--neo-accent-ink);
+        font-weight: 650;
+    }
+
+    .o_web_client.o_neo_theme .o_main_navbar .o_menu_brand {
+        font-size: 1.15rem;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+    }
+
+    .o_web_client.o_neo_theme .o_menu_systray > :is(button, div) > button {
+        color: var(--neo-accent-ink);
+    }
+
+    .o_web_client.o_neo_theme .o_app_menu_sidebar {
+        border-inline-end: 2px solid var(--neo-border);
+        background: var(--neo-surface);
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme .o_sidebar_topbar {
+        background: var(--neo-accent);
+        color: var(--neo-accent-ink);
+        border-bottom: 2px solid var(--neo-border);
+    }
+
+    /* Screen surfaces. Keep widths, scroll containers, and stacking from Odoo. */
+    .o_web_client.o_neo_theme :is(.o_action_manager, .o_content, .o_form_view, .o_kanban_renderer) {
+        background-color: var(--neo-bg);
+    }
+
+    .o_web_client.o_neo_theme .o_control_panel {
+        background: var(--neo-surface);
+        border-bottom: 2px solid var(--neo-border);
+        padding-bottom: 1rem !important;
+    }
+
+    .o_web_client.o_neo_theme .o_control_panel .breadcrumb {
+        margin-bottom: 0;
+        font-weight: 700;
+    }
+
+    .o_web_client.o_neo_theme .o_control_panel .breadcrumb-item.active {
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .o_control_panel .breadcrumb-item {
+        background-color: transparent;
+    }
+
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .o_control_panel .breadcrumb a {
+        color: var(--neo-link);
+    }
+
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .o_control_panel .breadcrumb {
+        background-color: transparent;
+    }
+
+    /* Community's dark bundle retains some light settings/form surfaces. */
+    .o_web_client.o_neo_theme .o_form_view .o_form_nosheet,
+    .o_web_client.o_neo_theme .o_base_settings_view .settings {
+        background-color: var(--neo-surface);
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme .o_base_settings_view .o_form_renderer {
+        --settings__tab-bg: var(--neo-bg);
+        --settings__tab-bg--active: var(--neo-accent-soft);
+        --settings__tab-color: var(--neo-ink);
+        --settings__title-bg: var(--neo-subtle);
+    }
+
+    .o_web_client.o_neo_theme .o_base_settings_view .settings_tab .tab:is(:hover, .selected) {
+        color: var(--neo-ink);
+        box-shadow: inset 2px 0 0 var(--neo-border);
+    }
+
+    .o_web_client.o_neo_theme .o_base_settings_view .settingSearchHeader {
+        background-color: var(--neo-subtle);
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme :is(.form-control, .form-select) {
+        background-color: var(--neo-surface);
+        color: var(--neo-ink);
+        border-color: var(--neo-line);
+    }
+
+    /* Style actual button variants; icon-only and statusbar controls keep geometry. */
+    .o_web_client.o_neo_theme .btn:is(.btn-primary, .btn-secondary, .btn-outline-primary, .btn-outline-secondary):not(.o_arrow_button) {
+        --btn-border-color: var(--neo-border);
+        --btn-hover-border-color: var(--neo-border);
+        --btn-active-border-color: var(--neo-border);
+        border: 2px solid var(--neo-border);
+        border-radius: var(--neo-radius);
+        font-weight: 700;
+        /* Keep text/background changes simultaneous when switching day/night mode. */
+        transition: box-shadow 100ms ease, transform 100ms ease;
+    }
+
+    .o_web_client.o_neo_theme .btn-primary:not(.o_arrow_button) {
+        --btn-bg: var(--neo-accent);
+        --btn-color: var(--neo-accent-ink);
+        --btn-hover-bg: var(--neo-accent);
+        --btn-hover-color: var(--neo-accent-ink);
+        --btn-active-bg: var(--neo-accent);
+        --btn-active-color: var(--neo-accent-ink);
+        background-color: var(--neo-accent);
+        color: var(--neo-accent-ink);
+        box-shadow: var(--neo-shadow-small);
+    }
+
+    .o_web_client.o_neo_theme .btn:is(.btn-secondary, .btn-outline-secondary, .btn-outline-primary):not(.o_arrow_button) {
+        background-color: var(--neo-surface);
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme .btn:is(.btn-secondary, .btn-outline-primary, .btn-outline-secondary):not(.o_arrow_button):is(:hover, .active, [aria-pressed="true"]) {
+        background-color: var(--neo-accent-soft);
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme .btn-primary:not(.o_arrow_button):not(:disabled):not(.disabled):hover {
+        box-shadow: 1px 1px 0 var(--neo-border);
+    }
+
+    .o_web_client.o_neo_theme .btn-primary:not(.o_arrow_button):not(:disabled):not(.disabled):active {
+        box-shadow: none;
+        transform: translate(1px, 1px);
+    }
+
+    .o_web_client.o_neo_theme .btn:is(:disabled, .disabled):not(.o_arrow_button_current) {
+        box-shadow: none;
+        opacity: 0.55;
+    }
+
+    .o_web_client.o_neo_theme .btn-group > .btn {
+        box-shadow: none;
+        transform: none;
+    }
+
+    .o_web_client.o_neo_theme .btn-group > .btn:not(:first-child) {
+        border-start-start-radius: 0;
+        border-end-start-radius: 0;
+    }
+
+    .o_web_client.o_neo_theme .btn-group > .btn:not(:last-child) {
+        border-start-end-radius: 0;
+        border-end-end-radius: 0;
+    }
+
+    .o_web_client.o_neo_theme :is(.btn, a, input, select, textarea, [tabindex]):focus-visible {
+        outline: 3px solid var(--neo-link);
+        outline-offset: 3px;
+    }
+
+    .o_web_client.o_neo_theme .o_main_navbar :is(button, a):focus-visible {
+        outline: 3px solid var(--neo-accent-ink);
+        outline-offset: -3px;
+    }
+
+    /* A clear search field without altering search facet behaviors. */
+    .o_web_client.o_neo_theme .o_searchview {
+        border: 2px solid var(--neo-border) !important;
+        border-radius: var(--neo-radius);
+        background-color: var(--neo-surface);
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme .o_searchview:focus-within {
+        box-shadow: var(--neo-shadow-small);
+    }
+
+    .o_web_client.o_neo_theme .o_searchview_input {
+        color: var(--neo-ink);
+        background: transparent;
+    }
+
+    .o_web_client.o_neo_theme .o_searchview .o_searchview_facet {
+        border: 1px solid var(--neo-border);
+        border-radius: 3px;
+        background: var(--neo-accent-soft);
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme .o_searchview .o_searchview_facet_label {
+        color: var(--neo-accent-ink);
+        background: var(--neo-accent);
+    }
+
+    /* Tables retain sticky headers, row decorations, handle cells and row actions. */
+    .o_web_client.o_neo_theme .o_list_renderer {
+        background: var(--neo-surface);
+    }
+
+    .o_web_client.o_neo_theme .o_list_table {
+        --table-color: var(--neo-ink);
+        --table-bg: var(--neo-surface);
+        --table-striped-bg: var(--neo-subtle);
+        --table-striped-color: var(--neo-ink);
+        --table-hover-bg: var(--neo-accent-soft);
+        --table-hover-color: var(--neo-ink);
+        --table-active-bg: var(--neo-accent-soft);
+        --table-active-color: var(--neo-ink);
+        --table-border-color: var(--neo-line);
+        --bs-table-bg: var(--neo-surface);
+        --bs-table-color: var(--neo-ink);
+        --bs-table-striped-bg: var(--neo-subtle);
+        --bs-table-striped-color: var(--neo-ink);
+        --bs-table-hover-bg: var(--neo-accent-soft);
+        --bs-table-hover-color: var(--neo-ink);
+        --bs-table-active-bg: var(--neo-accent-soft);
+        --bs-table-active-color: var(--neo-ink);
+        --bs-table-border-color: var(--neo-line);
+        color: var(--neo-ink);
+        border-color: var(--neo-line);
+    }
+
+    .o_web_client.o_neo_theme .o_list_table thead th {
+        background-color: var(--neo-subtle);
+        color: var(--neo-ink);
+        border-bottom: 2px solid var(--neo-border);
+        padding-block: 0.8rem;
+        font-weight: 750;
+        font-size: 0.8rem;
+    }
+
+    .o_web_client.o_neo_theme .o_list_table .o_data_row > td {
+        padding-block: var(--neo-row-padding);
+        border-bottom-color: var(--neo-line);
+        vertical-align: middle;
+    }
+
+    .o_web_client.o_neo_theme .o_list_table .o_data_row.o_selected_row > td {
+        background-color: var(--neo-accent-soft);
+    }
+
+    .o_web_client.o_neo_theme .o_list_table :is(.o_group_header, tfoot) {
+        background-color: var(--neo-subtle);
+        font-weight: 700;
+    }
+
+    /* Leave Odoo's named semantic colors intact (danger, warning, success, etc.). */
+    .o_web_client.o_neo_theme :is(.badge, .o_tag) {
+        border: 1px solid currentColor;
+        border-radius: 4px;
+        font-weight: 650;
+    }
+
+    /* Forms: native sheet and input DOM. No sizing of widgets or hidden controls. */
+    .o_web_client.o_neo_theme .o_form_sheet_bg {
+        background-color: var(--neo-bg);
+    }
+
+    .o_web_client.o_neo_theme .o_form_view .o_form_sheet {
+        border: 2px solid var(--neo-border);
+        border-radius: var(--neo-radius);
+        box-shadow: var(--neo-shadow);
+        background: var(--neo-surface);
+        color: var(--neo-ink);
+        margin-bottom: 1.25rem;
+    }
+
+    .o_web_client.o_neo_theme .o_form_view .oe_title :is(h1, h2) {
+        font-weight: 800;
+        letter-spacing: -0.04em;
+    }
+
+    .o_web_client.o_neo_theme .o_form_view .o_form_label {
+        font-weight: 650;
+    }
+
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .o_form_view .o_form_label:not(.o_field_invalid):not(.text-danger) {
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme .o_form_view .o_field_widget .o_input {
+        --o-input-border-color: var(--neo-line);
+        border-bottom: 2px solid var(--neo-line);
+        border-radius: 0;
+        color: var(--neo-ink);
+        background-color: transparent;
+    }
+
+    .o_web_client.o_neo_theme .o_form_view .o_field_widget .o_input:is(:hover, :focus) {
+        --o-input-border-color: var(--neo-border);
+        border-bottom-color: var(--neo-border);
+    }
+
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] :is(.o_field_email, .o_field_phone, .o_field_url) a {
+        color: var(--neo-link);
+    }
+
+    .o_web_client.o_neo_theme .o_form_view .o_field_widget:is(.o_field_invalid, .o_invalid) .o_input {
+        --o-input-border-color: #d43a3a;
+        border-bottom-color: #d43a3a;
+    }
+
+    .o_web_client.o_neo_theme .o_form_statusbar {
+        background-color: var(--neo-surface);
+        border-bottom-color: var(--neo-line);
+    }
+
+    .o_web_client.o_neo_theme .o_statusbar_status .o_arrow_button {
+        font-weight: 700;
+    }
+
+    .o_web_client.o_neo_theme .o_notebook .nav-tabs {
+        border-bottom: 2px solid var(--neo-border);
+        background-color: var(--neo-surface);
+        gap: 0.25rem;
+    }
+
+    .o_web_client.o_neo_theme .o_notebook .nav-tabs .nav-link {
+        color: var(--neo-muted);
+        font-weight: 700;
+        border-radius: var(--neo-radius) var(--neo-radius) 0 0;
+    }
+
+    .o_web_client.o_neo_theme .o_notebook .nav-tabs .nav-link.active {
+        background: var(--neo-accent);
+        color: var(--neo-accent-ink);
+        border: 2px solid var(--neo-border);
+        border-bottom-color: var(--neo-accent);
+        margin-bottom: -2px;
+    }
+
+    .o_web_client.o_neo_theme .oe_button_box .oe_stat_button {
+        border-color: var(--neo-line);
+    }
+
+    /* Standard form chatter shares the personal mode, even with light assets. */
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .o_form_view :is(.o-mail-ChatterContainer, .o-mail-Chatter, .o-mail-Chatter-top) {
+        background-color: var(--neo-bg);
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .o_form_view .o-mail-Message-date {
+        color: var(--neo-muted);
+    }
+
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .o_form_view .o-mail-DateSection .text-muted {
+        opacity: 1 !important;
+    }
+
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .o_form_view .o-mail-Chatter .text-action,
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .o-mail-ActivityButton.btn-dark,
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] .o-mail-ActivityButton .text-dark:not(.text-danger, .text-warning, .text-success) {
+        color: var(--neo-muted) !important;
+    }
+
+    /* Kanban: no transforms that would interfere with drag and drop. */
+    .o_web_client.o_neo_theme .o_kanban_renderer .o_kanban_record:not(.o_kanban_ghost) {
+        background-color: var(--neo-surface);
+        color: var(--neo-ink);
+        border: 2px solid var(--neo-border);
+        border-radius: var(--neo-radius);
+        box-shadow: var(--neo-shadow-small);
+    }
+
+    .o_web_client.o_neo_theme .o_kanban_renderer .o_kanban_record:not(.o_kanban_ghost):hover {
+        box-shadow: var(--neo-shadow);
+    }
+
+    .o_web_client.o_neo_theme .o_kanban_group .o_kanban_header {
+        border-bottom: 2px solid var(--neo-border);
+        margin-bottom: 0.9rem;
+    }
+
+    .o_web_client.o_neo_theme .o_kanban_header .o_column_title {
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    /* Overlays are portaled under body; body scoping also covers these controls. */
+    .o_web_client.o_neo_theme :is(.dropdown-menu, .o-dropdown--menu, .o_popover, .o-autocomplete--dropdown-menu) {
+        border: 2px solid var(--neo-border);
+        border-radius: var(--neo-radius);
+        box-shadow: var(--neo-shadow);
+        background-color: var(--neo-surface);
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme :is(.dropdown-menu, .o-dropdown--menu) .dropdown-item {
+        color: var(--neo-ink);
+        border-radius: 2px;
+    }
+
+    .o_web_client.o_neo_theme :is(.dropdown-menu, .o-dropdown--menu) .dropdown-item:not(.disabled):is(:hover, :focus, .focus, .selected, .active) {
+        background: var(--neo-accent-soft);
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme .modal-content {
+        border: 2px solid var(--neo-border);
+        border-radius: var(--neo-radius);
+        box-shadow: 6px 6px 0 #080a08;
+        background-color: var(--neo-surface);
+        color: var(--neo-ink);
+    }
+
+    .o_web_client.o_neo_theme .modal-header {
+        background: var(--neo-subtle);
+        border-bottom: 2px solid var(--neo-border);
+    }
+
+    .o_web_client.o_neo_theme .modal-title {
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .o_web_client.o_neo_theme .modal-footer {
+        border-top: 1px solid var(--neo-line);
+        gap: 0.5rem;
+    }
+
+    .o_web_client.o_neo_theme :is(.o_notification, .toast) {
+        background-color: var(--neo-surface);
+        color: var(--neo-ink);
+        border: 2px solid var(--neo-border);
+        border-radius: var(--neo-radius);
+        box-shadow: var(--neo-shadow-small);
+    }
+
+    /* Keep validation, alert icons and state colors provided by the core modules. */
+    .o_web_client.o_neo_theme .alert {
+        border-width: 2px;
+        border-radius: var(--neo-radius);
+    }
+
+    /* Appearance remains usable when the theme is switched off. */
+    .o_neo_appearance .o_neo_eyebrow {
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--neo-muted, inherit);
+    }
+
+    .o_neo_appearance h3 {
+        font-weight: 800;
+        letter-spacing: -0.04em;
+    }
+
+    .o_neo_appearance .o_neo_enable {
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .o_neo_appearance fieldset:disabled { opacity: 0.5; }
+}
+
+@media screen and (max-width: 767.98px) {
+    .o_web_client.o_neo_theme .o_main_navbar { --o-navbar-height: 50px; }
+    .o_web_client.o_neo_theme .o_form_view .o_form_sheet { box-shadow: 2px 2px 0 var(--neo-border); }
+    .o_web_client.o_neo_theme .o_control_panel { padding-bottom: 0.75rem !important; }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    .o_web_client.o_neo_theme .btn { transition: none !important; }
+    .o_web_client.o_neo_theme .btn-primary:active { transform: none !important; }
+}

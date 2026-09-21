@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Neo Brutal — marketplace cover source</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; width: 1120px; height: 560px; overflow: hidden; background: #f7f5ee; color: #161616; font-family: Arial, sans-serif; }
+.cover { width: 1120px; height: 560px; border: 3px solid #161616; position: relative; overflow: hidden; }
+.copy { position: absolute; top: 37px; left: 40px; width: 490px; z-index: 2; }
+.edition { display: inline-block; padding: 9px 13px; border: 2px solid #161616; background: #fff; font-size: 16px; font-weight: 700; box-shadow: 3px 3px #161616; }
+h1 { margin: 25px 0 15px; font-size: 84px; line-height: .93; font-weight: 900; letter-spacing: -5px; }
+h1 span { display: inline-block; background: #facc00; padding: 0 10px 6px 4px; }
+.subtitle { font-size: 23px; line-height: 1.35; margin: 20px 0 26px; }
+.feature { font: bold 14px monospace; letter-spacing: .5px; }
+.screens { position: absolute; width: 530px; height: 440px; top: 47px; right: 36px; }
+.screen { border: 3px solid #161616; border-radius: 6px; width: 494px; height: 275px; overflow: hidden; box-shadow: 7px 7px #161616; background: #fff; }
+.screen img { display: block; width: 100%; }
+.day { position: absolute; top: 0; right: 0; }
+.night { position: absolute; bottom: 0; left: 0; height: 227px; background: #292d2b; }
+.screen-label { position: absolute; right: 14px; bottom: 14px; border: 2px solid #161616; background: #fff; font: bold 13px monospace; padding: 6px 9px; }
+.night .screen-label { background: #facc00; }
+.day .screen-label { top: 35px; bottom: auto; }
+.swatches { position: absolute; left: 40px; bottom: 39px; display: flex; gap: 9px; }
+.swatches span { width: 42px; height: 30px; border: 2px solid #161616; box-shadow: 2px 2px #161616; }
+.footer { position: absolute; right: 37px; bottom: 18px; font: bold 11px monospace; letter-spacing: 1px; }
+</style>
+<div class="cover">
+  <div class="copy">
+    <div class="edition">ODOO 19 COMMUNITY</div>
+    <h1>NEO<br><span>BRUTAL.</span></h1>
+    <p class="subtitle">A bolder backend.<br>Your colors. Your night mode.</p>
+    <div class="feature">7 SHARED ACCENTS &nbsp; / &nbsp; PERSONAL DAY + NIGHT</div>
+  </div>
+  <div class="screens">
+    <div class="screen day"><img src="../static/description/contacts-kanban.png" alt="Actual Odoo Contacts kanban in day mode"><span class="screen-label">DAY</span></div>
+    <div class="screen night"><img src="../static/description/night-mode.png" alt="Actual Odoo Contacts list in night mode"><span class="screen-label">NIGHT</span></div>
+  </div>
+  <div class="swatches"><span style="background:#facc00"></span><span style="background:#5294ff"></span><span style="background:#5ad9aa"></span><span style="background:#b59aff"></span><span style="background:#ff91bc"></span><span style="background:#ffb15c"></span><span style="background:#ff7474"></span></div>
+  <div class="footer">NEO BRUTAL / BACKEND THEME</div>
+</div>
+</html>

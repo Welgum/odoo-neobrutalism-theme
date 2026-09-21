@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="neobrutalism_theme.ModeToggle">
+        <div class="o_neo_mode_toggle d-flex">
+            <button type="button" class="o_nav_entry"
+                    t-att-title="label" t-att-aria-label="label" t-on-click="toggle">
+                <i class="fa fa-lg" t-att-class="isDark ? 'fa-sun-o' : 'fa-moon-o'" aria-hidden="true"/>
+            </button>
+        </div>
+    </t>
+</templates>
