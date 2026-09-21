@@ -1,4 +1,10 @@
-# Validation — 17.0.1.0.1
+# Validation — 17.0.1.0.2
+
+## Theme-card thumbnail fix — 2026-09-21
+
+The public catalog was selecting the PNG `backend_screenshot.png` while the app detail page already used the animated cover. The manifest now declares one `_screenshot` image, `theme_screenshot.gif`, with a 1000 × 1210 portrait composition and a 3-second animated loop. The raw Contacts image is renamed to `backend-list.png`.
+
+This patch validates the selected image, GIF frames/timing, renamed image references and release packaging. The Odoo 19 image is also previewed in the actual public catalog DOM using a local response override; this is a local rendering check, not a marketplace rescan. Runtime code is unchanged.
 
 ## Marketplace presentation update — 2026-09-21
 

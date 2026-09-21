@@ -13,9 +13,12 @@ const speed = 3;
 const fps = 30;
 const jobs = [
     {name:'cover', source:'tools/cover.html', width:1120, height:560, seconds:9},
+    {name:'theme_screenshot', poster:'theme-preview', source:'tools/cover.html', query:'?format=thumbnail', width:1000, height:1210, seconds:9},
     {name:'day-night-demo', source:'tools/marketplace/motion.html', width:1120, height:760, seconds:8},
     {name:'accent-demo', source:'tools/marketplace/motion.html', query:'?type=accents', width:1120, height:760, seconds:14},
 ];
+const requested = process.argv.slice(2);
+assert.ok(requested.every(name => jobs.some(job => job.name === name)), 'Unknown animation name');
 (async()=>{
     const browser = await chromium.launch({headless:true,...(process.env.NEO_CHROME_PATH
         ? {executablePath:process.env.NEO_CHROME_PATH}: {})});
@@ -23,6 +26,7 @@ const jobs = [
         const page = await browser.newPage({deviceScaleFactor:1});
         const errors=[];page.on('pageerror',error=>errors.push(error.message));
         for (const job of jobs) {
+            if (requested.length && !requested.includes(job.name)) continue;
             const frameCount = Math.round(job.seconds / speed * fps);
             const finalDelay = Math.round(job.seconds / speed * 100) - Math.round((frameCount - 1) / fps * 100);
             const frames=path.join(scratch,job.name);
@@ -41,7 +45,7 @@ const jobs = [
                 '-loop','0','-final_delay',String(finalDelay),path.join(output,`${job.name}.gif`),
             ],{encoding:'utf8'});
             assert.equal(result.status,0,result.stderr);
-            await fs.copyFile(path.join(frames,'0000.png'),path.join(output,`${job.name}.png`));
+            await fs.copyFile(path.join(frames,'0000.png'),path.join(output,`${job.poster || job.name}.png`));
             const bytes=(await fs.stat(path.join(output,`${job.name}.gif`))).size;
             console.log(`${job.name}.gif: ${job.width}×${job.height}, ${(job.seconds/speed).toFixed(2)}s loop, ${(bytes/1024).toFixed(0)} KiB`);
         }
