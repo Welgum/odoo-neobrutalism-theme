@@ -31,15 +31,17 @@ The screenshots below belong to the Odoo version of the currently selected branc
 
 ## Install the theme
 
-For a new Odoo 19 installation (replace `19.0` with `18.0` for Odoo 18):
+For a new Odoo 18 installation (replace `18.0` with `19.0` for Odoo 19):
 
 ```bash
-git clone --branch 19.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons
+git clone --branch 18.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons
 ```
 
 Add the repository's absolute path to your existing `addons_path`, or copy its **`neobrutalism_theme`** directory into an add-ons directory already configured on your server. For Docker, mount the repository root into the container's custom add-ons path. Preserve existing paths, mounts and database volumes.
 
 Restart Odoo, enable developer mode, and open **Apps → Update Apps List**. Remove the default **Apps** filter, search for **Neo Brutal Backend Theme**, and install it. Reload the browser. For an existing installation, replace the module files, restart Odoo and choose **Upgrade** before refreshing the browser.
+
+**Updating an older checkout:** earlier releases kept the manifest at the repository root. The add-on now lives one directory deeper. Adjust the mount/add-ons path or copy the inner `neobrutalism_theme/` directory so Odoo still sees `ADDONS_PATH/neobrutalism_theme/__manifest__.py`.
 
 [Detailed installation, color settings and troubleshooting](neobrutalism_theme/README.md) · [User documentation](neobrutalism_theme/doc/index.rst)
 

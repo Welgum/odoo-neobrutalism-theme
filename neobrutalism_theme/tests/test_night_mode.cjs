@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
-// Writes local fixtures. Use only a disposable Odoo 19 database with Contacts,
+// Writes local fixtures. Use only a disposable Odoo 18 database with Contacts,
 // Discuss, CRM, Calendar and Project installed; never a production database.
 const assert = require('node:assert/strict');
 const { chromium } = require('playwright');
-const origin = process.env.NEO_TEST_URL || 'http://127.0.0.1:18069';
+const origin = process.env.NEO_TEST_URL || 'http://127.0.0.1:18068';
 const db = process.env.NEO_TEST_DB;
 assert.ok(db && process.env.NEO_ALLOW_TEST_WRITES === '1', 'Disposable database and NEO_ALLOW_TEST_WRITES=1 required');
 (async () => {
@@ -59,7 +59,7 @@ assert.ok(db && process.env.NEO_ALLOW_TEST_WRITES === '1', 'Disposable database 
   await setMode('light');assert.equal(await draft.inputValue(),'Unsaved message draft');
   await setMode('dark');assert.equal(await draft.inputValue(),'Unsaved message draft');
   // Popovers and modal surfaces inherit the same dark foundation.
-  await page.getByRole('button',{name:'Add Emojis',exact:true}).click();
+  await page.getByRole('button',{name:'Emojis',exact:true}).click();
   await page.locator('.o-EmojiPicker').waitFor();
   await readable('.o-EmojiPicker input',{surface:true,pseudo:'::placeholder'});
   await page.keyboard.press('Escape');

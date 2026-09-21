@@ -1,18 +1,18 @@
-# Odoo 19 Neobrutalism Backend Theme
+# Odoo 18 Neobrutalism Backend Theme
 
-**Neo Brutal** is an open-source **Odoo 19 Community backend theme** by [RivetFox](https://rivetfox.pro). It brings neobrutalism design to the Odoo ERP interface with bold outlines, solid shadows, seven accent color presets and personal **dark mode**.
+**Neo Brutal** is an open-source **Odoo 18 Community backend theme** by [RivetFox](https://rivetfox.pro). It brings neobrutalism design to the Odoo ERP interface with bold outlines, solid shadows, seven accent color presets and personal **dark mode**.
 
 Customize Odoo lists, forms, kanban boards and navigation, with dark styles for Discuss, Calendar, CRM, Project and standard charts. Administrators manage shared colors; each user chooses light or night mode from the top bar without losing unsaved work.
 
 **Repository:** [odoo-neobrutalism-theme](https://github.com/Welgum/odoo-neobrutalism-theme) · **Author:** [RivetFox](https://rivetfox.pro) · **License:** [LGPL-3.0-or-later](LICENSE)
 
-**Version:** `19.0.1.6.0` · **Odoo module:** `neobrutalism_theme` · **Dependencies:** `web`, `base_setup`.
+**Version:** `18.0.1.0.0` · **Odoo module:** `neobrutalism_theme` · **Dependencies:** `web`, `base_setup`.
 
 [Features](#odoo-backend-theme-features) · [Screenshots](#odoo-theme-screenshots) · [Installation](#install-the-odoo-theme-with-docker-or-on-a-vps) · [Colors and dark mode](#customize-odoo-theme-colors-and-dark-mode) · [FAQ](#frequently-asked-questions-and-troubleshooting)
 
 ## Odoo version and hosting compatibility
 
-Built for self-hosted **Odoo 19 Community**. It uses shared web-client components, but Enterprise-specific screens and third-party themes have not been verified. It can also be deployed as source through Odoo.sh. Odoo Online does not support installing this filesystem add-on. This is a backend theme, not a Website/eCommerce theme.
+Built for self-hosted **Odoo 18 Community**. It uses shared web-client components, but Enterprise-specific screens and third-party themes have not been verified. It can also be deployed as source through Odoo.sh. Odoo Online does not support installing this filesystem add-on. This is a backend theme, not a Website/eCommerce theme.
 
 ## Odoo backend theme features
 
@@ -33,13 +33,13 @@ The default is **yellow + comfortable + enabled** for each user. The shared acce
 
 ### Light mode: Contacts and backend navigation
 
-![Odoo 19 Community Contacts list with the Neo Brutal backend theme, yellow accent, outlined buttons and light mode](static/description/backend_screenshot.png)
+![Odoo 18 Community Contacts list with the Neo Brutal backend theme, yellow accent, outlined buttons and light mode](static/description/backend_screenshot.png)
 
 ### Dark mode: Odoo Discuss
 
-![Odoo 19 Discuss in Neo Brutal dark mode with readable channel names, messages and a dark message composer](static/description/discuss-night.png)
+![Odoo 18 Discuss in Neo Brutal dark mode with readable channel names, messages and a dark message composer](static/description/discuss-night.png)
 
-These screenshots show actual Odoo 19 Community screens with demonstration data. More examples are included in the [theme screenshot gallery](static/description/).
+These screenshots show actual Odoo 18 Community screens with demonstration data. More examples are included in the [theme screenshot gallery](static/description/).
 
 ## Install the Odoo theme with Docker or on a VPS
 
@@ -56,7 +56,7 @@ The names and paths below are examples. Use your existing Compose project and Od
    ```bash
    cd /path/to/your/compose-project
    mkdir -p addons
-   git clone --branch 19.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons
+   git clone --branch 18.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons
    cp -R theme-addons/neobrutalism_theme addons/
    ```
 
@@ -67,7 +67,7 @@ The names and paths below are examples. Use your existing Compose project and Od
    ```bash
    cd /path/to/your/compose-project
    mkdir -p addons
-   unzip /path/to/neobrutalism_theme-19.0.1.6.0.zip -d addons
+   unzip /path/to/neobrutalism_theme-18.0.1.0.0.zip -d addons
    ```
 
 2. If your deployment has no custom add-ons mount, **add** this entry to its Odoo service's existing `volumes` list. Preserve its other mounts:
@@ -117,6 +117,8 @@ Do not use `docker compose down -v`; deleting database volumes is not part of in
 Copy the `neobrutalism_theme` directory into one of the directories already listed in your Odoo server's `addons_path`, with read access for the Odoo OS user. Restart your Odoo service, then follow steps 4–6 above. No pip or npm installation is needed.
 
 ## Update, disable or uninstall the theme
+
+Earlier source releases kept the module at the repository root. It now lives in the inner `neobrutalism_theme/` directory. If your old checkout was mounted as the module itself, update the mount or copy that inner directory to the existing module location. The required path remains `ADDONS_PATH/neobrutalism_theme/__manifest__.py`; the technical name and saved preferences are unchanged.
 
 - To update: replace this module directory with the newer version, restart Odoo, then find the module in Apps and select **Upgrade**. Hard-refresh the browser after asset rebuilds.
 - To disable for yourself: avatar → **Appearance** → clear **Use Neobrutalism theme**. This takes effect immediately in this browser. Clicking the top-bar mode toggle enables the theme again for you.
@@ -176,7 +178,7 @@ Every backend user can click the **moon button** in the top bar for night mode a
 
 The toggle enables the theme for the user if they previously disabled it. Theme enable/disable and table spacing remain personal under avatar → **Appearance**. Reset defaults restores the personal options and follows Odoo's loaded color scheme again; it cannot change administrator colors.
 
-The former **Night mode for all users** setting has been removed. Any saved value from version 19.0.1.1.0 is ignored after upgrading. Public websites, portal pages and reports remain outside the backend theme's scope.
+There is no **Night mode for all users** setting. Any legacy global night-mode parameter is ignored. Public websites, portal pages and reports remain outside the backend theme's scope.
 
 ## Code customization
 
@@ -186,13 +188,13 @@ Do not add a global `*` reset or unscoped `body`, `button` or `input` rules. Nat
 
 The theme keeps Odoo's layout and widget behavior. Night mode compiles Odoo's native component styles with the palette in `static/src/scss/dark_primary.scss`, Bootstrap variables and contextual color helpers. Its private bundles include installed modules' native dark rules. The client stages the CSS before switching it, restores the original styles when disabled, and leaves Odoo's global color-scheme cookie untouched. Standard graphs update their canvas labels and grid when the personal mode changes.
 
-Discuss, Calendar, CRM, Project and standard graph/pivot views were checked on Odoo 19 Community. Studio, spreadsheets, specialized rich editors, Enterprise screens, third-party widgets and custom chart renderers are not verified. POS, login pages, public websites/portals, email templates and PDF reports remain outside the theme's scope.
+Discuss, Calendar, CRM, Project and standard graph/pivot views were checked on Odoo 18 Community. Studio, spreadsheets, specialized rich editors, Enterprise screens, third-party widgets and custom chart renderers are not verified. POS, login pages, public websites/portals, email templates and PDF reports remain outside the theme's scope.
 
 ## Validation and limits
 
-See the [validation record](VALIDATION.md) for performed checks and their limits. Marketplace screenshots in `static/description/` show actual Odoo 19 Community views with fictional demonstration records. These records and the Contacts app are not added by this theme. The [marketplace description](static/description/index.html) and [user documentation](doc/index.rst) are included in this repository.
+See the [validation record](VALIDATION.md) for performed checks and their limits. Marketplace screenshots in `static/description/` show actual Odoo 18 Community views with fictional demonstration records. These records and the Contacts app are not added by this theme. The [marketplace description](static/description/index.html) and [user documentation](doc/index.rst) are included in this repository.
 
-Source compatibility was checked against Odoo's public `19.0` branch, and version `19.0.1.5.0` was installed in a temporary local Odoo 19 Community database. This does not verify your installed third-party modules. Start with your test database, then check a list, an editable form, a many2one dropdown, a kanban board, a modal, mobile navigation and a report from your installed apps.
+Source compatibility was checked against Odoo's public `18.0` branch, and version `18.0.1.0.0` was installed in a temporary local Odoo 18 Community database. This does not verify your installed third-party modules. Start with your test database, then check a list, an editable form, a many2one dropdown, a kanban board, a modal, mobile navigation and a report from your installed apps.
 
 The included storage/initialization regression checks can be run outside Odoo with Node 18+:
 
@@ -224,9 +226,9 @@ Odoo-specific code: **LGPL-3.0-or-later**; see [LICENSE](LICENSE). The neobrutal
 - [Reference styling tokens](https://github.com/ekmas/neobrutalism-components/blob/main/src/styling/globals.css)
 - [OCA web_dark_mode](https://github.com/OCA/web/tree/18.0/web_dark_mode): reviewed its asset-level approach to complete dark palettes. This implementation uses original Neo palette/code; no AGPL module code is included.
 - [Pantalytics Odoo Style Pro](https://github.com/pantalytics/odoo-style-pro): reviewed its use of native dark components and semantic design tokens.
-- [Odoo 19 web asset manifest](https://github.com/odoo/odoo/blob/19.0/addons/web/__manifest__.py)
-- [Odoo 19 user menu registry](https://github.com/odoo/odoo/blob/19.0/addons/web/static/src/webclient/user_menu/user_menu_items.js)
-- [Odoo 19 Dialog](https://github.com/odoo/odoo/blob/19.0/addons/web/static/src/core/dialog/dialog.js)
+- [Odoo 18 web asset manifest](https://github.com/odoo/odoo/blob/18.0/addons/web/__manifest__.py)
+- [Odoo 18 user menu registry](https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/webclient/user_menu/user_menu_items.js)
+- [Odoo 18 Dialog](https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/core/dialog/dialog.js)
 
 ## Build an installable Odoo add-on ZIP
 

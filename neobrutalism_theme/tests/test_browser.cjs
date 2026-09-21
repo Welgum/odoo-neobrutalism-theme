@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
-// Writes test settings and users. Run only against a disposable Odoo 19 database.
+// Writes test settings and users. Run only against a disposable Odoo 18 database.
 const assert = require('node:assert/strict');
 const { chromium } = require('playwright');
-const origin=process.env.NEO_TEST_URL || 'http://127.0.0.1:18069';
+const origin=process.env.NEO_TEST_URL || 'http://127.0.0.1:18068';
 const db=process.env.NEO_TEST_DB;
 assert.ok(db && process.env.NEO_ALLOW_TEST_WRITES === '1', 'Set NEO_TEST_DB and NEO_ALLOW_TEST_WRITES=1 for a disposable database');
 const presets={yellow:'#facc00',blue:'#5294ff',green:'#5ad9aa',purple:'#b59aff',pink:'#ff91bc',orange:'#ffb15c',red:'#ff7474'};

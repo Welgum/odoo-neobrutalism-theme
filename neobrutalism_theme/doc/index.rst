@@ -1,14 +1,14 @@
 Neo Brutal Backend Theme
 ========================
 
-Neo Brutal gives the Odoo 19 backend bold outlines, solid shadows, seven
+Neo Brutal gives the Odoo 18 backend bold outlines, solid shadows, seven
 shared accent presets, and personal day/night mode. It uses native Odoo
 components and requires no external services or additional Python packages.
 
 Compatibility
 -------------
 
-* Tested with Odoo 19 Community, installed on a self-hosted server.
+* Tested with Odoo 18 Community, installed on a self-hosted server.
 * Dependencies: ``web`` and ``base_setup`` (standard Odoo modules).
 * A filesystem Python add-on: it cannot be installed on Odoo Online.
 * Source deployment through Odoo.sh is possible, but Enterprise-specific
@@ -17,7 +17,7 @@ Compatibility
   dialogs. It does not theme public websites, portals, POS, login pages,
   email templates, or PDF reports.
 * Discuss, Calendar, CRM, Project and standard graph/pivot views are checked
-  on Odoo 19 Community. Specialized editors, Studio, spreadsheets, custom charts and
+  on Odoo 18 Community. Specialized editors, Studio, spreadsheets, custom charts and
   third-party themes require testing on your own staging database.
 
 Installation
@@ -83,8 +83,7 @@ Replace the module files with the new release, restart Odoo, and use Upgrade
 on the module's Apps entry. Reload the browser after the assets rebuild.
 Always validate an upgrade against a staging copy of your database first.
 
-Versions before 19.0.1.3.0 may have stored custom colors or a global night-mode
-flag. These retired values are ignored. The accent defaults to Yellow until
+Any legacy custom colors or global night-mode parameters are ignored. The accent defaults to Yellow until
 an administrator selects a preset. Existing browser palette values are also
 ignored; other valid personal preferences remain available.
 

@@ -34,13 +34,11 @@ class TestThemeSettings(TransactionCase):
 
     def test_legacy_global_night_mode_is_ignored(self):
         params = self.env["ir.config_parameter"].sudo()
-        users = [new_test_user(self.env, login=f"neo-test-{i}", groups="base.group_user") for i in range(2)]
+        # Odoo 18 has no ir.http.color_scheme API. Night mode is a browser preference;
+        # the legacy parameter must never become a shared setting or session option.
         params.set_param(PARAM_PREFIX + "night_mode", True)
-        for user in users:
-            self.assertEqual(self.env["ir.http"].with_user(user).color_scheme(), "light")
         self.assertNotIn("night_mode", read_theme_settings(params))
         self.assertNotIn("neo_night_mode", self.env["res.config.settings"]._fields)
-        self.assertEqual(self.env["ir.http"].with_user(self.env.ref("base.public_user")).color_scheme(), "light")
 
     def test_regular_user_cannot_save_shared_settings(self):
         user = new_test_user(self.env, login="neo-no-settings", groups="base.group_user")

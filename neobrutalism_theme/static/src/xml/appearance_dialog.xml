@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
     <t t-name="neobrutalism_theme.AppearanceDialog">
         <Dialog title="title" size="'md'" bodyClass="'o_neo_appearance'">
-            <p class="o_neo_eyebrow">NEO BRUTAL / ODOO 19</p>
+            <p class="o_neo_eyebrow">NEO BRUTAL / ODOO 18</p>
             <h3 class="mb-3">Make work a little bolder.</h3>
             <label class="o_neo_enable d-flex align-items-center gap-3 mb-4">
                 <input type="checkbox" class="form-check-input m-0"
