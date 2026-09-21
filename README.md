@@ -1,4 +1,4 @@
-# Odoo Neobrutalism Backend Theme — Odoo 18 & 19
+# Odoo Neobrutalism Backend Theme — Odoo 16–19
 
 **Neo Brutal** is an open-source backend theme by **[RivetFox](https://rivetfox.pro)** for Odoo Community. It adds bold outlines, solid shadows, seven administrator-managed accent colors and personal dark mode to the Odoo ERP interface.
 
@@ -6,6 +6,8 @@
 
 | Odoo version | Source branch | Installable add-on |
 | --- | --- | --- |
+| Odoo 16 Community | [16.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/16.0) | `neobrutalism_theme` |
+| Odoo 17 Community | [17.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/17.0) | `neobrutalism_theme` |
 | Odoo 18 Community | [18.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/18.0) | `neobrutalism_theme` |
 | Odoo 19 Community | [19.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/19.0) | `neobrutalism_theme` |
 
@@ -31,7 +33,7 @@ The screenshots below belong to the Odoo version of the currently selected branc
 
 ## Install the theme
 
-For a new Odoo 19 installation (replace `19.0` with `18.0` for Odoo 18):
+For a new Odoo 19 installation (use the branch matching your server version):
 
 ```bash
 git clone --branch 19.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons
