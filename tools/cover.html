@@ -12,18 +12,26 @@
 .stage{position:absolute;right:31px;top:110px;width:581px;height:355px;border:3px solid #161616;background:white;box-shadow:10px 10px var(--ink);transform:rotate(-2deg);overflow:hidden}.chrome{height:29px;background:var(--paper);color:var(--ink);border-bottom:2px solid #161616;display:flex;align-items:center;padding:0 11px;font:700 10px monospace;gap:5px}.dot{width:6px;height:6px;border:1px solid currentColor}.chrome b{margin-left:8px;font-weight:400;letter-spacing:.6px}.viewport{position:relative;height:323px;overflow:hidden;background:#fff}.viewport img{width:100%;position:absolute;left:0;top:0;display:block}.view-new{clip-path:inset(0 100% 0 0)}
 .mode{position:absolute;right:25px;top:428px;background:var(--accent);color:#161616;border:3px solid #161616;box-shadow:5px 5px var(--ink);padding:12px 18px;font:800 20px monospace;transform:rotate(2deg);z-index:3}
 .bottom{position:absolute;bottom:25px;left:38px;right:32px;display:flex;align-items:center;justify-content:space-between}.free{font:700 12px monospace;letter-spacing:.7px}.swatches{display:flex;gap:7px}.swatches i{display:block;width:28px;height:22px;background:var(--color);border:2px solid #161616;box-shadow:2px 2px var(--ink)}
+.thumbnail{width:1000px;height:1210px}
+.thumbnail .top{inset:35px 42px auto;font-size:20px}.thumbnail .mark{width:40px;height:40px;font-size:27px}.thumbnail .edition{font-size:16px}
+.thumbnail .copy{left:42px;top:120px;width:910px}.thumbnail h1{font-size:124px}.thumbnail h1 span{font-size:110px}
+.thumbnail .tagline{position:absolute;left:530px;top:104px;width:340px;font-size:31px}.thumbnail .features{font-size:20px;gap:12px}
+.thumbnail .stage{left:42px;right:auto;top:466px;width:900px;height:594px;transform:rotate(-1deg)}.thumbnail .chrome{height:35px;font-size:13px}.thumbnail .viewport{height:555px}
+.thumbnail .mode{right:39px;top:1016px;font-size:26px;padding:14px 22px}
+.thumbnail .bottom{left:42px;right:42px;bottom:47px}.thumbnail .free{font-size:15px;letter-spacing:.3px}.thumbnail .swatches{gap:9px}.thumbnail .swatches i{width:34px;height:29px}
 </style>
 <div class="cover" id="cover">
  <div class="top"><div class="brand"><span class="mark">N.</span>RIVETFOX <span style="font-weight:400;letter-spacing:0">/ BACKEND THEME</span></div><div class="edition">ODOO 18 COMMUNITY</div></div>
  <div class="copy"><h1>NEO<br><span>BRUTAL.</span></h1><p class="tagline">Your Odoo.<br>With character.</p><div class="features"><span>7 ACCENTS</span><span>DAY + NIGHT</span></div></div>
- <div class="stage"><div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><b>YOUR EVERYDAY ODOO</b></div><div class="viewport"><img id="old" src="../neobrutalism_theme/static/description/backend_screenshot.png" alt="Actual Odoo 18 Contacts list"><img id="next" class="view-new" src="../neobrutalism_theme/static/description/backend_screenshot.png" alt="Alternate theme appearance"></div></div>
+ <div class="stage"><div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><b>YOUR EVERYDAY ODOO</b></div><div class="viewport"><img id="old" src="../neobrutalism_theme/static/description/backend-list.png" alt="Actual Odoo 18 Contacts list"><img id="next" class="view-new" src="../neobrutalism_theme/static/description/backend-list.png" alt="Alternate theme appearance"></div></div>
  <div class="mode" id="mode">01 / DAY MODE</div>
  <div class="bottom"><div class="free">FREE + OPEN SOURCE / LGPL-3</div><div class="swatches"><i style="--color:#facc00"></i><i style="--color:#5294ff"></i><i style="--color:#5ad9aa"></i><i style="--color:#b59aff"></i><i style="--color:#ff91bc"></i><i style="--color:#ffb15c"></i><i style="--color:#ff7474"></i></div></div>
 </div>
 <script src="marketplace/title-motion.js"></script>
 <script>
+document.getElementById('cover').classList.toggle('thumbnail',new URLSearchParams(location.search).get('format')==='thumbnail');
 const scenes=[
- {src:'../neobrutalism_theme/static/description/backend_screenshot.png',label:'01 / DAY MODE',paper:'#f7f5ee',ink:'#161616',accent:'#facc00'},
+ {src:'../neobrutalism_theme/static/description/backend-list.png',label:'01 / DAY MODE',paper:'#f7f5ee',ink:'#161616',accent:'#facc00'},
  {src:'../neobrutalism_theme/static/description/night-mode.png',label:'02 / NIGHT MODE',paper:'#202322',ink:'#f7f5ee',accent:'#facc00'},
  {src:'marketplace/screens/preset-blue.png',label:'03 / YOUR ACCENT',paper:'#f7f5ee',ink:'#161616',accent:'#5294ff'},
 ];

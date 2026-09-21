@@ -83,7 +83,7 @@ const output = path.resolve(__dirname, '../neobrutalism_theme/static/description
         await page.goto(actionUrl(action, menus.menu_contacts));
         await page.waitForSelector('.o_list_table .o_data_row');
         await setMode('light');
-        await capture('backend_screenshot.png');
+        await capture('backend-list.png');
         await setMode('dark');
         await capture('night-mode.png');
         await setMode('light');
