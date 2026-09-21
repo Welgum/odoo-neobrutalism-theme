@@ -34,7 +34,7 @@ Each branch includes:
 
 - A manifest with a short explicit name, RivetFox author/website, version, LGPL-3 license, dependencies, theme category and image declarations.
 - An English `static/description/index.html` using local images and permitted static markup; no JavaScript or external advertising links.
-- A 256 × 256 PNG icon, 1120 × 560 cover, an image ending in `_screenshot.png`, and actual screenshots from that Odoo version.
+- A 256 × 256 PNG icon, 1120 × 560 cover (PNG or GIF), an image ending in `_screenshot.png`, and actual screenshots from that Odoo version.
 - User documentation, license/attribution, tests and a validation record inside the add-on.
 
 The description claims Odoo Community backend support. It does not claim verified Enterprise, Odoo.sh, POS, website/portal or custom third-party theme compatibility.
@@ -56,7 +56,16 @@ To regenerate the listing images, install Contacts, CRM, Calendar and Project in
 NEO_TEST_URL=http://127.0.0.1:8069 NEO_TEST_DB=DISPOSABLE_DATABASE NEO_ALLOW_TEST_WRITES=1 node tools/capture_screenshots.cjs
 ```
 
-This uses the disposable database's `admin` / `admin` credentials, saves Yellow as the shared accent, and creates fictional contacts and an action. It captures the running Odoo version and renders the branch's cover. Set `NEO_CHROME_PATH` to use system Chrome. Playwright is a development dependency only.
+This uses the disposable database's `admin` / `admin` credentials, disables onboarding tips for the capture user, creates fictional contacts, a channel conversation and an action, and captures all seven real accent presets before restoring Yellow. Set `NEO_CHROME_PATH` to use system Chrome. Playwright is a development dependency only.
+
+Render the marketplace animations from those screenshots with Playwright and FFmpeg installed in the development environment:
+
+```bash
+node tools/render_marketplace.cjs
+python3 tools/build_release.py
+```
+
+The renderer creates `cover.gif` (3 seconds), `day-night-demo.gif` (about 2.67 seconds), `accent-demo.gif` (about 4.67 seconds), and PNG posters. Scenes play at three times the original speed, rendered at 30 fps with a subtle title lift and settle. GIF timing is rounded to centiseconds. The source layouts are `tools/cover.html` and `tools/marketplace/motion.html`; real preset captures are kept under `tools/marketplace/screens/`. All published images are local to the module. The listing itself contains no JavaScript. The release builder validates PNG/GIF headers and dimensions and embeds the correct image MIME type in its standalone preview.
 
 For updates, increase the version on the applicable branch, rerun validation, commit and push the branch, then rescan it in Odoo Apps. A local ZIP does not register or publish a marketplace listing.
 
