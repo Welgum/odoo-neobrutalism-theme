@@ -4,14 +4,14 @@
 
 ## Choose your Odoo version
 
-| Odoo version | Source branch | Installable add-on |
+| Odoo version | Source branch | Clone command |
 | --- | --- | --- |
-| Odoo 16 Community | [16.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/16.0) | `neobrutalism_theme` |
-| Odoo 17 Community | [17.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/17.0) | `neobrutalism_theme` |
-| Odoo 18 Community | [18.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/18.0) | `neobrutalism_theme` |
-| Odoo 19 Community | [19.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/19.0) | `neobrutalism_theme` |
+| Odoo 16 Community | [16.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/16.0) | `git clone --branch 16.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons` |
+| Odoo 17 Community | [17.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/17.0) | `git clone --branch 17.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons` |
+| Odoo 18 Community | [18.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/18.0) | `git clone --branch 18.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons` |
+| Odoo 19 Community | [19.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/19.0) | `git clone --branch 19.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons` |
 
-Use the branch matching your Odoo server. Each branch contains a complete add-on in `neobrutalism_theme/`, ready for Odoo's add-ons path and the Odoo Apps repository scanner. The module keeps the same technical name across versions. `main` follows the Odoo 19 version; register the numbered branches for publication.
+Run only the command matching your Odoo server. It creates a `theme-addons/` repository directory containing the complete add-on in `neobrutalism_theme/`, ready for Odoo's add-ons path and the Odoo Apps repository scanner. The module keeps the same technical name across versions. `main` follows the Odoo 19 version; register the numbered branches for publication.
 
 ## Theme features
 
