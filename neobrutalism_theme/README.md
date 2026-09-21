@@ -6,7 +6,7 @@ Customize Odoo lists, forms, kanban boards and navigation, with dark styles for 
 
 **Repository:** [odoo-neobrutalism-theme](https://github.com/Welgum/odoo-neobrutalism-theme) · **Author:** [RivetFox](https://rivetfox.pro) · **License:** [LGPL-3.0-or-later](LICENSE)
 
-**Version:** `16.0.1.0.1` · **Odoo module:** `neobrutalism_theme` · **Dependencies:** `web`, `base_setup`.
+**Version:** `16.0.1.0.2` · **Odoo module:** `neobrutalism_theme` · **Dependencies:** `web`, `base_setup`.
 
 [Features](#odoo-backend-theme-features) · [Screenshots](#odoo-theme-screenshots) · [Installation](#install-the-odoo-theme-with-docker-or-on-a-vps) · [Colors and dark mode](#customize-odoo-theme-colors-and-dark-mode) · [FAQ](#frequently-asked-questions-and-troubleshooting)
 
@@ -33,7 +33,7 @@ The default is **yellow + comfortable + enabled** for each user. The shared acce
 
 ### Light mode: Contacts and backend navigation
 
-![Odoo 16 Community Contacts list with the Neo Brutal backend theme, yellow accent, outlined buttons and light mode](static/description/backend_screenshot.png)
+![Odoo 16 Community Contacts list with the Neo Brutal backend theme, yellow accent, outlined buttons and light mode](static/description/backend-list.png)
 
 ### Dark mode: Odoo Discuss
 
@@ -67,7 +67,7 @@ The names and paths below are examples. Use your existing Compose project and Od
    ```bash
    cd /path/to/your/compose-project
    mkdir -p addons
-   unzip /path/to/neobrutalism_theme-16.0.1.0.1.zip -d addons
+   unzip /path/to/neobrutalism_theme-16.0.1.0.2.zip -d addons
    ```
 
 2. If your deployment has no custom add-ons mount, **add** this entry to its Odoo service's existing `volumes` list. Preserve its other mounts:

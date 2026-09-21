@@ -133,7 +133,9 @@ def validate():
     require(len(manifest["images"]) > 1, "Include a cover and theme screenshot")
     for filename in manifest["images"]:
         image_size(local_file(filename))
-    require(any(Path(p).stem.endswith("_screenshot") for p in manifest["images"]), "Theme gallery needs an _screenshot image")
+    screenshots = [p for p in manifest["images"] if Path(p).stem.endswith("_screenshot")]
+    require(screenshots == ["static/description/theme_screenshot.gif"], "Theme cards must select the single animated _screenshot image")
+    require(image_size(local_file(screenshots[0])) == (1000, 1210), "Expected the portrait theme-card thumbnail")
     require(image_size(local_file("static/description/icon.png")) == (256, 256), "Expected the square PNG app icon")
     require(image_size(local_file(manifest["images"][0])) == (1120, 560), "Expected this release's 2:1 cover")
     local_file("doc/index.rst")
@@ -179,6 +181,20 @@ h2,h3{line-height:1.2;margin:0 0 16px}p{margin:0 0 16px}.container{max-width:114
     return f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(name)} — listing preview</title><style>{css}</style></head><body>{html}</body></html>\n'
 
 
+def thumbnail_preview(manifest):
+    thumbnail = next(p for p in manifest["images"] if Path(p).stem.endswith("_screenshot"))
+    encoded = base64.b64encode(local_file(thumbnail).read_bytes()).decode()
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{escape(manifest["name"])} — theme card preview</title>
+<style>*{{box-sizing:border-box}}body{{margin:0;padding:32px;background:#f8f9fb;color:#161c28;font:16px/1.4 Arial,sans-serif}}
+h1{{margin:0 0 24px;font-size:32px}}.card{{width:298px;max-width:100%}}.browser{{border:1px solid #dfe1e6;border-radius:3px;overflow:hidden;background:#fff}}
+.bar{{height:20px;padding:2px 10px;color:#dfe1e6;letter-spacing:3px;font-size:12px}}.image{{aspect-ratio:1000/1210;background: center / cover no-repeat url(data:image/gif;base64,{encoded})}}
+h2{{font-size:20px;line-height:1.2;margin:12px 0 8px}}.details{{display:flex;justify-content:space-between;font-weight:700;color:#364152}}</style></head>
+<body><h1>{escape(manifest["author"])} Themes</h1><article class="card"><div class="browser"><div class="bar">●●●</div><div class="image" role="img" aria-label="Animated Neo Brutal day, night and accent preview"></div></div>
+<h2>{escape(manifest["name"])}</h2><div class="details"><span>{escape(manifest["author"])}</span><span>FREE</span></div></article></body></html>'''
+
+
 def main():
     manifest, paths, html, images = validate()
     destination = REPOSITORY / "dist"
@@ -197,9 +213,11 @@ def main():
     digest = hashlib.sha256(archive.read_bytes()).hexdigest()
     archive.with_suffix(".zip.sha256").write_text(f"{digest}  {archive.name}\n")
     (destination / "listing-preview.html").write_text(preview(html, images, manifest["name"]))
+    (destination / "thumbnail-preview.html").write_text(thumbnail_preview(manifest))
     print(f'PASS: manifest, listing, {len(images)} images, Python/XML syntax, and archive integrity')
     print(f'{archive}\n{len(paths)} files; {archive.stat().st_size:,} bytes\nSHA-256: {digest}')
     print(destination / "listing-preview.html")
+    print(destination / "thumbnail-preview.html")
 
 
 if __name__ == "__main__":

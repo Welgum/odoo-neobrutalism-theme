@@ -34,10 +34,16 @@ Each branch includes:
 
 - A manifest with a short explicit name, RivetFox author/website, version, LGPL-3 license, dependencies, theme category and image declarations.
 - An English `static/description/index.html` using local images and permitted static markup; no JavaScript or external advertising links.
-- A 256 × 256 PNG icon, 1120 × 560 cover (PNG or GIF), an image ending in `_screenshot.png`, and actual screenshots from that Odoo version.
+- A 256 × 256 PNG icon, 1120 × 560 animated cover, a 1000 × 1210 animated theme-card thumbnail, and actual screenshots from that Odoo version.
 - User documentation, license/attribution, tests and a validation record inside the add-on.
 
 The description claims Odoo Community backend support. It does not claim verified Enterprise, Odoo.sh, POS, website/portal or custom third-party theme compatibility.
+
+### Theme card versus app cover
+
+Odoo's theme catalog selects the first manifest image whose filename stem ends in `_screenshot`, as documented in the [Apps FAQ](https://apps.odoo.com/apps/faq). This is separate from the regular cover. Our only matching entry is `static/description/theme_screenshot.gif`; its portrait composition fits the catalog's tall, center-cropped card. The regular cover stays `cover.gif`. Raw Contacts screenshots use `backend-list.png` so they cannot take over the theme thumbnail.
+
+After pushing a thumbnail change, rescan every registered version branch in Odoo Apps. Updating the description or refreshing the browser does not change which image the scanner selected. The builder produces `dist/thumbnail-preview.html` for reviewing the catalog card alongside `dist/listing-preview.html` for the description.
 
 ## Build and validate a release
 
@@ -65,7 +71,9 @@ node tools/render_marketplace.cjs
 python3 tools/build_release.py
 ```
 
-The renderer creates `cover.gif` (3 seconds), `day-night-demo.gif` (about 2.67 seconds), `accent-demo.gif` (about 4.67 seconds), and PNG posters. Scenes play at three times the original speed, rendered at 30 fps with a subtle title lift and settle. GIF timing is rounded to centiseconds. The source layouts are `tools/cover.html` and `tools/marketplace/motion.html`; real preset captures are kept under `tools/marketplace/screens/`. All published images are local to the module. The listing itself contains no JavaScript. The release builder validates PNG/GIF headers and dimensions and embeds the correct image MIME type in its standalone preview.
+The renderer creates `cover.gif` and `theme_screenshot.gif` (3 seconds each), `day-night-demo.gif` (about 2.67 seconds), `accent-demo.gif` (about 4.67 seconds), and PNG posters. The thumbnail's poster is named `theme-preview.png` to keep the animated file as the only `_screenshot` candidate. Pass job names to render a subset, for example `node tools/render_marketplace.cjs theme_screenshot`.
+
+Scenes play at three times the original speed, rendered at 30 fps with a subtle title lift and settle. GIF timing is rounded to centiseconds. The source layouts are `tools/cover.html` and `tools/marketplace/motion.html`; real preset captures are kept under `tools/marketplace/screens/`. All published images are local to the module. The listing itself contains no JavaScript. The release builder validates PNG/GIF headers and dimensions, checks the thumbnail selector, and embeds the correct image MIME type in its standalone previews.
 
 For updates, increase the version on the applicable branch, rerun validation, commit and push the branch, then rescan it in Odoo Apps. A local ZIP does not register or publish a marketplace listing.
 
