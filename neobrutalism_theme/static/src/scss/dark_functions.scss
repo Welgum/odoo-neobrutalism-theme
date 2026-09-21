@@ -7,6 +7,6 @@
 }
 
 @function shade-color($color, $weight) {
-    // Odoo 18 uses gray-700 for main text; notice text needs the brighter ink role.
+    // Odoo 16 uses gray-700 for main text; notice text needs the brighter ink role.
     @return mix($o-gray-900, $color, $weight);
 }

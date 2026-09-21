@@ -2,7 +2,7 @@
 
 Publisher: **RivetFox** · Website: **https://rivetfox.pro** · Technical module: **`neobrutalism_theme`** · License: **LGPL-3**.
 
-The repository contains the complete add-on in `neobrutalism_theme/`. It can be discovered from the repository root without renaming folders or running a build step. The two version branches use the same module name and the corresponding Odoo version in the manifest.
+The repository contains the complete add-on in `neobrutalism_theme/`. It can be discovered from the repository root without renaming folders or running a build step. The four version branches use the same module name and the corresponding Odoo version in the manifest.
 
 ## Register the version branches
 
@@ -10,12 +10,14 @@ Use these repository URLs in the publisher account's [Submit your Apps and Theme
 
 | Odoo version | Git branch | Repository registration URL |
 | --- | --- | --- |
+| 16 | `16.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme#16.0` |
+| 17 | `17.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme#17.0` |
 | 18 | `18.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme#18.0` |
 | 19 | `19.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme#19.0` |
 
-The SSH URL plus `#branch` format follows the [Odoo Apps FAQ](https://apps.odoo.com/apps/faq). The repository is public. If it becomes private, authorize Odoo's scanner as described in the current FAQ before rescanning. `main` follows Odoo 19; use the two version branches for publication.
+The SSH URL plus `#branch` format follows the [Odoo Apps FAQ](https://apps.odoo.com/apps/faq). The repository is public. If it becomes private, authorize Odoo's scanner as described in the current FAQ before rescanning. `main` follows Odoo 19; use the four version branches for publication.
 
-1. Sign in with the RivetFox publisher account and register both version URLs.
+1. Sign in with the RivetFox publisher account and register all four version URLs.
 2. Run the Apps scanner for each branch.
 3. Inspect each resulting listing: author, name, matching version, license, features, screenshots, and free/paid status.
 4. Resolve any scanner feedback and publish through the account workflow.
@@ -39,7 +41,7 @@ The description claims Odoo Community backend support. It does not claim verifie
 
 ## Build and validate a release
 
-From either version branch:
+From any version branch:
 
 ```bash
 node neobrutalism_theme/tests/test_preferences.mjs

@@ -1,10 +1,10 @@
 # Changelog
 
-## 18.0.1.0.0 — 2026-09-21
+## 16.0.1.0.0 — 2026-09-21
 
-- Initial Odoo 18 Community release of the Neo Brutal backend theme.
-- Seven administrator-managed accent presets, personal day/night mode, table spacing and Appearance preferences.
-- Adapt contextual dark text to Odoo 18's dimmer base text token so semantic notices remain readable.
-- Verify real Odoo 18 screens, permissions, package installation and module lifecycle.
-- Add actual Odoo 18 screenshots and a repeatable capture tool.
-- Standard add-on repository layout, RivetFox metadata and Odoo Apps listing materials.
+- Initial Odoo 16 Community release of the Neo Brutal backend theme.
+- Preserve seven administrator-only accent presets, personal day/night mode, density and Appearance settings.
+- Adapt settings to the Odoo 16 layout, wait for the document body at startup, and use common/backend dark bundles and Chart.js 2.
+- Correct dark settings-sidebar colors and legacy message dates/composer placeholders.
+- Include RivetFox metadata, version-specific marketplace screenshots, documentation and a reproducible release archive.
+- Validate module installation, upgrade/uninstall, permissions, real screens and personal preference isolation.

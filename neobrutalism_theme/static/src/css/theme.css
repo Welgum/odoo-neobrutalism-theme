@@ -163,24 +163,24 @@
 
     /* Community's dark bundle retains some light settings/form surfaces. */
     .o_web_client.o_neo_theme .o_form_view .o_form_nosheet,
-    .o_web_client.o_neo_theme .o_base_settings_view .settings {
+    .o_web_client.o_neo_theme .o_base_settings .settings {
         background-color: var(--neo-surface);
         color: var(--neo-ink);
     }
 
-    .o_web_client.o_neo_theme .o_base_settings_view .o_form_renderer {
+    .o_web_client.o_neo_theme .o_base_settings {
         --settings__tab-bg: var(--neo-bg);
         --settings__tab-bg--active: var(--neo-accent-soft);
         --settings__tab-color: var(--neo-ink);
         --settings__title-bg: var(--neo-subtle);
     }
 
-    .o_web_client.o_neo_theme .o_base_settings_view .settings_tab .tab:is(:hover, .selected) {
+    .o_web_client.o_neo_theme .o_base_settings .settings_tab .tab:is(:hover, .selected) {
         color: var(--neo-ink);
         box-shadow: inset 2px 0 0 var(--neo-border);
     }
 
-    .o_web_client.o_neo_theme .o_base_settings_view .settingSearchHeader {
+    .o_web_client.o_neo_theme .o_base_settings .settingSearchHeader {
         background-color: var(--neo-subtle);
         color: var(--neo-ink);
     }

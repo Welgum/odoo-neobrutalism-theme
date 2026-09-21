@@ -48,6 +48,9 @@ const output = path.resolve(__dirname, '../neobrutalism_theme/static/description
         };
         const settings = await rpc('res.config.settings', 'create', [{neo_accent_preset: 'yellow'}]);
         await rpc('res.config.settings', 'set_values', [[settings]]);
+        // Shared accent settings are read into the session on page load.
+        await page.reload();
+        await page.waitForSelector('.o_neo_mode_toggle button');
         const names = ['Acorn Studio', 'Atlas Workshop', 'Birch & Co.', 'Brightside Design',
             'Cedar Supply', 'Copper Lane', 'Fieldwork Labs', 'Harbor Collective',
             'Juniper Works', 'Northstar Studio', 'Paperplane Creative', 'Willow Partners'];
@@ -59,11 +62,11 @@ const output = path.resolve(__dirname, '../neobrutalism_theme/static/description
             phone: `+1 202 555 ${String(100 + i).padStart(4, '0')}`,
         }))]);
         const action = await rpc('ir.actions.act_window', 'create', [{name: 'Contacts',
-            res_model: 'res.partner', view_mode: 'list,kanban,form',
+            res_model: 'res.partner', view_mode: 'tree,kanban,form',
             domain: JSON.stringify([['id', 'in', contacts]])}]);
-        await page.goto(`${origin}/odoo/action-contacts.action_contacts`);
+        await page.goto(`${origin}/web#action=contacts.action_contacts`);
         await page.waitForSelector('.o_list_renderer, .o_kanban_renderer');
-        await page.goto(`${origin}/odoo/action-${action}`);
+        await page.goto(`${origin}/web#action=${action}&view_type=list`);
         await page.waitForSelector('.o_list_table .o_data_row');
         await setMode('light');
         await capture('backend_screenshot.png');
@@ -72,9 +75,9 @@ const output = path.resolve(__dirname, '../neobrutalism_theme/static/description
         await setMode('light');
         await page.locator('.o_list_table .o_data_row').first().click();
         await page.waitForSelector('.o_form_sheet');
-        await page.locator('.o-mail-Message-body').first().waitFor();
+        await page.locator('.o_Message_prettyBody').first().waitFor();
         await capture('contact-form.png');
-        await page.goto(`${origin}/odoo/action-${action}`);
+        await page.goto(`${origin}/web#action=${action}&view_type=list`);
         await page.locator('.o_switch_view.o_kanban').click();
         await page.waitForSelector('.o_kanban_record');
         await capture('contacts-kanban.png');
@@ -83,13 +86,14 @@ const output = path.resolve(__dirname, '../neobrutalism_theme/static/description
         await page.locator('.o_neo_appearance').waitFor();
         await capture('personal-appearance.png');
         await page.getByRole('button', {name: 'Done', exact: true}).click();
-        await page.goto(`${origin}/odoo/action-neobrutalism_theme.action_neo_theme_settings`);
+        await page.goto(`${origin}/web#action=neobrutalism_theme.action_neo_theme_settings`);
         await page.waitForSelector('[name=neo_accent_preset]');
         await capture('admin-presets.png');
         await setMode('dark');
-        await page.goto(`${origin}/odoo/discuss`);
-        await page.locator('.o-mail-DiscussSidebar').getByText('OdooBot', {exact: true}).click();
-        await page.locator('.o-mail-Message-body').first().waitFor();
+        await page.locator('.o_navbar_apps_menu .dropdown-toggle').click();
+        await page.locator('[data-menu-xmlid="mail.menu_root_discuss"]').click();
+        await page.locator('.o_DiscussSidebar').getByText('OdooBot', {exact: true}).click();
+        await page.locator('.o_Message_prettyBody').first().waitFor();
         await capture('discuss-night.png');
         assert.deepEqual(errors, []);
         await page.setViewportSize({width: 1120, height: 560});

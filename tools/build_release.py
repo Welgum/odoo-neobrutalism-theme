@@ -91,7 +91,7 @@ class ListingValidator(HTMLParser):
 def validate():
     manifest = ast.literal_eval(local_file("__manifest__.py").read_text())
     require(0 < len(manifest["name"]) <= 25, "Marketplace name must be at most 25 characters")
-    require(re.fullmatch(r"(?:18|19)\.0\.\d+\.\d+\.\d+", manifest["version"]), "Expected an Odoo 18 or 19 five-part version")
+    require(re.fullmatch(r"(?:16|17|18|19)\.0\.\d+\.\d+\.\d+", manifest["version"]), "Expected an Odoo 16–19 five-part version")
     require(manifest.get("author") and manifest.get("summary") and manifest.get("description"), "Incomplete listing metadata")
     require(manifest["license"] == "LGPL-3", "Review licensing before changing the release license")
     require("theme" in manifest["category"].lower(), "Theme category missing")
@@ -106,7 +106,7 @@ def validate():
             if isinstance(filename, tuple):
                 directive = filename
                 if len(directive) == 2 and directive[0] == "include":
-                    require(directive[1] in {"web.assets_web_dark", "web.assets_backend_lazy_dark"}, f"Review included bundle: {directive}")
+                    require(directive[1] in {"web.dark_mode_assets_common", "web.dark_mode_assets_backend", "web.assets_backend", "web.assets_backend_legacy_lazy"}, f"Review included bundle: {directive}")
                     continue
                 require(len(directive) == 3 and directive[:2] in {
                     ("before", "web/static/src/scss/primary_variables.scss"),

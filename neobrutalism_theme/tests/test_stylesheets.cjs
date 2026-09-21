@@ -11,7 +11,7 @@ const { chromium } = require('playwright');
         await page.route('https://appearance.test/**', route => {
             const url = route.request().url();
             if (url.endsWith('.css')) return route.fulfill({contentType: 'text/css', body: `body { background: ${url.includes('dark') ? '#202322' : '#ffffff'}; }`});
-            return route.fulfill({contentType: 'text/html', body: '<html><head><link rel="stylesheet" media="screen" href="/web.assets_web.min.css"><link rel="stylesheet" media="print" href="/web.assets_web_print.min.css"></head><body>Appearance test</body></html>'});
+            return route.fulfill({contentType: 'text/html', body: '<html><head><link rel="stylesheet" media="screen" href="/web.assets_backend.min.css"><link rel="stylesheet" media="print" href="/web.assets_backend_print.min.css"></head><body>Appearance test</body></html>'});
         });
         await page.goto('https://appearance.test/');
         const source = fs.readFileSync(path.join(__dirname, '../static/src/js/stylesheet_switcher.js'), 'utf8');
@@ -24,7 +24,7 @@ const { chromium } = require('playwright');
             switcher.activate('dark', dark);
             const active = color();
             const lazy = document.createElement('link');
-            lazy.rel = 'stylesheet'; lazy.href = '/web.assets_backend_lazy.min.css';
+            lazy.rel = 'stylesheet'; lazy.href = '/web.assets_backend_legacy_lazy.min.css';
             document.head.appendChild(lazy);
             await new Promise(resolve => { lazy.onload = resolve; });
             const lazyMedia = lazy.media;
@@ -60,7 +60,7 @@ const { chromium } = require('playwright');
         await page.addScriptTag({content: source.replace('export class StylesheetSwitcher', 'window.StylesheetSwitcher = class StylesheetSwitcher')});
         const nativeDark = await page.evaluate(async () => {
             const original = document.querySelector('link[media=screen]');
-            await new Promise(resolve => { original.onload = resolve; original.href = '/web.assets_web_dark.min.css'; });
+            await new Promise(resolve => { original.onload = resolve; original.href = '/web.dark_mode_assets_backend.min.css'; });
             const switcher = new StylesheetSwitcher(document, async name => ({cssLibs:[`/${name}.min.css`]}), 'dark');
             const target = switcher.target(true, 'light');
             switcher.activate(target, await switcher.prepare(target));

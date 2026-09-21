@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
-// Writes local fixtures. Use only a disposable Odoo 18 database with Contacts,
+// Writes local fixtures. Use only a disposable Odoo 16 database with Contacts,
 // Discuss, CRM, Calendar and Project installed; never a production database.
 const assert = require('node:assert/strict');
 const { chromium } = require('playwright');
-const origin = process.env.NEO_TEST_URL || 'http://127.0.0.1:18068';
+const origin = process.env.NEO_TEST_URL || 'http://127.0.0.1:18066';
 const db = process.env.NEO_TEST_DB;
 assert.ok(db && process.env.NEO_ALLOW_TEST_WRITES === '1', 'Disposable database and NEO_ALLOW_TEST_WRITES=1 required');
 (async () => {
@@ -50,18 +50,18 @@ assert.ok(db && process.env.NEO_ALLOW_TEST_WRITES === '1', 'Disposable database 
   assert.equal(await page.locator('body').getAttribute('data-neo-mode'),'light');
   await page.unroute('**/neobrutalism_theme.assets*.css');
   await setMode('dark');
-  await page.goto(`${origin}/odoo/discuss`);
-  await page.locator('.o-mail-DiscussSidebar').getByText('OdooBot',{exact:true}).click();
-  await page.locator('.o-mail-Message-body').first().waitFor();
-  for(const selector of ['.o-mail-DiscussSidebarChannel-itemName','.o-mail-Message-author','.o-mail-Message-body','.o-mail-Message-date','.o-mail-DateSection span']) await readable(selector,{surface:true});
-  await readable('.o-mail-Composer-input',{surface:true,pseudo:'::placeholder'});
-  const draft=page.locator('.o-mail-Composer-input');await draft.fill('Unsaved message draft');
+  await page.goto(`${origin}/web#action=mail.action_discuss`);
+  await page.locator('.o_DiscussSidebar').getByText('OdooBot',{exact:true}).click();
+  await page.locator('.o_Message_prettyBody').first().waitFor();
+  for(const selector of ['.o_DiscussSidebarCategoryItem_name','.o_Message_authorName','.o_Message_prettyBody','.o_Message_date','.o_MessageList_separatorLabel']) await readable(selector,{surface:true});
+  await readable('.o_ComposerTextInput_textarea',{surface:true,pseudo:'::placeholder'});
+  const draft=page.locator('.o_ComposerTextInput_textarea');await draft.fill('Unsaved message draft');
   await setMode('light');assert.equal(await draft.inputValue(),'Unsaved message draft');
   await setMode('dark');assert.equal(await draft.inputValue(),'Unsaved message draft');
   // Popovers and modal surfaces inherit the same dark foundation.
-  await page.getByRole('button',{name:'Emojis',exact:true}).click();
-  await page.locator('.o-EmojiPicker').waitFor();
-  await readable('.o-EmojiPicker input',{surface:true,pseudo:'::placeholder'});
+  await page.locator('.o_Composer_buttonEmojis').click();
+  await page.locator('.o_EmojiPickerView').waitFor();
+  await readable('.o_EmojiPickerView input',{surface:true,pseudo:'::placeholder'});
   await page.keyboard.press('Escape');
   // Fixed-color semantic notices must remain readable too.
   await page.evaluate(()=>{const fixture=document.createElement('div');fixture.id='neo-alert-qa';fixture.style.cssText='position:fixed;top:160px;left:350px;z-index:2000';fixture.innerHTML=['success','info','warning','danger'].map(type=>`<div class="alert alert-${type}"><h4>${type}</h4><p>Notice text</p><small class="text-muted">Details</small></div>`).join('');document.body.appendChild(fixture)});
@@ -71,25 +71,25 @@ assert.ok(db && process.env.NEO_ALLOW_TEST_WRITES === '1', 'Disposable database 
   const stage=await rpc('project.task.type','create',[{name:'In progress',project_ids:[[6,0,[project]]]}]);
   const task=await rpc('project.task','create',[{name:'Night mode regression task',project_id:project,stage_id:stage,user_ids:[[6,0,[2]]]}]);
   const lead=await rpc('crm.lead','create',[{name:'Night mode regression lead',type:'opportunity',expected_revenue:4000}]);
-  const graph=await rpc('ir.actions.act_window','create',[{name:'Night mode graphs',res_model:'crm.lead',view_mode:'graph,pivot,list',context:"{'group_by':['stage_id']}"}]);
+  const graph=await rpc('ir.actions.act_window','create',[{name:'Night mode graphs',res_model:'crm.lead',view_mode:'graph,pivot,tree',context:"{'group_by':['stage_id']}"}]);
   for(const [route,selector] of [
-   ['action-calendar.action_calendar_event','.o_calendar_renderer .fc-col-header-cell-cushion'],
+   ['action-calendar.action_calendar_event','.o_calendar_renderer .fc-day-header'],
    ['action-crm.crm_lead_action_pipeline','.o_kanban_header .o_column_title, .o_kanban_record .o_kanban_record_title'],
-   ['action-project.action_view_task','.o_kanban_record .fw-bold.fs-5'],
-   ['action-neobrutalism_theme.action_neo_theme_settings','[name=neo_accent_preset] label'],
+   ['action-project.action_view_task','.o_kanban_record .o_kanban_record_title'],
+   ['action-neobrutalism_theme.action_neo_theme_settings','[name=neo_accent_preset] label, .settings_tab .tab'],
   ]) {
-   await page.goto(`${origin}/odoo/${route}`);await page.locator(selector).first().waitFor();await readable(selector,{surface:true});
+   await page.goto(`${origin}/web#action=${route.replace(/^action-/, "")}`);await page.locator(selector).first().waitFor();await readable(selector,{surface:true});
   }
-  await page.goto(`${origin}/odoo/action-${graph}`);await page.waitForSelector('.o_graph_renderer canvas');
-  await page.waitForFunction(()=>window.Chart && Chart.getChart(document.querySelector('.o_graph_renderer canvas')));
+  await page.goto(`${origin}/web#action=${graph}`);await page.waitForSelector('.o_graph_renderer canvas');
+  await page.waitForFunction(()=>window.Chart && Object.values(Chart.instances).find(c => c.canvas === document.querySelector('.o_graph_renderer canvas')));
   for(const mode of ['dark','light','dark']) {
    await setMode(mode);
-   const chart=await page.evaluate(()=>{const c=Chart.getChart(document.querySelector('.o_graph_renderer canvas'));return {ticks:c.options.scales.x.ticks.color,legend:c.legend.legendItems.map(l=>l.fontColor),expected:getComputedStyle(document.body).getPropertyValue('--neo-ink').trim()}});
+   const chart=await page.evaluate(()=>{const c=Object.values(Chart.instances).find(c => c.canvas === document.querySelector('.o_graph_renderer canvas'));return {ticks:c.options.scales.xAxes[0].ticks.fontColor,legend:[c.options.legend.labels.fontColor],expected:getComputedStyle(document.body).getPropertyValue('--neo-ink').trim()}});
    assert.equal(chart.ticks,chart.expected);assert.ok(chart.legend.every(color=>color===chart.expected));
   }
   for(const type of ['line','pie','bar']) {
    await page.locator(`button[data-mode=${type}]`).click();
-   await page.waitForFunction(type=>Chart.getChart(document.querySelector('.o_graph_renderer canvas')).config.type===type,type);
+   await page.waitForFunction(type=>Object.values(Chart.instances).find(c => c.canvas === document.querySelector('.o_graph_renderer canvas')).config.type===type,type);
   }
   await page.locator('.o_switch_view.o_pivot').click();await page.waitForSelector('.o_pivot table th');
   await readable('.o_pivot th',{surface:true});

@@ -1,13 +1,13 @@
 {
     "name": "Neo Brutal Backend Theme",
-    "summary": "Odoo 18 Community backend theme with dark mode and seven accent colors",
-    "version": "18.0.1.0.0",
+    "summary": "Odoo 16 Community backend theme with dark mode and seven accent colors",
+    "version": "16.0.1.0.0",
     "category": "Themes/Backend",
     "author": "RivetFox",
     "website": "https://rivetfox.pro",
     "license": "LGPL-3",
     "description": """
-Neo Brutal is an open-source neobrutalism backend theme for Odoo 18 Community,
+Neo Brutal is an open-source neobrutalism backend theme for Odoo 16 Community,
 developed by RivetFox. Customize the Odoo ERP interface with bold outlines,
 solid shadows, and seven administrator-managed accent color presets.
 
@@ -42,26 +42,29 @@ third-party themes are not verified. Not compatible with Odoo Online.
             "neobrutalism_theme/static/src/js/theme_service.js",
             "neobrutalism_theme/static/src/js/mode_toggle.js",
             "neobrutalism_theme/static/src/js/appearance_dialog.js",
+            "neobrutalism_theme/static/src/js/graph_renderer.js",
             "neobrutalism_theme/static/src/xml/appearance_dialog.xml",
             "neobrutalism_theme/static/src/xml/mode_toggle.xml",
         ],
         # Private bundles leave Odoo's original appearance intact when disabled.
         # Including the native dark bundles also includes installed apps' dark rules.
         "neobrutalism_theme.assets_web_dark": [
-            ("include", "web.assets_web_dark"),
+            ("include", "web.dark_mode_assets_backend"),
+            ("include", "web.assets_backend_legacy_lazy"),
             ("before", "web/static/src/scss/primary_variables.scss", "neobrutalism_theme/static/src/scss/dark_primary.scss"),
             ("before", "web/static/src/scss/bootstrap_overridden.scss", "neobrutalism_theme/static/src/scss/dark_bootstrap.scss"),
             ("after", "web/static/lib/bootstrap/scss/_functions.scss", "neobrutalism_theme/static/src/scss/dark_functions.scss"),
             "neobrutalism_theme/static/src/scss/dark_components.scss",
         ],
-        "neobrutalism_theme.assets_backend_lazy_dark": [
-            ("include", "web.assets_backend_lazy_dark"),
+
+        "neobrutalism_theme.assets_common_dark": [
+            ("include", "web.dark_mode_assets_common"),
             ("before", "web/static/src/scss/primary_variables.scss", "neobrutalism_theme/static/src/scss/dark_primary.scss"),
-            ("before", "web/static/src/scss/bootstrap_overridden.scss", "neobrutalism_theme/static/src/scss/dark_bootstrap.scss"),
             ("after", "web/static/lib/bootstrap/scss/_functions.scss", "neobrutalism_theme/static/src/scss/dark_functions.scss"),
         ],
-        "web.assets_backend_lazy": [
-            "neobrutalism_theme/static/src/js/graph_renderer.js",
+        "neobrutalism_theme.assets_backend_light": [
+            ("include", "web.assets_backend"),
+            ("include", "web.assets_backend_legacy_lazy"),
         ],
     },
     "installable": True,

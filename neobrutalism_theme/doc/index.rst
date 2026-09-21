@@ -1,14 +1,14 @@
 Neo Brutal Backend Theme
 ========================
 
-Neo Brutal gives the Odoo 18 backend bold outlines, solid shadows, seven
+Neo Brutal gives the Odoo 16 backend bold outlines, solid shadows, seven
 shared accent presets, and personal day/night mode. It uses native Odoo
 components and requires no external services or additional Python packages.
 
 Compatibility
 -------------
 
-* Tested with Odoo 18 Community, installed on a self-hosted server.
+* Tested with Odoo 16 Community, installed on a self-hosted server.
 * Dependencies: ``web`` and ``base_setup`` (standard Odoo modules).
 * A filesystem Python add-on: it cannot be installed on Odoo Online.
 * Source deployment through Odoo.sh is possible, but Enterprise-specific
@@ -17,7 +17,7 @@ Compatibility
   dialogs. It does not theme public websites, portals, POS, login pages,
   email templates, or PDF reports.
 * Discuss, Calendar, CRM, Project and standard graph/pivot views are checked
-  on Odoo 18 Community. Specialized editors, Studio, spreadsheets, custom charts and
+  on Odoo 16 Community. Specialized editors, Studio, spreadsheets, custom charts and
   third-party themes require testing on your own staging database.
 
 Installation

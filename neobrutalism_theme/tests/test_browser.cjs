@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
-// Writes test settings and users. Run only against a disposable Odoo 18 database.
+// Writes test settings and users. Run only against a disposable Odoo 16 database.
 const assert = require('node:assert/strict');
 const { chromium } = require('playwright');
-const origin=process.env.NEO_TEST_URL || 'http://127.0.0.1:18068';
+const origin=process.env.NEO_TEST_URL || 'http://127.0.0.1:18066';
 const db=process.env.NEO_TEST_DB;
 assert.ok(db && process.env.NEO_ALLOW_TEST_WRITES === '1', 'Set NEO_TEST_DB and NEO_ALLOW_TEST_WRITES=1 for a disposable database');
 const presets={yellow:'#facc00',blue:'#5294ff',green:'#5ad9aa',purple:'#b59aff',pink:'#ff91bc',orange:'#ffb15c',red:'#ff7474'};
@@ -24,7 +24,7 @@ function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)
  }
  async function rpc(page,model,method,args=[]){return page.evaluate(async({model,method,args})=>(await fetch(`/web/dataset/call_kw/${model}/${method}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',method:'call',id:1,params:{model,method,args,kwargs:{}}})})).json(),{model,method,args});}
  const admin=await login('admin','admin');
- await admin.goto(`${origin}/odoo/action-neobrutalism_theme.action_neo_theme_settings`);
+ await admin.goto(`${origin}/web#action=neobrutalism_theme.action_neo_theme_settings`);
  await admin.waitForSelector('[name=neo_accent_preset]');
  assert.equal(await admin.locator('[name=neo_accent_preset] input[type=radio]').count(),7);
  assert.equal(await admin.locator('input[type=color]').count(),0);
@@ -66,7 +66,7 @@ function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)
    const semantics=await admin.locator('.qa-semantic').evaluateAll(els=>els.map(el=>{const s=getComputedStyle(el);return [s.color,s.backgroundColor,s.borderColor]}));
    if(!baselines[mode])baselines[mode]=semantics;else assert.deepEqual(semantics,baselines[mode],`${preset}/${mode} must preserve status colors`);
    await admin.locator('.o_neo_mode_toggle button').focus();
-   const brand=await admin.locator('.o_navbar_breadcrumbs').evaluate(el=>getComputedStyle(el).color);
+   const brand=await admin.locator('.o_menu_brand').evaluate(el=>getComputedStyle(el).color);
    assert.ok(contrast(brand,tokens.accent)>=4.5,`${preset}/${mode} navbar title contrast`);
    const outline=await admin.locator('.o_neo_mode_toggle button').evaluate(el=>getComputedStyle(el).outlineColor);
    assert.ok(contrast(outline,tokens.accent)>=3,`${preset}/${mode} navbar focus visibility`);
@@ -77,7 +77,7 @@ function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)
  await admin.setViewportSize({width:390,height:844});
  await admin.locator('[name=neo_accent_preset]').waitFor({state:'visible'});
  await admin.waitForFunction(()=>document.body.scrollWidth<=innerWidth,{},{timeout:5000});
- const mobileBrand=await admin.locator('.o_navbar_breadcrumbs').evaluate(el=>getComputedStyle(el).color);
+ const mobileBrand=await admin.locator('.o_mobile_menu_toggle').evaluate(el=>getComputedStyle(el).color);
  assert.ok(contrast(mobileBrand,presets.red)>=4.5,'mobile navbar title contrast');
  
  const existing=await rpc(admin,'res.users','search',[[['login','=','preset-employee']]]);
@@ -94,8 +94,8 @@ function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)
  await admin.setViewportSize({width:1440,height:1000});
  const contact=await rpc(admin,'res.partner','create',[{name:'Night Mode QA',email:'night-mode@example.test',is_company:true}]);
  assert.ok(contact.result,JSON.stringify(contact));
- const action=await rpc(admin,'ir.actions.act_window','create',[{name:'Theme QA Contacts',res_model:'res.partner',view_mode:'list,form',domain:JSON.stringify([['id','=',contact.result]])}]);
- await admin.goto(`${origin}/odoo/action-${action.result}`);
+ const action=await rpc(admin,'ir.actions.act_window','create',[{name:'Theme QA Contacts',res_model:'res.partner',view_mode:'tree,form',domain:JSON.stringify([['id','=',contact.result]])}]);
+ await admin.goto(`${origin}/web#action=${action.result}`);
  await admin.waitForSelector('.o_list_table .o_data_row');
  async function readable(selector,minimum=4.5){
   const elements=admin.locator(selector).filter({visible:true});
@@ -113,18 +113,18 @@ function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)
   if(await admin.locator('body').getAttribute('data-neo-mode')!==mode)await admin.locator('.o_neo_mode_toggle button').click();
   await admin.waitForSelector(`body[data-neo-mode=${mode}]`);
   await readable('[aria-label="Actions menu"], .o_optional_columns_dropdown_toggle',3);
-  await readable('.o-mail-ActivityButton i',3);
+  await readable('.o_ActivityButtonView i',3);
  }
  await admin.locator('.o_list_table .o_data_row').first().click();
  await admin.waitForSelector('.o_form_sheet');
- await admin.locator('.o-mail-Message-body').first().waitFor();
+ await admin.locator('.o_Message_prettyBody').first().waitFor();
  await readable('.o_form_label');
  await readable('.o_control_panel .breadcrumb a');
  await readable('.o_notebook .nav-link:not(.active)');
  await admin.locator('.o_field_email').hover();
  await readable('.o_field_email a',3);
- await readable('.o-mail-Message-date');
- await readable('.o-mail-Chatter .text-action',3);
+ await readable('.o_Message_date');
+ await readable('.o_ChatterTopbar_button',3);
  const input=admin.locator('[name="name"] input');
  await input.fill('Unsaved theme toggle check');
  await admin.getByRole('button',{name:'Switch to day mode',exact:true}).click();

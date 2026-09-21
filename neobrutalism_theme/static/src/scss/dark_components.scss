@@ -8,21 +8,20 @@
         .o-mail-Discuss {
             --mail-Discuss-surface-dark: var(--neo-surface);
         }
-        .o-mail-Message-author {
+        .o_Message_authorName {
             opacity: 1;
         }
-        .o-mail-Message-date {
+        .o_Message_date {
             color: var(--neo-muted) !important;
             opacity: 1 !important;
         }
-        .o-mail-DateSection .text-muted {
+        .o_MessageList_separatorLabel {
             opacity: 1 !important;
         }
         .o_kanban_counter.opacity-25 {
             opacity: .65 !important;
         }
-        .o-mail-Composer-input::placeholder,
-        .o-mail-Composer-html::placeholder {
+        .o_ComposerTextInput_textarea::placeholder {
             color: var(--neo-muted);
             opacity: 1;
         }

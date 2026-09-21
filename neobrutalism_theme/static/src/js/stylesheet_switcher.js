@@ -1,7 +1,7 @@
 /** @odoo-module **/
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-const NATIVE_BUNDLE = /\/(?:web\.assets_web(?:_dark)?|web\.assets_backend_lazy(?:_dark)?)(?:\.[^/]+)?\.css(?:\?|$)/;
+const NATIVE_BUNDLE = /\/(?:web\.(?:assets_(?:common|backend(?:_legacy_lazy)?)|dark_mode_assets_(?:common|backend)))(?:\.[^/]+)?\.css(?:\?|$)/;
 
 /** Stage CSS before swapping it, without executing bundle JS or changing cookies.
  * Original media attributes are restored exactly (including lazy styles added later).
@@ -44,8 +44,8 @@ export class StylesheetSwitcher {
         const links = [];
         const promise = (async () => {
             const bundles = mode === "dark"
-                ? ["neobrutalism_theme.assets_web_dark", "neobrutalism_theme.assets_backend_lazy_dark"]
-                : ["web.assets_web", "web.assets_backend_lazy"];
+                ? ["neobrutalism_theme.assets_common_dark", "neobrutalism_theme.assets_web_dark"]
+                : ["web.assets_common", "neobrutalism_theme.assets_backend_light"];
             let timer;
             let descriptors;
             try {

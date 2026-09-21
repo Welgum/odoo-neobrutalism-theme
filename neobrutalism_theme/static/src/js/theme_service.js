@@ -5,7 +5,6 @@ import { reactive } from "@odoo/owl";
 import { getBundle } from "@web/core/assets";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
-import { user } from "@web/core/user";
 import { session } from "@web/session";
 import {
     DEFAULTS, applyPreferences, normalizePreferences, normalizeThemeSettings,
@@ -14,8 +13,12 @@ import {
 import { StylesheetSwitcher } from "./stylesheet_switcher";
 
 export const neoThemeService = {
-    dependencies: ["notification"],
-    async start(env, { notification }) {
+    dependencies: ["notification", "user"],
+    async start(env, { notification, user }) {
+        // Odoo 16 can start services while its head scripts are still parsing.
+        if (!document.body) {
+            await new Promise(resolve => document.addEventListener("DOMContentLoaded", resolve, { once: true }));
+        }
         const key = storageKey(session.db, user.userId);
         let storage;
         try {
@@ -29,7 +32,7 @@ export const neoThemeService = {
         const status = reactive({ persistent: Boolean(storage), loading: false });
         const settings = normalizeThemeSettings(session.neobrutalism_theme);
         // Follow Odoo until this user explicitly chooses day or night mode.
-        const colorScheme = document.querySelector('link[href*="web.assets_web_dark"]')
+        const colorScheme = document.querySelector('link[href*="web.dark_mode_assets_backend"]')
             ? "dark" : "light";
         const styles = new StylesheetSwitcher(document, getBundle, colorScheme);
         let revision = 0;

@@ -5,23 +5,37 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//form" position="inside">
-                <app string="Neo Brutal" name="neobrutalism_theme" groups="base.group_system"
-                     logo="/neobrutalism_theme/static/description/icon.png">
-                    <block title="Appearance for all users" name="neo_appearance">
-                        <setting id="neo_accent_preset_setting" string="Accent color" help="Choose one of seven presets for navigation, primary buttons and active tabs. Save and reload Odoo to apply it for all users. Only Settings administrators can change this selection.">
-                            <field name="neo_accent_preset" widget="radio" class="o_neo_accent_presets"/>
-                            <div class="text-muted mt-3">
-                                Each preset includes matching highlights and readable button labels. Backgrounds, text, and success, warning and error colors retain their theme defaults.
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Neo Brutal" string="Neo Brutal"
+                     data-key="neobrutalism_theme" groups="base.group_system">
+                    <h2>Appearance for all users</h2>
+                    <div class="row mt16 o_settings_container" name="neo_appearance">
+                        <div class="col-12 col-lg-6 o_setting_box" id="neo_accent_preset_setting">
+                            <div class="o_setting_right_pane">
+                                <label for="neo_accent_preset" string="Accent color"/>
+                                <div class="text-muted mb-3">
+                                    Choose one of seven presets for navigation, primary buttons and active tabs.
+                                    Save and reload Odoo to apply it for all users.
+                                    Only Settings administrators can change this selection.
+                                </div>
+                                <field name="neo_accent_preset" widget="radio" class="o_neo_accent_presets"/>
+                                <div class="text-muted mt-3">
+                                    Each preset includes matching highlights and readable button labels.
+                                    Backgrounds, text, and success, warning and error colors retain their theme defaults.
+                                </div>
                             </div>
-                        </setting>
-                    </block>
-                    <block title="Personal appearance" name="neo_personal_appearance">
-                        <div class="px-4 pb-3 text-muted">
-                            Each user switches day or night mode with the sun/moon button in the top bar. The accent preset works in both modes.
                         </div>
-                    </block>
-                </app>
+                    </div>
+                    <h2>Personal appearance</h2>
+                    <div class="row mt16 o_settings_container" name="neo_personal_appearance">
+                        <div class="col-12 o_setting_box">
+                            <div class="o_setting_right_pane text-muted">
+                                Each user switches day or night mode with the sun/moon button in the top bar.
+                                The accent preset works in both modes.
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </xpath>
         </field>
     </record>

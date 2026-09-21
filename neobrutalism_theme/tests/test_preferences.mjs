@@ -97,7 +97,7 @@ const serviceSource = (await readFile(new URL("../static/src/js/theme_service.js
 const { neoThemeService } = await import(`data:text/javascript;base64,${Buffer.from(serviceSource).toString("base64")}`);
 const env = { bus: { trigger() {} } };
 const notices = [];
-const deps = { notification: { add: text => notices.push(text) } };
+const deps = { user: { userId: 7 }, notification: { add: text => notices.push(text) } };
 const service = await neoThemeService.start(env, deps);
 assert.equal(classes.has("o_neo_theme"), false);
 await service.toggleMode();
@@ -139,4 +139,16 @@ const privateService = await neoThemeService.start(env, deps);
 await privateService.toggleMode();
 assert.equal(root.dataset.neoMode, "dark", "blocked storage must not prevent toggling");
 assert.equal(privateService.status.persistent, false);
+// Head scripts in Odoo 16 can start services before the body has been parsed.
+document.body = null;
+let domReady;
+document.addEventListener = (event, callback) => {
+    assert.equal(event, "DOMContentLoaded");
+    domReady = callback;
+};
+const parsingService = neoThemeService.start(env, deps);
+assert.equal(typeof domReady, "function");
+document.body = root;
+domReady();
+assert.equal((await parsingService).state.enabled, true);
 console.log("PASS: personal mode toggling, reload persistence, user/tab isolation, storage failures, seven presets, day/night contrast, admin color precedence and legacy-setting cleanup");

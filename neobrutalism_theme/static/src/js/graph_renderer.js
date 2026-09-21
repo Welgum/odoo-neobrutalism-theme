@@ -5,63 +5,28 @@ import { GraphRenderer } from "@web/views/graph/graph_renderer";
 import { patch } from "@web/core/utils/patch";
 import { useBus } from "@web/core/utils/hooks";
 
-// Canvas text cannot inherit CSS. Odoo's default graph colors are captured from
-// its global cookie at module load; Neo preferences belong to this user/database.
-patch(GraphRenderer.prototype, {
+// Odoo 16 uses the named patch API and Chart.js 2's axes/legend options.
+patch(GraphRenderer.prototype, "neobrutalism_theme.graph", {
     setup() {
-        super.setup(...arguments);
+        this._super(...arguments);
         useBus(this.env.bus, "NEO:APPEARANCE_CHANGED", () => {
             if (this.chart) this.renderChart();
         });
     },
-
     getChartConfig() {
-        const config = super.getChartConfig(...arguments);
+        const config = this._super(...arguments);
         if (!document.body.classList.contains("o_neo_theme")) return config;
         const style = getComputedStyle(document.body);
         const ink = style.getPropertyValue("--neo-ink").trim();
         const line = style.getPropertyValue("--neo-line").trim();
-        for (const [axis, scale] of Object.entries(config.options.scales || {})) {
-            if (scale.ticks) scale.ticks.color = ink;
-            if (scale.title) scale.title.color = ink;
-            if (axis === "y" && scale.grid) scale.grid.color = line;
+        for (const axes of Object.values(config.options.scales || {})) {
+            for (const axis of axes) {
+                if (axis.ticks) axis.ticks.fontColor = ink;
+                if (axis.scaleLabel) axis.scaleLabel.fontColor = ink;
+                axis.gridLines = { ...axis.gridLines, color: line, zeroLineColor: line };
+            }
         }
-        const labels = config.options.plugins.legend.labels;
-        const generateLabels = labels.generateLabels;
-        labels.color = ink;
-        labels.generateLabels = (...args) => generateLabels(...args).map((label) => ({ ...label, fontColor: ink }));
-        // Replace the line chart's cookie-colored overlay with a palette-aware grid.
-        config.plugins = (config.plugins || []).map((plugin) => plugin.id !== "gridOnTop" ? plugin : {
-            id: "neoGridOnTop",
-            afterDraw(chart) {
-                const { ctx, chartArea, scales } = chart;
-                ctx.save();
-                ctx.strokeStyle = line;
-                ctx.lineWidth = 1;
-                scales.y.ticks.forEach((_, index) => {
-                    const y = scales.y.getPixelForTick(index);
-                    ctx.beginPath();
-                    ctx.moveTo(chartArea.left - 8, y);
-                    ctx.lineTo(chartArea.right, y);
-                    ctx.stroke();
-                });
-                scales.x.ticks.forEach((_, index) => {
-                    const x = scales.x.getPixelForTick(index);
-                    ctx.beginPath();
-                    ctx.moveTo(x, chartArea.bottom);
-                    ctx.lineTo(x, chartArea.bottom + 8);
-                    ctx.stroke();
-                });
-                for (const point of chart.getActiveElements()) {
-                    const x = scales.x.getPixelForTick(point.index);
-                    ctx.beginPath();
-                    ctx.moveTo(x, chartArea.top);
-                    ctx.lineTo(x, chartArea.bottom);
-                    ctx.stroke();
-                }
-                ctx.restore();
-            },
-        });
+        config.options.legend.labels.fontColor = ink;
         return config;
     },
 });
