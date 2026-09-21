@@ -1,5 +1,13 @@
 # Changelog
 
+## 19.0.1.6.0 — 2026-09-21
+
+- Package the add-on inside `neobrutalism_theme/` so Odoo discovers it directly from the repository.
+- Add standard `18.0` and `19.0` publication branches, a version matrix, and RivetFox publisher instructions.
+- Preserve the technical module name, administrator-only seven-color presets, and personal day/night mode.
+- Refresh real Odoo 19 listing screenshots and add a repeatable screenshot capture tool.
+- Validate installation from the release archive, module lifecycle, permissions, and browser behavior on Odoo 19 Community.
+
 ## 19.0.1.5.1 — 2026-09-21
 
 - Set the manifest author to RivetFox and the website to https://rivetfox.pro.

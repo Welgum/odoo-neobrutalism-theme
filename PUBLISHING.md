@@ -48,6 +48,14 @@ python3 tools/build_release.py
 
 The builder checks the manifest, declared assets, Python/XML syntax, English listing markup, local images and ZIP integrity. The archive contains one `neobrutalism_theme/` folder and excludes build tools, output, publisher-only notes and caches. Results and runtime test commands are in `neobrutalism_theme/VALIDATION.md`.
 
+To regenerate the listing images, install Contacts, CRM, Calendar and Project in a disposable database, then run the Playwright capture tool from a development environment:
+
+```bash
+NEO_TEST_URL=http://127.0.0.1:8069 NEO_TEST_DB=DISPOSABLE_DATABASE NEO_ALLOW_TEST_WRITES=1 node tools/capture_screenshots.cjs
+```
+
+This uses the disposable database's `admin` / `admin` credentials, saves Yellow as the shared accent, and creates fictional contacts and an action. It captures the running Odoo version and renders the branch's cover. Set `NEO_CHROME_PATH` to use system Chrome. Playwright is a development dependency only.
+
 For updates, increase the version on the applicable branch, rerun validation, commit and push the branch, then rescan it in Odoo Apps. A local ZIP does not register or publish a marketplace listing.
 
 Official references checked for this preparation: [Vendor guidelines](https://apps.odoo.com/apps/vendor-guidelines), [Odoo Apps FAQ](https://apps.odoo.com/apps/faq), and [repository submission](https://apps.odoo.com/apps/upload).

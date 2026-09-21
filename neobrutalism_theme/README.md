@@ -118,6 +118,8 @@ Copy the `neobrutalism_theme` directory into one of the directories already list
 
 ## Update, disable or uninstall the theme
 
+Earlier source releases kept the module at the repository root. It now lives in the inner `neobrutalism_theme/` directory. If your old checkout was mounted as the module itself, update the mount or copy that inner directory to the existing module location. The required path remains `ADDONS_PATH/neobrutalism_theme/__manifest__.py`; the technical name and saved preferences are unchanged.
+
 - To update: replace this module directory with the newer version, restart Odoo, then find the module in Apps and select **Upgrade**. Hard-refresh the browser after asset rebuilds.
 - To disable for yourself: avatar → **Appearance** → clear **Use Neobrutalism theme**. This takes effect immediately in this browser. Clicking the top-bar mode toggle enables the theme again for you.
 - To remove for everyone: uninstall **Neo Brutal Backend Theme** from Apps, then reload. Remove its directory only **after** uninstalling it. No business data belongs to the add-on.
@@ -192,7 +194,7 @@ Discuss, Calendar, CRM, Project and standard graph/pivot views were checked on O
 
 See the [validation record](VALIDATION.md) for performed checks and their limits. Marketplace screenshots in `static/description/` show actual Odoo 19 Community views with fictional demonstration records. These records and the Contacts app are not added by this theme. The [marketplace description](static/description/index.html) and [user documentation](doc/index.rst) are included in this repository.
 
-Source compatibility was checked against Odoo's public `19.0` branch, and version `19.0.1.5.0` was installed in a temporary local Odoo 19 Community database. This does not verify your installed third-party modules. Start with your test database, then check a list, an editable form, a many2one dropdown, a kanban board, a modal, mobile navigation and a report from your installed apps.
+Source compatibility was checked against Odoo's public `19.0` branch, and version `19.0.1.6.0` was installed in a temporary local Odoo 19 Community database. This does not verify your installed third-party modules. Start with your test database, then check a list, an editable form, a many2one dropdown, a kanban board, a modal, mobile navigation and a report from your installed apps.
 
 The included storage/initialization regression checks can be run outside Odoo with Node 18+:
 

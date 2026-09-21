@@ -41,6 +41,8 @@ Add the repository's absolute path to your existing `addons_path`, or copy its *
 
 Restart Odoo, enable developer mode, and open **Apps → Update Apps List**. Remove the default **Apps** filter, search for **Neo Brutal Backend Theme**, and install it. Reload the browser. For an existing installation, replace the module files, restart Odoo and choose **Upgrade** before refreshing the browser.
 
+**Updating an older checkout:** earlier releases kept the manifest at the repository root. The add-on now lives one directory deeper. Adjust the mount/add-ons path or copy the inner `neobrutalism_theme/` directory so Odoo still sees `ADDONS_PATH/neobrutalism_theme/__manifest__.py`.
+
 [Detailed installation, color settings and troubleshooting](neobrutalism_theme/README.md) · [User documentation](neobrutalism_theme/doc/index.rst)
 
 ## Validation and release packages
