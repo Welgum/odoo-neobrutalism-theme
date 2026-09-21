@@ -29,7 +29,7 @@ Dependencies are only `web` and `base_setup`. Optional apps shown in screenshots
 
 The screenshots below belong to the Odoo version of the currently selected branch and show fictional demonstration records.
 
-![Neo Brutal Odoo backend theme in light mode with a yellow accent and outlined navigation](neobrutalism_theme/static/description/backend_screenshot.png)
+![Neo Brutal Odoo backend theme in light mode with a yellow accent and outlined navigation](neobrutalism_theme/static/description/backend-list.png)
 
 ![Odoo Discuss with readable messages and dark conversation surfaces in Neo Brutal night mode](neobrutalism_theme/static/description/discuss-night.png)
 

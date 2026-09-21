@@ -1,7 +1,7 @@
 {
     "name": "Neo Brutal Backend Theme",
     "summary": "Odoo 19 Community backend theme with dark mode and seven accent colors",
-    "version": "19.0.1.6.1",
+    "version": "19.0.1.6.2",
     "category": "Themes/Backend",
     "author": "RivetFox",
     "website": "https://rivetfox.pro",
@@ -24,7 +24,8 @@ third-party themes are not verified. Not compatible with Odoo Online.
 """,
     "images": [
         "static/description/cover.gif",
-        "static/description/backend_screenshot.png",
+        "static/description/theme_screenshot.gif",
+        "static/description/backend-list.png",
         "static/description/day-night-demo.gif",
         "static/description/accent-demo.gif",
         "static/description/night-mode.png",

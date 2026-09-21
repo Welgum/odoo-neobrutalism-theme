@@ -1,5 +1,11 @@
 # Changelog
 
+## 19.0.1.6.2 — 2026-09-21
+
+- Fix the Odoo Apps theme-card image selector: use the animated `theme_screenshot.gif` instead of the static Contacts screenshot.
+- Add a portrait thumbnail matching the catalog card's crop, retaining the 3-second loop and subtle title motion.
+- Rename the raw Contacts capture to `backend-list.png`, validate the unique thumbnail candidate, and add a standalone card preview.
+
 ## 19.0.1.6.1 — 2026-09-21
 
 - Refresh the marketplace listing with an animated RivetFox cover, day/night comparison and seven accent previews using actual version-specific Odoo screenshots.
