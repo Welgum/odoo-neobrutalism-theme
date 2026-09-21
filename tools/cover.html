@@ -1,41 +1,45 @@
 <!doctype html>
 <html lang="en">
 <meta charset="utf-8">
-<title>Neo Brutal — marketplace cover source</title>
+<title>Neo Brutal — animated marketplace cover</title>
 <style>
-* { box-sizing: border-box; }
-body { margin: 0; width: 1120px; height: 560px; overflow: hidden; background: #f7f5ee; color: #161616; font-family: Arial, sans-serif; }
-.cover { width: 1120px; height: 560px; border: 3px solid #161616; position: relative; overflow: hidden; }
-.copy { position: absolute; top: 37px; left: 40px; width: 490px; z-index: 2; }
-.edition { display: inline-block; padding: 9px 13px; border: 2px solid #161616; background: #fff; font-size: 16px; font-weight: 700; box-shadow: 3px 3px #161616; }
-h1 { margin: 25px 0 15px; font-size: 84px; line-height: .93; font-weight: 900; letter-spacing: -5px; }
-h1 span { display: inline-block; background: #facc00; padding: 0 10px 6px 4px; }
-.subtitle { font-size: 23px; line-height: 1.35; margin: 20px 0 26px; }
-.feature { font: bold 14px monospace; letter-spacing: .5px; }
-.screens { position: absolute; width: 530px; height: 440px; top: 47px; right: 36px; }
-.screen { border: 3px solid #161616; border-radius: 6px; width: 494px; height: 275px; overflow: hidden; box-shadow: 7px 7px #161616; background: #fff; }
-.screen img { display: block; width: 100%; }
-.day { position: absolute; top: 0; right: 0; }
-.night { position: absolute; bottom: 0; left: 0; height: 227px; background: #292d2b; }
-.screen-label { position: absolute; right: 14px; bottom: 14px; border: 2px solid #161616; background: #fff; font: bold 13px monospace; padding: 6px 9px; }
-.night .screen-label { background: #facc00; }
-.day .screen-label { top: 35px; bottom: auto; }
-.swatches { position: absolute; left: 40px; bottom: 39px; display: flex; gap: 9px; }
-.swatches span { width: 42px; height: 30px; border: 2px solid #161616; box-shadow: 2px 2px #161616; }
-.footer { position: absolute; right: 37px; bottom: 18px; font: bold 11px monospace; letter-spacing: 1px; }
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif}
+.cover{--paper:#f7f5ee;--ink:#161616;--accent:#facc00;width:1120px;height:560px;overflow:hidden;position:relative;background:var(--paper);color:var(--ink);border:3px solid var(--ink)}
+.top{position:absolute;inset:28px 30px auto;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:800;letter-spacing:1px}
+.brand{display:flex;gap:12px;align-items:center}.mark{width:32px;height:32px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:22px;letter-spacing:-2px}.edition{border:2px solid var(--ink);padding:8px 12px;background:var(--paper);box-shadow:3px 3px var(--ink);font-size:13px;letter-spacing:.5px}
+.copy{position:absolute;left:38px;top:113px;z-index:2;width:420px}h1{font-size:100px;line-height:.91;letter-spacing:-7px;margin:0 0 27px;font-weight:900}h1 span{display:inline-block;background:var(--accent);color:#161616;border:3px solid #161616;box-shadow:6px 6px var(--ink);padding:0 10px 8px 4px;margin-top:10px;font-size:89px;letter-spacing:-6px}
+.tagline{font-size:26px;line-height:1.2;font-weight:700;margin:0 0 24px;letter-spacing:-.7px}.features{font:700 13px monospace;letter-spacing:.1px;display:flex;gap:8px}.features span{border:2px solid var(--ink);padding:8px 10px}
+.stage{position:absolute;right:31px;top:110px;width:581px;height:355px;border:3px solid #161616;background:white;box-shadow:10px 10px var(--ink);transform:rotate(-2deg);overflow:hidden}.chrome{height:29px;background:var(--paper);color:var(--ink);border-bottom:2px solid #161616;display:flex;align-items:center;padding:0 11px;font:700 10px monospace;gap:5px}.dot{width:6px;height:6px;border:1px solid currentColor}.chrome b{margin-left:8px;font-weight:400;letter-spacing:.6px}.viewport{position:relative;height:323px;overflow:hidden;background:#fff}.viewport img{width:100%;position:absolute;left:0;top:0;display:block}.view-new{clip-path:inset(0 100% 0 0)}
+.mode{position:absolute;right:25px;top:428px;background:var(--accent);color:#161616;border:3px solid #161616;box-shadow:5px 5px var(--ink);padding:12px 18px;font:800 20px monospace;transform:rotate(2deg);z-index:3}
+.bottom{position:absolute;bottom:25px;left:38px;right:32px;display:flex;align-items:center;justify-content:space-between}.free{font:700 12px monospace;letter-spacing:.7px}.swatches{display:flex;gap:7px}.swatches i{display:block;width:28px;height:22px;background:var(--color);border:2px solid #161616;box-shadow:2px 2px var(--ink)}
 </style>
-<div class="cover">
-  <div class="copy">
-    <div class="edition">ODOO 19 COMMUNITY</div>
-    <h1>NEO<br><span>BRUTAL.</span></h1>
-    <p class="subtitle">A bolder backend.<br>Your colors. Your night mode.</p>
-    <div class="feature">7 SHARED ACCENTS &nbsp; / &nbsp; PERSONAL DAY + NIGHT</div>
-  </div>
-  <div class="screens">
-    <div class="screen day"><img src="../neobrutalism_theme/static/description/contacts-kanban.png" alt="Actual Odoo Contacts kanban in day mode"><span class="screen-label">DAY</span></div>
-    <div class="screen night"><img src="../neobrutalism_theme/static/description/night-mode.png" alt="Actual Odoo Contacts list in night mode"><span class="screen-label">NIGHT</span></div>
-  </div>
-  <div class="swatches"><span style="background:#facc00"></span><span style="background:#5294ff"></span><span style="background:#5ad9aa"></span><span style="background:#b59aff"></span><span style="background:#ff91bc"></span><span style="background:#ffb15c"></span><span style="background:#ff7474"></span></div>
-  <div class="footer">NEO BRUTAL / BACKEND THEME</div>
+<div class="cover" id="cover">
+ <div class="top"><div class="brand"><span class="mark">N.</span>RIVETFOX <span style="font-weight:400;letter-spacing:0">/ BACKEND THEME</span></div><div class="edition">ODOO 19 COMMUNITY</div></div>
+ <div class="copy"><h1>NEO<br><span>BRUTAL.</span></h1><p class="tagline">Your Odoo.<br>With character.</p><div class="features"><span>7 ACCENTS</span><span>DAY + NIGHT</span></div></div>
+ <div class="stage"><div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><b>YOUR EVERYDAY ODOO</b></div><div class="viewport"><img id="old" src="../neobrutalism_theme/static/description/backend_screenshot.png" alt="Actual Odoo 19 Contacts list"><img id="next" class="view-new" src="../neobrutalism_theme/static/description/backend_screenshot.png" alt="Alternate theme appearance"></div></div>
+ <div class="mode" id="mode">01 / DAY MODE</div>
+ <div class="bottom"><div class="free">FREE + OPEN SOURCE / LGPL-3</div><div class="swatches"><i style="--color:#facc00"></i><i style="--color:#5294ff"></i><i style="--color:#5ad9aa"></i><i style="--color:#b59aff"></i><i style="--color:#ff91bc"></i><i style="--color:#ffb15c"></i><i style="--color:#ff7474"></i></div></div>
 </div>
+<script src="marketplace/title-motion.js"></script>
+<script>
+const scenes=[
+ {src:'../neobrutalism_theme/static/description/backend_screenshot.png',label:'01 / DAY MODE',paper:'#f7f5ee',ink:'#161616',accent:'#facc00'},
+ {src:'../neobrutalism_theme/static/description/night-mode.png',label:'02 / NIGHT MODE',paper:'#202322',ink:'#f7f5ee',accent:'#facc00'},
+ {src:'marketplace/screens/preset-blue.png',label:'03 / YOUR ACCENT',paper:'#f7f5ee',ink:'#161616',accent:'#5294ff'},
+];
+window.renderFrame=async time=>{
+ window.animateTitle(document.querySelector('h1'),time,9);
+ window.animateTitle(document.querySelector('.tagline'),time,9,2,.04);
+ const idx=Math.floor(time/3)%scenes.length,local=time%3,scene=scenes[idx];
+ const next=scenes[(idx+1)%scenes.length];
+ const progress=Math.max(0,Math.min(1,(local-2.5)/.5));
+ const eased=progress*progress*(3-2*progress);
+ const el=document.getElementById('cover');
+ for(const key of ['paper','ink','accent'])el.style.setProperty('--'+key,scene[key]);
+ document.getElementById('mode').textContent=scene.label;
+ const a=document.getElementById('old'),b=document.getElementById('next');a.src=scene.src;b.src=next.src;
+ b.style.clipPath=`inset(0 ${(1-eased)*100}% 0 0)`;
+ await Promise.all([a.decode(),b.decode()]);
+};
+</script>
 </html>
