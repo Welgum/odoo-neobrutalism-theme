@@ -5,7 +5,6 @@ import { reactive } from "@odoo/owl";
 import { getBundle } from "@web/core/assets";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
-import { user } from "@web/core/user";
 import { session } from "@web/session";
 import {
     DEFAULTS, applyPreferences, normalizePreferences, normalizeThemeSettings,
@@ -14,8 +13,8 @@ import {
 import { StylesheetSwitcher } from "./stylesheet_switcher";
 
 export const neoThemeService = {
-    dependencies: ["notification"],
-    async start(env, { notification }) {
+    dependencies: ["notification", "user"],
+    async start(env, { notification, user }) {
         const key = storageKey(session.db, user.userId);
         let storage;
         try {

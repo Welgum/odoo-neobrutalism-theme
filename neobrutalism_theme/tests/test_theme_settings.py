@@ -34,7 +34,7 @@ class TestThemeSettings(TransactionCase):
 
     def test_legacy_global_night_mode_is_ignored(self):
         params = self.env["ir.config_parameter"].sudo()
-        # Odoo 18 has no ir.http.color_scheme API. Night mode is a browser preference;
+        # Odoo 17 has no ir.http.color_scheme API. Night mode is a browser preference;
         # the legacy parameter must never become a shared setting or session option.
         params.set_param(PARAM_PREFIX + "night_mode", True)
         self.assertNotIn("night_mode", read_theme_settings(params))

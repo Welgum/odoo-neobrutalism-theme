@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <t t-name="neobrutalism_theme.ModeToggle">
+    <t t-name="neobrutalism_theme.ModeToggle" owl="1">
         <div class="o_neo_mode_toggle d-flex">
             <button type="button" class="o_nav_entry"
                     t-att-title="label" t-att-aria-label="label" t-on-click="toggle"

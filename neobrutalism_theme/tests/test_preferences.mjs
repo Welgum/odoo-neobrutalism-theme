@@ -97,7 +97,7 @@ const serviceSource = (await readFile(new URL("../static/src/js/theme_service.js
 const { neoThemeService } = await import(`data:text/javascript;base64,${Buffer.from(serviceSource).toString("base64")}`);
 const env = { bus: { trigger() {} } };
 const notices = [];
-const deps = { notification: { add: text => notices.push(text) } };
+const deps = { user: { userId: 7 }, notification: { add: text => notices.push(text) } };
 const service = await neoThemeService.start(env, deps);
 assert.equal(classes.has("o_neo_theme"), false);
 await service.toggleMode();
