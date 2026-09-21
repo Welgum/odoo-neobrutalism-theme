@@ -82,31 +82,61 @@ const listeners = {};
 globalThis.window = { localStorage: storage, addEventListener: (name, handler) => { listeners[name] = handler; } };
 globalThis.document = { body: root, querySelector: () => null };
 const serviceSource = (await readFile(new URL("../static/src/js/theme_service.js", import.meta.url), "utf8"))
+    .replace('import { getBundle } from "@web/core/assets";', 'const getBundle = () => {};')
+    .replace('import { _t } from "@web/core/l10n/translation";', 'const _t = value => value;')
+    .replace('import { StylesheetSwitcher } from "./stylesheet_switcher";', `class StylesheetSwitcher {
+        target(enabled, mode) { return enabled ? mode : null; }
+        async prepare() { await globalThis.prepareStyles?.(); }
+        activate() {}
+    }`)
     .replace('import { reactive } from "@odoo/owl";', 'const reactive = value => value;')
     .replace('import { registry } from "@web/core/registry";', 'const registry = { category: () => ({ add() {} }) };')
     .replace('import { user } from "@web/core/user";', 'const user = { userId: 7 };')
     .replace('import { session } from "@web/session";', 'const session = { db: "erp-production" };')
     .replace('from "./preferences";', `from "${preferencesURL}";`);
 const { neoThemeService } = await import(`data:text/javascript;base64,${Buffer.from(serviceSource).toString("base64")}`);
-const service = neoThemeService.start();
+const env = { bus: { trigger() {} } };
+const notices = [];
+const deps = { notification: { add: text => notices.push(text) } };
+const service = await neoThemeService.start(env, deps);
 assert.equal(classes.has("o_neo_theme"), false);
-service.toggleMode();
+await service.toggleMode();
 assert.equal(root.dataset.neoMode, "dark");
 assert.equal(service.state.enabled, true, "a user can opt back in with the top-bar toggle");
 assert.equal(readPreferences(storage, key).mode, "dark", "night mode survives reload");
 assert.deepEqual(readPreferences(storage, storageKey("erp-production", 8)), DEFAULTS, "toggling must not affect another user");
-service.toggleMode();
+await service.toggleMode();
 assert.equal(root.dataset.neoMode, "light");
 writePreferences(storage, key, { ...DEFAULTS, mode: "dark" });
 listeners.storage({ storageArea: storage, key: storageKey("erp-production", 8) });
 assert.equal(root.dataset.neoMode, "light", "another user's storage event is ignored");
 listeners.storage({ storageArea: storage, key });
+await new Promise(resolve => setTimeout(resolve, 0));
 assert.equal(root.dataset.neoMode, "dark", "same-user tabs synchronize");
-service.reset();
+await service.reset();
 assert.equal(root.dataset.neoMode, "light");
+// Failed loads must preserve state, stored preference and the current appearance.
+globalThis.prepareStyles = () => Promise.reject(new Error("Network failure"));
+await service.toggleMode();
+assert.equal(root.dataset.neoMode, "light");
+assert.equal(readPreferences(storage, key).mode, "auto");
+assert.equal(service.status.loading, false);
+assert.equal(notices.length, 1);
+// The latest selection wins even when earlier styles finish loading later.
+let finish;
+globalThis.prepareStyles = () => new Promise(resolve => { finish = resolve; });
+const slow = service.set({ mode: "dark" });
+const finishSlow = finish;
+globalThis.prepareStyles = undefined;
+await service.set({ mode: "light", density: "compact" });
+finishSlow();
+await slow;
+assert.equal(root.dataset.neoMode, "light");
+assert.equal(service.state.density, "compact");
+assert.equal(service.status.loading, false);
 Object.defineProperty(window, "localStorage", { get() { throw new Error("SecurityError"); } });
-const privateService = neoThemeService.start();
-privateService.toggleMode();
+const privateService = await neoThemeService.start(env, deps);
+await privateService.toggleMode();
 assert.equal(root.dataset.neoMode, "dark", "blocked storage must not prevent toggling");
 assert.equal(privateService.status.persistent, false);
 console.log("PASS: personal mode toggling, reload persistence, user/tab isolation, storage failures, seven presets, day/night contrast, admin color precedence and legacy-setting cleanup");

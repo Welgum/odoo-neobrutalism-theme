@@ -7,7 +7,7 @@ The module and listing materials are prepared locally. Nothing has been uploaded
 - Confirm the publisher name. The existing manifest author is **alx-projects**; it has been retained.
 - Provide a support email and, if desired, the publisher's website. Neither is invented or present in the manifest yet.
 - Choose free or paid. The current manifest has **no price**, which Odoo Apps treats as free. The existing LGPL-3 license is retained. A paid release needs an explicit `price` and `currency` (EUR or USD) and a reviewed support policy before submission.
-- Supply a Git repository and publisher account. This workspace is not currently a Git repository. No remote has been created or modified.
+- Register the publisher account and repository with Odoo Apps. Source is tracked at https://github.com/Welgum/odoo-neobrutalism-theme on `main`; an Apps-compatible branch/layout and scanner registration still need to be arranged.
 
 The support address can be added as the manifest's `support` field. Do not add a store link or external advertising to the marketplace description. Rebuild the release after changing metadata so the archive and checksum agree.
 

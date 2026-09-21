@@ -22,7 +22,7 @@ FILES = (
     "README.md", "CHANGELOG.md", "VALIDATION.md",
 )
 DIRECTORIES = ("models", "views", "static", "doc", "tests")
-SUFFIXES = {".py", ".xml", ".css", ".js", ".mjs", ".cjs", ".png", ".html", ".rst", ".md"}
+SUFFIXES = {".py", ".xml", ".css", ".scss", ".js", ".mjs", ".cjs", ".png", ".html", ".rst", ".md"}
 STYLE_PROPERTIES = {
     "color", "background-color", "font-family", "font-size", "font-weight",
     "border", "border-radius", "margin", "padding",
@@ -102,6 +102,17 @@ def validate():
         local_file(filename)
     for bundle in manifest["assets"].values():
         for filename in bundle:
+            if isinstance(filename, tuple):
+                directive = filename
+                if len(directive) == 2 and directive[0] == "include":
+                    require(directive[1] in {"web.assets_web_dark", "web.assets_backend_lazy_dark"}, f"Review included bundle: {directive}")
+                    continue
+                require(len(directive) == 3 and directive[:2] in {
+                    ("before", "web/static/src/scss/primary_variables.scss"),
+                    ("before", "web/static/src/scss/bootstrap_overridden.scss"),
+                    ("after", "web/static/lib/bootstrap/scss/_functions.scss"),
+                }, f"Review asset directive: {directive}")
+                filename = directive[2]
             require(isinstance(filename, str) and filename.startswith(MODULE + "/"), f"Review asset declaration: {filename}")
             local_file(filename.removeprefix(MODULE + "/"))
     require(len(manifest["images"]) > 1, "Include a cover and theme screenshot")

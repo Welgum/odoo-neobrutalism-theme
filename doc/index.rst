@@ -16,7 +16,8 @@ Compatibility
 * Styles the backend navigation, buttons, lists, forms, kanban cards and
   dialogs. It does not theme public websites, portals, POS, login pages,
   email templates, or PDF reports.
-* Specialized editors, Discuss, Studio, spreadsheets, custom charts and
+* Discuss, Calendar, CRM, Project and standard graph/pivot views are checked
+  on Odoo 19 Community. Specialized editors, Studio, spreadsheets, custom charts and
   third-party themes require testing on your own staging database.
 
 Installation
@@ -53,7 +54,8 @@ Personal day/night mode
 -----------------------
 
 Click the moon in the top bar to enter night mode, or the sun to return to
-day mode. Changes apply immediately, without reloading the page. Each user
+day mode. The first switch loads styles from your Odoo server and may show a
+brief spinner. Open forms and message drafts survive the switch. Each user
 chooses independently; there is no administrator switch forcing night mode
 for everyone. Clicking the toggle also enables the theme if it was disabled.
 
@@ -100,6 +102,10 @@ read permissions; update the Apps list and remove the Apps filter.
 **No visible change:** check Appearance > Use Neobrutalism theme, upgrade the
 module after replacing files, and refresh the browser. Check Odoo logs for
 asset errors. The login screen and public pages are outside the theme's scope.
+
+**Night mode cannot load:** the previous appearance stays active. Retry the
+toggle, and check Odoo logs for asset errors if it continues to fail. Upgrade
+the module and refresh the browser after replacing its files.
 
 **Inconsistent custom screens:** test without other backend themes. Custom
 widgets may need additional scoped styles. The theme does not replace their

@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 import { reactive } from "@odoo/owl";
+import { getBundle } from "@web/core/assets";
+import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { session } from "@web/session";
@@ -9,9 +11,11 @@ import {
     DEFAULTS, applyPreferences, normalizePreferences, normalizeThemeSettings,
     readPreferences, resolveColorScheme, storageKey, writePreferences,
 } from "./preferences";
+import { StylesheetSwitcher } from "./stylesheet_switcher";
 
 export const neoThemeService = {
-    start() {
+    dependencies: ["notification"],
+    async start(env, { notification }) {
         const key = storageKey(session.db, user.userId);
         let storage;
         try {
@@ -20,20 +24,43 @@ export const neoThemeService = {
             // Browsers can throw even when reading the localStorage property.
             storage = null;
         }
-        const state = reactive(readPreferences(storage, key));
-        const status = reactive({ persistent: Boolean(storage) });
+        const saved = readPreferences(storage, key);
+        const state = reactive({ ...DEFAULTS, enabled: false });
+        const status = reactive({ persistent: Boolean(storage), loading: false });
         const settings = normalizeThemeSettings(session.neobrutalism_theme);
         // Follow Odoo until this user explicitly chooses day or night mode.
         const colorScheme = document.querySelector('link[href*="web.assets_web_dark"]')
             ? "dark" : "light";
-        const apply = () => applyPreferences(document.body, state, colorScheme, settings);
-        apply();
+        const styles = new StylesheetSwitcher(document, getBundle, colorScheme);
+        let revision = 0;
+        let desired = saved;
+        const apply = async (next, persist) => {
+            const request = ++revision;
+            desired = next;
+            status.loading = true;
+            try {
+                const target = styles.target(next.enabled, resolveColorScheme(next.mode, colorScheme));
+                const links = await styles.prepare(target);
+                if (request !== revision) return;
+                styles.activate(target, links);
+                Object.assign(state, next);
+                applyPreferences(document.body, state, colorScheme, settings);
+                if (persist) status.persistent = writePreferences(storage, key, state);
+                env.bus.trigger("NEO:APPEARANCE_CHANGED");
+            } catch {
+                if (request !== revision) return;
+                desired = { ...state };
+                notification.add(_t("Could not load the appearance styles. Your previous appearance is unchanged. Please try again."), { type: "warning" });
+            } finally {
+                if (request === revision) status.loading = false;
+            }
+        };
+        await apply(saved, false);
 
         // Services live for the web client's lifetime, so one listener per client.
         window.addEventListener("storage", (event) => {
             if (event.storageArea === storage && (event.key === key || event.key === null)) {
-                Object.assign(state, readPreferences(storage, key));
-                apply();
+                apply(readPreferences(storage, key), false);
             }
         });
 
@@ -43,16 +70,14 @@ export const neoThemeService = {
             settings,
             colorScheme,
             set(patch) {
-                Object.assign(state, normalizePreferences({ ...state, ...patch }));
-                apply();
-                status.persistent = writePreferences(storage, key, state);
+                return apply(normalizePreferences({ ...desired, ...patch }), true);
             },
             reset() {
-                this.set(DEFAULTS);
+                return this.set(DEFAULTS);
             },
             toggleMode() {
                 const current = state.enabled ? resolveColorScheme(state.mode, colorScheme) : colorScheme;
-                this.set({ enabled: true, mode: current === "dark" ? "light" : "dark" });
+                return this.set({ enabled: true, mode: current === "dark" ? "light" : "dark" });
             },
         };
     },

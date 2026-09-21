@@ -1,5 +1,14 @@
 # Changelog
 
+## 19.0.1.5.0 — 2026-09-21
+
+- Replaced partial night-mode recoloring with private Odoo dark asset bundles and a complete neutral palette, including native dark component styles from installed apps.
+- Fixed Discuss surfaces, channel/message text, timestamps, date separators and composer placeholders; improved faint empty kanban counters and contextual alerts.
+- Updated standard graph labels, legends and grids when the user's mode changes, including charts already open.
+- Stage styles before applying them; show loading progress, preserve the previous appearance on failure, and allow retry. Restore original Odoo styles when disabled, without changing its global color-scheme cookie.
+- Kept personal preferences, unsaved form edits and message drafts intact; added stylesheet lifecycle and real-app browser regressions.
+- Updated the marketplace description, night screenshots and installation documentation.
+
 ## 19.0.1.4.1 — 2026-09-21
 
 - Added color swatches beside all seven accent choices in Settings, including day/night mode and when the personal theme is disabled.

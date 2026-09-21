@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// Original Neo palette. These variables are compiled only in our private bundles.
+// Odoo uses white/black and gray steps as surface/ink roles throughout its apps.
+$o-webclient-color-scheme: dark;
+$o-white: #292d2b;
+$o-black: #f5f5ed;
+$o-gray-100: #202322;
+$o-gray-200: #343a36;
+$o-gray-300: #555d55;
+$o-gray-400: #747d73;
+$o-gray-500: #9ba596;
+$o-gray-600: #b0b9ac;
+$o-gray-700: #c1c6be;
+$o-gray-800: #dfe4d9;
+$o-gray-900: #f5f5ed;
+$o-view-background-color: #292d2b;
+$o-webclient-background-color: #202322;
+$o-main-color-muted: #c1c6be;
+$o-main-link-color: #a9c9ff;
+$o-main-code-color: #ff91bc;
+$o-action: #a9c9ff;
+$o-component-active-bg: #38433a;
+$o-component-active-border: #a9c9ff;
+$o-form-lightsecondary: #555d55;
+$o-list-group-active-bg: #38433a;
+$o-shadow-color: #080a08;
+$o-theme-text-colors: (
+    "success": #75df94,
+    "info": #72d5e5,
+    "warning": #ffcc70,
+    "danger": #ff929b,
+);

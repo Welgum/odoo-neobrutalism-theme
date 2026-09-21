@@ -2,7 +2,7 @@
 
 An installable backend theme inspired by [ekmas/neobrutalism-components](https://github.com/ekmas/neobrutalism-components): strong outlines, solid offset shadows, small corner radii, and bright accents.
 
-**Version:** `19.0.1.4.1` · **Technical name:** `neobrutalism_theme` · **Dependencies:** `web`, `base_setup`.
+**Version:** `19.0.1.5.0` · **Technical name:** `neobrutalism_theme` · **Dependencies:** `web`, `base_setup`.
 
 Built for self-hosted **Odoo 19 Community**. It uses shared web-client components, but Enterprise-specific screens and third-party themes have not been verified. It can also be deployed as source through Odoo.sh. Odoo Online does not support installing this filesystem add-on. This is a backend theme, not a Website/eCommerce theme.
 
@@ -12,11 +12,11 @@ Built for self-hosted **Odoo 19 Community**. It uses shared web-client component
 - Primary/secondary buttons with solid shadows and visible keyboard focus.
 - List tables, form sheets, notebook tabs, kanban cards, menus and dialogs.
 - **Settings → Neo Brutal** for seven administrator-only accent presets: Yellow, Blue, Green, Purple, Pink, Orange and Red.
-- A **sun/moon button in the top bar** for each user to switch day/night mode instantly.
+- A **sun/moon button in the top bar** for each user to switch day/night mode without reloading.
 - Comfortable or compact table spacing.
 - **User avatar → Appearance** to change options, reset, or turn the theme off.
 - Personal options isolated by browser origin, database and user; synchronized between tabs.
-- Dark surface tokens when Odoo's dark asset bundle is detected.
+- Complete private dark asset bundles for Odoo components, including Discuss, Calendar and standard graph/pivot views.
 - Reduced motion support and screen-only styles.
 
 The default is **yellow + comfortable + enabled** for each user. The shared accent preset is Yellow initially. Each user can choose day/night mode independently; until then, the theme follows Odoo's loaded color scheme. No external fonts, CDNs, React, Tailwind build step or additional Python packages are required. Shared settings use Odoo's standard settings model and database parameters; only Settings administrators can change them. Odoo's existing menus, permissions, fields, widgets, state colors and business actions are retained. The add-on does not add new sales screens or sample records.
@@ -36,7 +36,7 @@ The names and paths below are examples. Use your existing Compose project and Od
    ```bash
    cd /path/to/your/compose-project
    mkdir -p addons
-   unzip /path/to/neobrutalism_theme-19.0.1.4.1.zip -d addons
+   unzip /path/to/neobrutalism_theme-19.0.1.5.0.zip -d addons
    ```
 
 2. If your deployment has no custom add-ons mount, **add** this entry to its Odoo service's existing `volumes` list. Preserve its other mounts:
@@ -105,7 +105,7 @@ Copy the `neobrutalism_theme` directory into one of the directories already list
 
 **Accent settings do not appear yet.** Restart Odoo and **Upgrade** the module after replacing the files; a browser refresh alone does not install the new settings fields and view. After saving shared settings, reload each open browser tab. Shared settings are stored in the database and apply across devices and companies in that database.
 
-**Dark mode looks inconsistent in a custom screen.** The add-on detects the standard `web.assets_web_dark` stylesheet. Enterprise, custom dark bundles, rich editors, dashboards, and custom chart renderers may need extra selectors. Prefer Odoo Light mode for the first evaluation.
+**Night mode does not finish loading.** Upgrade the module and reload after replacing its files. The first switch loads styles from your Odoo server; the toggle shows a spinner while loading. If loading fails, the previous appearance remains and a notification lets you retry. Check Odoo logs for asset compilation errors. Custom widgets with hardcoded colors, Enterprise screens and other backend themes still require testing.
 
 ## Administrator colors and personal night mode
 
@@ -125,7 +125,7 @@ Each preset styles navigation, primary buttons and active tabs, with matching hi
 
 Free-form color pickers and custom surface/text settings have been replaced by this list. Older arbitrary color settings are ignored after upgrading; the default becomes Yellow until an administrator selects a preset. Personal palette controls remain unavailable, and older browser palettes are ignored.
 
-Every backend user can click the **moon button** in the top bar for night mode and the **sun button** for day mode. Switching applies the theme's colors immediately, without reloading the page or losing unsaved edits. It changes only that user's preference in the current browser and database, persists across reloads, and synchronizes between their tabs. It does not change other users' modes or synchronize between devices. If browser storage is unavailable, switching still works for the current page.
+Every backend user can click the **moon button** in the top bar for night mode and the **sun button** for day mode. Switching loads a complete dark palette for Odoo's components without reloading the page or losing unsaved edits and message drafts. The first switch may briefly show a loading spinner; subsequent switches reuse the loaded styles. It changes only that user's preference in the current browser and database, persists across reloads, and synchronizes between their tabs. It does not change other users' modes or synchronize between devices. If browser storage is unavailable, switching still works for the current page.
 
 The toggle enables the theme for the user if they previously disabled it. Theme enable/disable and table spacing remain personal under avatar → **Appearance**. Reset defaults restores the personal options and follows Odoo's loaded color scheme again; it cannot change administrator colors.
 
@@ -137,19 +137,23 @@ The main file is `static/src/css/theme.css`. Its scoped variables control the ac
 
 Do not add a global `*` reset or unscoped `body`, `button` or `input` rules. Native editors and third-party widgets depend on their original layout. Keep changes inside `.o_web_client.o_neo_theme` and `@media screen` so disabling and printing remain predictable.
 
-The theme intentionally keeps Odoo's layout and widget behavior. It does not redesign calendar/graph/pivot internals, Discuss, Studio, spreadsheets, POS, login pages, portal pages, websites, email templates, or PDF reports. Shared buttons/menus may inherit the style, but those specialized interfaces have not been individually verified.
+The theme keeps Odoo's layout and widget behavior. Night mode compiles Odoo's native component styles with the palette in `static/src/scss/dark_primary.scss`, Bootstrap variables and contextual color helpers. Its private bundles include installed modules' native dark rules. The client stages the CSS before switching it, restores the original styles when disabled, and leaves Odoo's global color-scheme cookie untouched. Standard graphs update their canvas labels and grid when the personal mode changes.
+
+Discuss, Calendar, CRM, Project and standard graph/pivot views were checked on Odoo 19 Community. Studio, spreadsheets, specialized rich editors, Enterprise screens, third-party widgets and custom chart renderers are not verified. POS, login pages, public websites/portals, email templates and PDF reports remain outside the theme's scope.
 
 ## Validation and limits
 
 See `VALIDATION.md` for performed checks and their limits. Marketplace screenshots in `static/description/` show actual Odoo 19 Community views with fictional demonstration records. These records and the Contacts app are not added by this theme. The marketplace description is `static/description/index.html`; user documentation is `doc/index.rst`.
 
-Source compatibility was checked against Odoo's public `19.0` branch, and version `19.0.1.4.1` was installed in a temporary local Odoo 19 Community database. This does not verify your installed third-party modules. Start with your test database, then check a list, an editable form, a many2one dropdown, a kanban board, a modal, mobile navigation and a report from your installed apps.
+Source compatibility was checked against Odoo's public `19.0` branch, and version `19.0.1.5.0` was installed in a temporary local Odoo 19 Community database. This does not verify your installed third-party modules. Start with your test database, then check a list, an editable form, a many2one dropdown, a kanban board, a modal, mobile navigation and a report from your installed apps.
 
 The included storage/initialization regression checks can be run outside Odoo with Node 18+:
 
 ```bash
 node tests/test_preferences.mjs
 ```
+
+Additional Playwright checks cover stylesheet switching (`tests/test_stylesheets.cjs`) and real Odoo night-mode screens (`tests/test_night_mode.cjs`). See `VALIDATION.md` for prerequisites and commands.
 
 Odoo integration tests cover preset persistence, rejection of arbitrary colors, permissions and retirement of the global night-mode policy:
 
@@ -163,6 +167,8 @@ Odoo-specific code: LGPL-3.0-or-later; see `LICENSE`. Upstream design attributio
 
 - [Neobrutalism components](https://github.com/ekmas/neobrutalism-components)
 - [Reference styling tokens](https://github.com/ekmas/neobrutalism-components/blob/main/src/styling/globals.css)
+- [OCA web_dark_mode](https://github.com/OCA/web/tree/18.0/web_dark_mode): reviewed its asset-level approach to complete dark palettes. This implementation uses original Neo palette/code; no AGPL module code is included.
+- [Pantalytics Odoo Style Pro](https://github.com/pantalytics/odoo-style-pro): reviewed its use of native dark components and semantic design tokens.
 - [Odoo 19 web asset manifest](https://github.com/odoo/odoo/blob/19.0/addons/web/__manifest__.py)
 - [Odoo 19 user menu registry](https://github.com/odoo/odoo/blob/19.0/addons/web/static/src/webclient/user_menu/user_menu_items.js)
 - [Odoo 19 Dialog](https://github.com/odoo/odoo/blob/19.0/addons/web/static/src/core/dialog/dialog.js)

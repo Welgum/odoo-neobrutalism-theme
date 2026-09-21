@@ -1,6 +1,24 @@
-# Validation — 19.0.1.4.1
+# Validation — 19.0.1.5.0
 
-## Current release: color swatches
+## Current release: complete night-mode assets
+
+Validated on 2026-09-21 in a disposable Odoo **19.0-20260908 Community** database, PostgreSQL 17 and headless Google Chrome. No production database was used.
+
+- Reproduced the original Discuss failure: the sidebar, header and conversation retained light backgrounds while the personal theme applied light text.
+- Reviewed the asset-level approach in [OCA web_dark_mode](https://github.com/OCA/web/tree/18.0/web_dark_mode), the native dark-token approach in [Pantalytics Odoo Style Pro](https://github.com/pantalytics/odoo-style-pro), and Odoo 19's own bundles and component SCSS. Implemented an original Neo palette and stylesheet switcher; no AGPL theme code was copied.
+- Upgraded the module in Odoo; all five existing Python integration tests passed, including administrator-only settings access.
+- The Node suite passed, including asynchronous preference changes, failed loads, out-of-order completion, user/database isolation and storage failures.
+- Standalone browser lifecycle tests passed: styles remain inert until ready; main and lazy styles switch together; later native lazy styles cannot reintroduce a light surface; original media attributes restore exactly; a native dark baseline can switch to day and back; JavaScript is never loaded twice; failed stylesheet loads can be retried and stalled bundle requests time out.
+- The existing full browser suite passed for all seven presets in both modes, actual Contacts list/form/chatter, administrator-only colors, mobile settings and unsaved form edits. Status colors remain independent of the selected accent.
+- The new real-app suite passed for Discuss channel names, messages, authors, timestamps, date separators, composer placeholders and the emoji picker. Measured text contrast is at least **4.5:1** on the tested elements, including opacity and composed background colors.
+- Tested generated success/info/warning/danger notices with headings and muted details; all tested text meets 4.5:1. This exposed and fixed literal light tints left by Bootstrap's default color helpers.
+- Checked Calendar headers, CRM pipeline titles, Project task cards, shared color settings, standard graph/pivot views and Appearance dialogs with dark surfaces. Inspected rendered Calendar and graph screenshots.
+- Standard graph axes and legends follow live day/night changes; bar, line and pie render without errors. These checks use Odoo's standard renderer, not every custom chart implementation.
+- The new suite confirms failed stylesheet loads keep the previous appearance, retry succeeds, unsent Discuss drafts survive switches, disabling restores original CSS, and the global `color_scheme` cookie is unchanged. No uncaught JavaScript/Owl errors occurred.
+- Installed the extracted 19.0.1.5.0 ZIP in a second fresh database with only the manifest's dependencies. All five integration tests passed. Its main/lazy dark CSS compiled without errors, both stylesheets loaded, the stored mode survived reload, and returning to day restored the native styles.
+- Refreshed the actual Odoo screenshots and added a Discuss night-mode example. The release builder validated eight listing images, Python/XML syntax, SCSS asset directives and ZIP integrity; RST documentation rendered without warnings.
+
+## Previous release: color swatches
 
 Validated on 2026-09-21 with a fresh disposable Odoo 19.0-20260908 Community database and Chrome.
 
@@ -12,7 +30,7 @@ Validated on 2026-09-21 with a fresh disposable Odoo 19.0-20260908 Community dat
 
 ## Previous release validation
 
-The remaining sections record the broader marketplace and lifecycle checks performed for **19.0.1.4.0**. This patch changes only settings presentation, documentation and the version number.
+The remaining sections record the broader marketplace and lifecycle checks performed for **19.0.1.4.0**. Those checks are historical; the current release also changes asset loading and dark styling.
 
 
 ## Marketplace preparation
@@ -69,11 +87,23 @@ The browser suite `tests/test_browser.cjs` requires Playwright 1.62+ with Chromi
 NEO_TEST_URL=http://127.0.0.1:18069 NEO_TEST_DB=DISPOSABLE_DATABASE NEO_ALLOW_TEST_WRITES=1 node tests/test_browser.cjs
 ```
 
+The additional suite needs Discuss, CRM, Calendar and Project installed alongside Contacts, and writes fictional tasks, opportunities and actions in the disposable database:
+
+```bash
+NEO_TEST_DB=DISPOSABLE_DATABASE NEO_ALLOW_TEST_WRITES=1 node tests/test_night_mode.cjs
+```
+
+The stylesheet lifecycle tests require only Playwright and a browser, with no running Odoo or database:
+
+```bash
+node tests/test_stylesheets.cjs
+```
+
 Set `NEO_CHROME_PATH` if using a system Chrome executable instead of Playwright's Chromium. Do not run this write-enabled suite against a production database.
 
 ## Remaining deployment checks
 
-The module has not been tested on your VPS/database or with your installed third-party modules. Enterprise-only screens, RTL layouts, specialized editors, Discuss, Studio, spreadsheets, POS and custom chart renderers have not been verified. Public websites and portals are outside the backend theme's scope.
+The module has not been tested on your VPS/database or with your installed third-party modules. Enterprise-only screens, RTL layouts, specialized editors, Studio, spreadsheets, POS and custom chart renderers have not been verified. Discuss and the standard graph/pivot renderer are covered by the current-release checks above. Public websites and portals are outside the backend theme's scope.
 
 After upgrading on your test database, check the settings page, a list, an editable form and many2one dropdown, a kanban board, a modal, mobile navigation and a report. Shared settings take effect when users reload Odoo; existing open pages do not receive a live push update.
 

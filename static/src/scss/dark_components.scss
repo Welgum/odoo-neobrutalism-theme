@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: LGPL-3.0-or-later
+// Loaded after native dark component rules; only Neo's enabled night mode is affected.
+@media screen {
+    .o_web_client.o_neo_theme[data-neo-mode="dark"] {
+        .o_main_navbar {
+            background: var(--neo-accent);
+        }
+        .o-mail-Discuss {
+            --mail-Discuss-surface-dark: var(--neo-surface);
+        }
+        .o-mail-Message-author {
+            opacity: 1;
+        }
+        .o-mail-Message-date {
+            color: var(--neo-muted) !important;
+            opacity: 1 !important;
+        }
+        .o-mail-DateSection .text-muted {
+            opacity: 1 !important;
+        }
+        .o_kanban_counter.opacity-25 {
+            opacity: .65 !important;
+        }
+        .o-mail-Composer-input::placeholder,
+        .o-mail-Composer-html::placeholder {
+            color: var(--neo-muted);
+            opacity: 1;
+        }
+    }
+}

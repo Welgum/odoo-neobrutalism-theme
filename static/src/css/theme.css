@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later
  * Inspired by ekmas/neobrutalism-components (MIT; see THIRD_PARTY_NOTICES.md).
- * Runtime-scoped, screen-only overrides. No Bootstrap reset, external fonts,
- * primary-variable changes, report styles, or DOM/layout replacement.
+ * Runtime-scoped, screen-only visual overrides. Night mode additionally loads
+ * Odoo's component styles compiled with our private dark palette.
  */
 
 @media screen {
@@ -72,10 +72,8 @@
         filter: invert(1) grayscale(100%) brightness(200%);
     }
 
-    /* Unstyled icon buttons inherit Bootstrap's light-bundle ink otherwise.
-       Explicit button variants keep their own semantic colors. */
-    .o_web_client.o_neo_theme .btn:not([class*="btn-"]),
-    .o_web_client.o_neo_theme .btn-link {
+    /* Avoid transient low contrast while switching the complete color palette. */
+    .o_web_client.o_neo_theme .btn {
         transition-property: box-shadow, transform;
     }
 

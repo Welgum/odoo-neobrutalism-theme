@@ -45,6 +45,7 @@ function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)
   });
   for(const mode of ['light','dark']){
    if(await admin.locator('body').getAttribute('data-neo-mode')!==mode)await admin.locator('.o_neo_mode_toggle button').click();
+   await admin.waitForSelector(`body[data-neo-mode=${mode}]`);
    const tokens=await admin.locator('body').evaluate(el=>Object.fromEntries(['accent','accent-ink','accent-soft','surface','bg','ink','link'].map(k=>[k,getComputedStyle(el).getPropertyValue('--neo-'+k).trim()])));
    assert.equal(tokens.accent,color);
    assert.equal(tokens.surface,mode==='dark'?'#292d2b':'#ffffff');
@@ -86,6 +87,7 @@ function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)
  assert.equal(await employee.locator('body').evaluate(el=>el.style.getPropertyValue('--neo-accent')),presets.red);
  const denied=await rpc(employee,'res.config.settings','create',[{neo_accent_preset:'blue'}]);assert.equal(denied.error.data.name,'odoo.exceptions.AccessError');
  await employee.getByRole('button',{name:'Switch to night mode',exact:true}).click();
+ await employee.waitForSelector('body[data-neo-mode=dark]');
  await employee.reload();await employee.waitForSelector('body[data-neo-mode=dark]');
  assert.equal(await employee.locator('body').evaluate(el=>el.style.getPropertyValue('--neo-accent')),presets.red);
  // Exercise actual standard views, not only the isolated contrast fixtures.
@@ -109,6 +111,7 @@ function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)
  }
  for(const mode of ['light','dark']){
   if(await admin.locator('body').getAttribute('data-neo-mode')!==mode)await admin.locator('.o_neo_mode_toggle button').click();
+  await admin.waitForSelector(`body[data-neo-mode=${mode}]`);
   await readable('[aria-label="Actions menu"], .o_optional_columns_dropdown_toggle',3);
   await readable('.o-mail-ActivityButton i',3);
  }
@@ -125,6 +128,7 @@ function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)
  const input=admin.locator('[name="name"] input');
  await input.fill('Unsaved theme toggle check');
  await admin.getByRole('button',{name:'Switch to day mode',exact:true}).click();
+ await admin.waitForSelector('body[data-neo-mode=light]');
  assert.equal(await input.inputValue(),'Unsaved theme toggle check');
  assert.equal(await admin.locator('.o_form_sheet').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(255, 255, 255)');
  assert.deepEqual(errors,[]);

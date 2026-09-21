@@ -14,6 +14,7 @@ export class NeoModeToggle extends Component {
     setup() {
         this.theme = useService("neobrutalism_theme");
         this.state = useState(this.theme.state);
+        this.status = useState(this.theme.status);
     }
 
     get isDark() {
