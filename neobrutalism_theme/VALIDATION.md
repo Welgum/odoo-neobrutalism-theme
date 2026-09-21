@@ -1,4 +1,10 @@
-# Validation — 17.0.1.0.0
+# Validation — 17.0.1.0.1
+
+## Marketplace presentation update — 2026-09-21
+
+The marketplace-only patch adds a version-specific animated cover, a day/night comparison and seven real preset captures. Loops run for 3.00, 2.67 and 4.67 seconds at a nominal 30 fps, with subtle title motion baked into GIF frames. The listing has no JavaScript. PNG posters remain available.
+
+Validation for this patch covers GIF decoding, dimensions and timing, all local listing images, Odoo HTML sanitization, desktop/mobile preview layout, and reproducible ZIP packaging. Theme runtime source and dependencies are unchanged; the runtime checks below describe the preceding functional release.
 
 Validated on **2026-09-21** with official Odoo **17.0-20260908 Community** runtime, PostgreSQL 17, and headless Google Chrome. Tests used disposable databases only. Docker image storage was full, so the official ARM64 image layers were verified against their SHA-256 digests and extracted into temporary host storage, then run in isolated containers using that image’s own Python runtime and dependencies.
 

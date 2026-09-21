@@ -23,7 +23,7 @@ FILES = (
     "README.md", "CHANGELOG.md", "VALIDATION.md",
 )
 DIRECTORIES = ("models", "views", "static", "doc", "tests")
-SUFFIXES = {".py", ".xml", ".css", ".scss", ".js", ".mjs", ".cjs", ".png", ".html", ".rst", ".md"}
+SUFFIXES = {".py", ".xml", ".css", ".scss", ".js", ".mjs", ".cjs", ".png", ".gif", ".html", ".rst", ".md"}
 STYLE_PROPERTIES = {
     "color", "background-color", "font-family", "font-size", "font-weight",
     "border", "border-radius", "margin", "padding",
@@ -43,10 +43,24 @@ def local_file(path, base=ROOT):
     return target
 
 
-def png_size(path):
+def image_info(path):
     data = path.read_bytes()
-    require(data[:8] == b"\x89PNG\r\n\x1a\n" and data[12:16] == b"IHDR", f"Invalid PNG: {path}")
-    return struct.unpack(">II", data[16:24])
+    if path.suffix.lower() == ".png":
+        require(len(data) >= 24 and data[:8] == b"\x89PNG\r\n\x1a\n" and data[12:16] == b"IHDR", f"Invalid PNG: {path}")
+        size = struct.unpack(">II", data[16:24])
+        mime = "image/png"
+    elif path.suffix.lower() == ".gif":
+        require(len(data) >= 14 and data[:6] in {b"GIF87a", b"GIF89a"} and data[-1:] == b";", f"Invalid GIF: {path}")
+        size = struct.unpack("<HH", data[6:10])
+        mime = "image/gif"
+    else:
+        raise ValueError(f"Unsupported image format: {path}")
+    require(all(size), f"Empty image dimensions: {path}")
+    return size, mime
+
+
+def image_size(path):
+    return image_info(path)[0]
 
 
 class ListingValidator(HTMLParser):
@@ -76,7 +90,7 @@ class ListingValidator(HTMLParser):
         if tag == "img":
             require(values.get("alt", "").strip(), "Every listing image needs alt text")
             require(values.get("src"), "Listing image missing source")
-            png_size(local_file(values["src"], DESCRIPTION))
+            image_size(local_file(values["src"], DESCRIPTION))
             self.images.add(values["src"])
         if tag not in {"img", "br"}:
             self.stack.append(tag)
@@ -118,10 +132,10 @@ def validate():
             local_file(filename.removeprefix(MODULE + "/"))
     require(len(manifest["images"]) > 1, "Include a cover and theme screenshot")
     for filename in manifest["images"]:
-        png_size(local_file(filename))
+        image_size(local_file(filename))
     require(any(Path(p).stem.endswith("_screenshot") for p in manifest["images"]), "Theme gallery needs an _screenshot image")
-    require(png_size(local_file("static/description/icon.png")) == (256, 256), "Expected the square app icon")
-    require(png_size(local_file(manifest["images"][0])) == (1120, 560), "Expected this release's 2:1 cover")
+    require(image_size(local_file("static/description/icon.png")) == (256, 256), "Expected the square PNG app icon")
+    require(image_size(local_file(manifest["images"][0])) == (1120, 560), "Expected this release's 2:1 cover")
     local_file("doc/index.rst")
     html = local_file("static/description/index.html").read_text()
     parser = ListingValidator()
@@ -148,8 +162,10 @@ def validate():
 
 def preview(html, images, name):
     for filename in images:
-        encoded = base64.b64encode((DESCRIPTION / filename).read_bytes()).decode()
-        html = html.replace(f'src="{filename}"', f'src="data:image/png;base64,{encoded}"')
+        path = DESCRIPTION / filename
+        encoded = base64.b64encode(path.read_bytes()).decode()
+        mime = image_info(path)[1]
+        html = html.replace(f'src="{filename}"', f'src="data:{mime};base64,{encoded}"')
     css = """*{box-sizing:border-box}body{margin:0;background:#fff;font:16px/1.5 Arial,sans-serif}
 h2,h3{line-height:1.2;margin:0 0 16px}p{margin:0 0 16px}.container{max-width:1140px;margin:auto;padding:0 15px}
 .row{display:flex;flex-wrap:wrap;margin:0 -12px}.row>[class*=col]{padding:0 12px;width:100%}.col-6{flex:0 0 50%}
