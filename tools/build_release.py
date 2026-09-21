@@ -14,8 +14,9 @@ from urllib.parse import urlsplit
 from xml.etree import ElementTree
 
 
-ROOT = Path(__file__).resolve().parents[1]
+REPOSITORY = Path(__file__).resolve().parents[1]
 MODULE = "neobrutalism_theme"
+ROOT = REPOSITORY / MODULE
 DESCRIPTION = ROOT / "static" / "description"
 FILES = (
     "__init__.py", "__manifest__.py", "LICENSE", "THIRD_PARTY_NOTICES.md",
@@ -90,7 +91,7 @@ class ListingValidator(HTMLParser):
 def validate():
     manifest = ast.literal_eval(local_file("__manifest__.py").read_text())
     require(0 < len(manifest["name"]) <= 25, "Marketplace name must be at most 25 characters")
-    require(re.fullmatch(r"19\.0\.\d+\.\d+\.\d+", manifest["version"]), "Expected an Odoo 19 five-part version")
+    require(re.fullmatch(r"(?:18|19)\.0\.\d+\.\d+\.\d+", manifest["version"]), "Expected an Odoo 18 or 19 five-part version")
     require(manifest.get("author") and manifest.get("summary") and manifest.get("description"), "Incomplete listing metadata")
     require(manifest["license"] == "LGPL-3", "Review licensing before changing the release license")
     require("theme" in manifest["category"].lower(), "Theme category missing")
@@ -164,7 +165,7 @@ h2,h3{line-height:1.2;margin:0 0 16px}p{margin:0 0 16px}.container{max-width:114
 
 def main():
     manifest, paths, html, images = validate()
-    destination = ROOT / "dist"
+    destination = REPOSITORY / "dist"
     destination.mkdir(exist_ok=True)
     archive = destination / f'{MODULE}-{manifest["version"]}.zip'
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as release:

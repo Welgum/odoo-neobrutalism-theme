@@ -1,53 +1,53 @@
-# Odoo Apps publishing handoff
+# Odoo Apps publication — RivetFox
 
-The module and listing materials are prepared locally. Nothing has been uploaded, registered, or approved by Odoo Apps.
+Publisher: **RivetFox** · Website: **https://rivetfox.pro** · Technical module: **`neobrutalism_theme`** · License: **LGPL-3**.
 
-The publisher is **[RivetFox](https://rivetfox.pro)**. The manifest uses `RivetFox` as the author and `https://rivetfox.pro` as the website. Source is hosted in [Welgum/odoo-neobrutalism-theme](https://github.com/Welgum/odoo-neobrutalism-theme); the installable module directory remains `neobrutalism_theme`.
+The repository contains the complete add-on in `neobrutalism_theme/`. It can be discovered from the repository root without renaming folders or running a build step. The two version branches use the same module name and the corresponding Odoo version in the manifest.
 
-## Publisher decisions still needed
+## Register the version branches
 
-- Provide a support email. No support address has been supplied or added to the manifest.
-- Choose free or paid. The current manifest has **no price**, which Odoo Apps treats as free. The existing LGPL-3 license is retained. A paid release needs an explicit `price` and `currency` (EUR or USD) and a reviewed support policy before submission.
-- Register the publisher account and repository with Odoo Apps. Source is tracked at https://github.com/Welgum/odoo-neobrutalism-theme on `main`; an Apps-compatible branch/layout and scanner registration still need to be arranged.
+Use these repository URLs in the publisher account's [Submit your Apps and Themes](https://apps.odoo.com/apps/upload) form:
 
-The support address can be added as the manifest's `support` field. Do not add a store link or external advertising to the marketplace description. Rebuild the release after changing metadata so the archive and checksum agree.
+| Odoo version | Git branch | Repository registration URL |
+| --- | --- | --- |
+| 18 | `18.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme#18.0` |
+| 19 | `19.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme#19.0` |
 
-## Included materials
+The SSH URL plus `#branch` format follows the [Odoo Apps FAQ](https://apps.odoo.com/apps/faq). The repository is public. If it becomes private, authorize Odoo's scanner as described in the current FAQ before rescanning. `main` follows Odoo 19; use the two version branches for publication.
 
-| Material | Path |
-| --- | --- |
-| Manifest | `__manifest__.py` |
-| English marketplace description | `static/description/index.html` |
-| Icon | `static/description/icon.png` |
-| Cover (1120 × 560) | `static/description/cover.png` |
-| Large theme screenshot | `static/description/backend_screenshot.png` |
-| Supporting screenshots | Other PNGs in `static/description/` |
-| User documentation | `doc/index.rst` |
-| License and attribution | `LICENSE`, `THIRD_PARTY_NOTICES.md` |
-| Validation record | `VALIDATION.md` |
-| Reproducible release builder | `tools/build_release.py` |
+1. Sign in with the RivetFox publisher account and register both version URLs.
+2. Run the Apps scanner for each branch.
+3. Inspect each resulting listing: author, name, matching version, license, features, screenshots, and free/paid status.
+4. Resolve any scanner feedback and publish through the account workflow.
 
-The screenshots were captured from actual Odoo 19 Community views with fictional records in a disposable database. Contacts was installed for the screenshots only; the theme's dependencies remain `web` and `base_setup`.
+No publisher account login, repository registration or Odoo scanner approval has been performed by this preparation. Only Odoo's scanner/review can confirm acceptance.
 
-## Build and inspect
+## Listing configuration
+
+The current release is **free**: no `price` is set. Odoo's guidelines make the `support` email optional and do not require support services for free apps. No unconfirmed address is included. If a support email is supplied, put it in the manifest's `support` field before rescanning.
+
+A paid release needs an explicit supported currency and price meeting Odoo's current minimum, plus an agreed support policy. Do not add a paid price unless the publisher has chosen one.
+
+Each branch includes:
+
+- A manifest with a short explicit name, RivetFox author/website, version, LGPL-3 license, dependencies, theme category and image declarations.
+- An English `static/description/index.html` using local images and permitted static markup; no JavaScript or external advertising links.
+- A 256 × 256 PNG icon, 1120 × 560 cover, an image ending in `_screenshot.png`, and actual screenshots from that Odoo version.
+- User documentation, license/attribution, tests and a validation record inside the add-on.
+
+The description claims Odoo Community backend support. It does not claim verified Enterprise, Odoo.sh, POS, website/portal or custom third-party theme compatibility.
+
+## Build and validate a release
+
+From either version branch:
 
 ```bash
-node tests/test_preferences.mjs
+node neobrutalism_theme/tests/test_preferences.mjs
 python3 tools/build_release.py
 ```
 
-The builder creates the versioned ZIP, SHA-256 checksum and local listing preview in `dist/`. It validates local assets, manifest paths, XML and Python syntax, marketplace HTML, and single-module archive structure. It uses only Python's standard library. The preview includes lightweight layout styles for local review; Odoo Apps supplies its own styles when rendering the actual description.
+The builder checks the manifest, declared assets, Python/XML syntax, English listing markup, local images and ZIP integrity. The archive contains one `neobrutalism_theme/` folder and excludes build tools, output, publisher-only notes and caches. Results and runtime test commands are in `neobrutalism_theme/VALIDATION.md`.
 
-The ZIP's top level is `neobrutalism_theme/`. The archive excludes `.DS_Store`, bytecode, secrets, release output, build tools, and publisher-only notes. User docs, runtime assets, tests, README and licensing are included. Keep the complete source repository for future releases.
+For updates, increase the version on the applicable branch, rerun validation, commit and push the branch, then rescan it in Odoo Apps. A local ZIP does not register or publish a marketplace listing.
 
-## Repository submission
-
-1. Put the module in a publisher-controlled Git repository on a **19.0** branch. A typical layout is `repository/neobrutalism_theme/__manifest__.py`.
-2. If private, grant the Odoo Apps scanner access following the current official FAQ. Confirm the scanner identity there before granting access.
-3. Sign in to Odoo Apps with the publisher account and register the repository with its 19.0 branch. The repository scanner discovers the module and listing assets; a ZIP alone does not create a marketplace listing.
-4. Scan the repository, inspect the resulting draft/listing, and resolve any scanner feedback. Confirm name, author, support, price, license, screenshots and technical version before publication.
-5. For later releases, increment the manifest version, rebuild and test the package, commit the release, and rescan the registered repository.
-
-Only Odoo's scanner and review process can confirm marketplace acceptance. Local validation is not marketplace certification. This release claims testing on self-hosted Odoo 19 Community; it does not claim verified Enterprise or Odoo.sh compatibility.
-
-Official references checked on 2026-09-21: [Vendor guidelines](https://apps.odoo.com/apps/vendor-guidelines) and [Odoo Apps FAQ](https://apps.odoo.com/apps/faq).
+Official references checked for this preparation: [Vendor guidelines](https://apps.odoo.com/apps/vendor-guidelines), [Odoo Apps FAQ](https://apps.odoo.com/apps/faq), and [repository submission](https://apps.odoo.com/apps/upload).
