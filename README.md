@@ -4,14 +4,18 @@
 
 ## Choose your Odoo version
 
-| Odoo version | Source branch | Clone command |
-| --- | --- | --- |
-| Odoo 16 Community | [16.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/16.0) | `git clone --branch 16.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons` |
-| Odoo 17 Community | [17.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/17.0) | `git clone --branch 17.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons` |
-| Odoo 18 Community | [18.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/18.0) | `git clone --branch 18.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons` |
-| Odoo 19 Community | [19.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/19.0) | `git clone --branch 19.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons` |
+Run **one command below from your server's existing add-ons directory** (the host directory mounted into Odoo, for example `./addons`). Choose the row matching your Odoo server. Requires Git and a POSIX shell on Linux or macOS.
 
-Run only the command matching your Odoo server. It creates a `theme-addons/` repository directory containing the complete add-on in `neobrutalism_theme/`, ready for Odoo's add-ons path and the Odoo Apps repository scanner. The module keeps the same technical name across versions. `main` follows the Odoo 19 version; register the numbered branches for publication.
+| Odoo version | Source branch | Download into the current add-ons directory |
+| --- | --- | --- |
+| Odoo 16 Community | [16.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/16.0) | `(set -eu; test ! -e neobrutalism_theme; test ! -L neobrutalism_theme; neo_tmp=$(mktemp -d); trap 'rm -rf "$neo_tmp"' EXIT; git clone --depth 1 --single-branch --branch 16.0 https://github.com/Welgum/odoo-neobrutalism-theme.git "$neo_tmp"; mv "$neo_tmp/neobrutalism_theme" ./)` |
+| Odoo 17 Community | [17.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/17.0) | `(set -eu; test ! -e neobrutalism_theme; test ! -L neobrutalism_theme; neo_tmp=$(mktemp -d); trap 'rm -rf "$neo_tmp"' EXIT; git clone --depth 1 --single-branch --branch 17.0 https://github.com/Welgum/odoo-neobrutalism-theme.git "$neo_tmp"; mv "$neo_tmp/neobrutalism_theme" ./)` |
+| Odoo 18 Community | [18.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/18.0) | `(set -eu; test ! -e neobrutalism_theme; test ! -L neobrutalism_theme; neo_tmp=$(mktemp -d); trap 'rm -rf "$neo_tmp"' EXIT; git clone --depth 1 --single-branch --branch 18.0 https://github.com/Welgum/odoo-neobrutalism-theme.git "$neo_tmp"; mv "$neo_tmp/neobrutalism_theme" ./)` |
+| Odoo 19 Community | [19.0](https://github.com/Welgum/odoo-neobrutalism-theme/tree/19.0) | `(set -eu; test ! -e neobrutalism_theme; test ! -L neobrutalism_theme; neo_tmp=$(mktemp -d); trap 'rm -rf "$neo_tmp"' EXIT; git clone --depth 1 --single-branch --branch 19.0 https://github.com/Welgum/odoo-neobrutalism-theme.git "$neo_tmp"; mv "$neo_tmp/neobrutalism_theme" ./)` |
+
+Each command clones the matching branch into a temporary directory, places only the installable `neobrutalism_theme/` folder in the current directory, and removes the temporary checkout. The result is `ADDONS_PATH/neobrutalism_theme/__manifest__.py`, with no extra repository folder. Commands stop if `neobrutalism_theme` already exists; use the update instructions below for an existing installation.
+
+The module keeps the same technical name across versions. The source repository retains the layout used by the Odoo Apps repository scanner. `main` follows Odoo 19; register the numbered branches for publication.
 
 ## Theme features
 
@@ -33,13 +37,9 @@ The screenshots below belong to the Odoo version of the currently selected branc
 
 ## Install the theme
 
-For a new Odoo 17 installation (use the branch matching your server version):
+Use the command for your Odoo version in the table above from your existing add-ons directory. It downloads the correctly named module directly into that directory.
 
-```bash
-git clone --branch 17.0 --single-branch https://github.com/Welgum/odoo-neobrutalism-theme.git theme-addons
-```
-
-Add the repository's absolute path to your existing `addons_path`, or copy its **`neobrutalism_theme`** directory into an add-ons directory already configured on your server. For Docker, mount the repository root into the container's custom add-ons path. Preserve existing paths, mounts and database volumes.
+Ensure the directory containing `neobrutalism_theme/` is on Odoo's `addons_path`. For Docker, mount that host directory into the container's custom add-ons path, for example `./addons:/mnt/extra-addons`, with `/mnt/extra-addons` in `addons_path`. Preserve existing paths, mounts and database volumes.
 
 Restart Odoo, enable developer mode, and open **Apps → Update Apps List**. Remove the default **Apps** filter, search for **Neo Brutal Backend Theme**, and install it. Reload the browser. For an existing installation, replace the module files, restart Odoo and choose **Upgrade** before refreshing the browser.
 
