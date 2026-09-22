@@ -83,8 +83,10 @@ const output = path.resolve(__dirname, '../neobrutalism_theme/static/description
         await page.goto(actionUrl(action, menus.menu_contacts));
         await page.waitForSelector('.o_list_table .o_data_row');
         await setMode('light');
+        await page.waitForSelector('.o_list_table .o_data_row');
         await capture('backend-list.png');
         await setMode('dark');
+        await page.waitForSelector('.o_list_table .o_data_row');
         await capture('night-mode.png');
         await setMode('light');
         await page.locator('.o_list_table .o_data_row').first().click();
@@ -152,7 +154,9 @@ const output = path.resolve(__dirname, '../neobrutalism_theme/static/description
         await rpc('res.config.settings', 'set_values', [[restore]]);
         assert.deepEqual(errors, []);
         await page.setViewportSize({width: 1120, height: 560});
-        await page.goto(pathToFileURL(path.join(__dirname, 'cover.html')).href);
+        const coverURL = pathToFileURL(path.join(__dirname, 'cover.html'));
+        coverURL.searchParams.set('odoo', String(major));
+        await page.goto(coverURL.href);
         assert.ok(await page.locator('img').evaluateAll(images =>
             images.every(image => image.complete && image.naturalWidth > 0)));
         await capture('cover.png');

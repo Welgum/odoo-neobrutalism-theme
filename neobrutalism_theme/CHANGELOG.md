@@ -1,5 +1,13 @@
 # Changelog
 
+## 17.0.1.0.3 — 2026-09-22
+
+- Replace the incomplete light Contacts screenshot with this branch’s existing complete yellow-preset capture.
+
+- Add the RivetFox website fox and wordmark consistently to marketplace covers, portrait thumbnails and feature GIFs.
+- Keep local, licensed brand assets with the reproducible renderers; derive version badges from the manifest.
+- Preserve each Odoo version’s real source screenshots and the unique animated theme-card image selector.
+
 ## 17.0.1.0.2 — 2026-09-21
 
 - Fix the Odoo Apps theme-card image selector: use the animated `theme_screenshot.gif` instead of the static Contacts screenshot.

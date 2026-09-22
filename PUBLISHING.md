@@ -10,10 +10,10 @@ Use these repository URLs in the publisher account's [Submit your Apps and Theme
 
 | Odoo version | Git branch | Repository registration URL |
 | --- | --- | --- |
-| 16 | `16.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme#16.0` |
-| 17 | `17.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme#17.0` |
-| 18 | `18.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme#18.0` |
-| 19 | `19.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme#19.0` |
+| 16 | `16.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme.git#16.0` |
+| 17 | `17.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme.git#17.0` |
+| 18 | `18.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme.git#18.0` |
+| 19 | `19.0` | `ssh://git@github.com/Welgum/odoo-neobrutalism-theme.git#19.0` |
 
 The SSH URL plus `#branch` format follows the [Odoo Apps FAQ](https://apps.odoo.com/apps/faq). The repository is public. If it becomes private, authorize Odoo's scanner as described in the current FAQ before rescanning. `main` follows Odoo 19; use the four version branches for publication.
 
@@ -78,3 +78,11 @@ Scenes play at three times the original speed, rendered at 30 fps with a subtle 
 For updates, increase the version on the applicable branch, rerun validation, commit and push the branch, then rescan it in Odoo Apps. A local ZIP does not register or publish a marketplace listing.
 
 Official references checked for this preparation: [Vendor guidelines](https://apps.odoo.com/apps/vendor-guidelines), [Odoo Apps FAQ](https://apps.odoo.com/apps/faq), and [repository submission](https://apps.odoo.com/apps/upload).
+
+## Shared RivetFox identity — 2026-09-22
+
+`tools/branding/` contains the publisher’s website fox mark, a shared wordmark treatment and the locally bundled Space Grotesk font with its SIL OFL notice. These are renderer inputs only. All four promotional GIFs bake in the publisher identity; the listing stays static and local-only. Backend styles and theme-specific app icons are unchanged.
+
+Use the checkout’s own source screenshots. `render_marketplace.cjs` passes the manifest’s Odoo version to every composition; do not relabel newer-version screenshots for an older branch. Run `node tools/check_marketplace.cjs` after rendering and building to decode every GIF frame, verify dimensions/timing, exercise scene/loop rendering, check brand/font loading without network requests and inspect both preview widths.
+
+After pushing this artwork release, rescan each registered version branch in Odoo Apps to refresh the marketplace assets. A Git push alone does not confirm that the marketplace has imported the new images.
