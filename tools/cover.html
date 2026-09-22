@@ -2,10 +2,11 @@
 <html lang="en">
 <meta charset="utf-8">
 <title>Neo Brutal — animated marketplace cover</title>
+<link rel="stylesheet" href="branding/brand.css">
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif}
 .cover{--paper:#f7f5ee;--ink:#161616;--accent:#facc00;width:1120px;height:560px;overflow:hidden;position:relative;background:var(--paper);color:var(--ink);border:3px solid var(--ink)}
-.top{position:absolute;inset:28px 30px auto;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:800;letter-spacing:1px}
+.top{position:absolute;inset:26px 36px auto;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:800;letter-spacing:1px}
 .brand{display:flex;gap:12px;align-items:center}.mark{width:32px;height:32px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:22px;letter-spacing:-2px}.edition{border:2px solid var(--ink);padding:8px 12px;background:var(--paper);box-shadow:3px 3px var(--ink);font-size:13px;letter-spacing:.5px}
 .copy{position:absolute;left:38px;top:113px;z-index:2;width:420px}h1{font-size:100px;line-height:.91;letter-spacing:-7px;margin:0 0 27px;font-weight:900}h1 span{display:inline-block;background:var(--accent);color:#161616;border:3px solid #161616;box-shadow:6px 6px var(--ink);padding:0 10px 8px 4px;margin-top:10px;font-size:89px;letter-spacing:-6px}
 .tagline{font-size:26px;line-height:1.2;font-weight:700;margin:0 0 24px;letter-spacing:-.7px}.features{font:700 13px monospace;letter-spacing:.1px;display:flex;gap:8px}.features span{border:2px solid var(--ink);padding:8px 10px}
@@ -13,7 +14,7 @@
 .mode{position:absolute;right:25px;top:428px;background:var(--accent);color:#161616;border:3px solid #161616;box-shadow:5px 5px var(--ink);padding:12px 18px;font:800 20px monospace;transform:rotate(2deg);z-index:3}
 .bottom{position:absolute;bottom:25px;left:38px;right:32px;display:flex;align-items:center;justify-content:space-between}.free{font:700 12px monospace;letter-spacing:.7px}.swatches{display:flex;gap:7px}.swatches i{display:block;width:28px;height:22px;background:var(--color);border:2px solid #161616;box-shadow:2px 2px var(--ink)}
 .thumbnail{width:1000px;height:1210px}
-.thumbnail .top{inset:35px 42px auto;font-size:20px}.thumbnail .mark{width:40px;height:40px;font-size:27px}.thumbnail .edition{font-size:16px}
+.thumbnail .top{inset:34px 42px auto;font-size:20px}.thumbnail .mark{width:40px;height:40px;font-size:27px}.thumbnail .edition{font-size:16px}
 .thumbnail .copy{left:42px;top:120px;width:910px}.thumbnail h1{font-size:124px}.thumbnail h1 span{font-size:110px}
 .thumbnail .tagline{position:absolute;left:530px;top:104px;width:340px;font-size:31px}.thumbnail .features{font-size:20px;gap:12px}
 .thumbnail .stage{left:42px;right:auto;top:466px;width:900px;height:594px;transform:rotate(-1deg)}.thumbnail .chrome{height:35px;font-size:13px}.thumbnail .viewport{height:555px}
@@ -21,15 +22,16 @@
 .thumbnail .bottom{left:42px;right:42px;bottom:47px}.thumbnail .free{font-size:15px;letter-spacing:.3px}.thumbnail .swatches{gap:9px}.thumbnail .swatches i{width:34px;height:29px}
 </style>
 <div class="cover" id="cover">
- <div class="top"><div class="brand"><span class="mark">N.</span>RIVETFOX <span style="font-weight:400;letter-spacing:0">/ BACKEND THEME</span></div><div class="edition">ODOO 19 COMMUNITY</div></div>
+ <div class="top"><div class="rf-lockup"><img src="branding/rivetfox-mark.svg" alt="RivetFox fox"><span class="rf-wordmark">rivetfox<span class="rf-period">.</span></span></div><div class="edition">ODOO <span data-odoo-version>19</span> COMMUNITY</div></div>
  <div class="copy"><h1>NEO<br><span>BRUTAL.</span></h1><p class="tagline">Your Odoo.<br>With character.</p><div class="features"><span>7 ACCENTS</span><span>DAY + NIGHT</span></div></div>
- <div class="stage"><div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><b>YOUR EVERYDAY ODOO</b></div><div class="viewport"><img id="old" src="../neobrutalism_theme/static/description/backend-list.png" alt="Actual Odoo 19 Contacts list"><img id="next" class="view-new" src="../neobrutalism_theme/static/description/backend-list.png" alt="Alternate theme appearance"></div></div>
+ <div class="stage"><div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><b>YOUR EVERYDAY ODOO</b></div><div class="viewport"><img id="old" src="../neobrutalism_theme/static/description/backend-list.png" alt="Actual Odoo Contacts list"><img id="next" class="view-new" src="../neobrutalism_theme/static/description/backend-list.png" alt="Alternate theme appearance"></div></div>
  <div class="mode" id="mode">01 / DAY MODE</div>
  <div class="bottom"><div class="free">FREE + OPEN SOURCE / LGPL-3</div><div class="swatches"><i style="--color:#facc00"></i><i style="--color:#5294ff"></i><i style="--color:#5ad9aa"></i><i style="--color:#b59aff"></i><i style="--color:#ff91bc"></i><i style="--color:#ffb15c"></i><i style="--color:#ff7474"></i></div></div>
 </div>
 <script src="marketplace/title-motion.js"></script>
 <script>
 document.getElementById('cover').classList.toggle('thumbnail',new URLSearchParams(location.search).get('format')==='thumbnail');
+document.querySelectorAll('[data-odoo-version]').forEach(el=>el.textContent=new URLSearchParams(location.search).get('odoo')||'19');
 const scenes=[
  {src:'../neobrutalism_theme/static/description/backend-list.png',label:'01 / DAY MODE',paper:'#f7f5ee',ink:'#161616',accent:'#facc00'},
  {src:'../neobrutalism_theme/static/description/night-mode.png',label:'02 / NIGHT MODE',paper:'#202322',ink:'#f7f5ee',accent:'#facc00'},

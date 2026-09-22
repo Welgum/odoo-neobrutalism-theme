@@ -63,3 +63,9 @@ The builder validates the manifest, description, asset paths and images, then wr
 Developed by **[RivetFox](https://rivetfox.pro)**. Source: [Welgum/odoo-neobrutalism-theme](https://github.com/Welgum/odoo-neobrutalism-theme).
 
 Licensed under **[LGPL-3.0-or-later](LICENSE)**. The visual design is inspired by [ekmas/neobrutalism-components](https://github.com/ekmas/neobrutalism-components); its MIT attribution is preserved in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## RivetFox marketplace artwork
+
+The covers, portrait catalog thumbnails and feature animations share RivetFox’s orange fox and lowercase wordmark. Source artwork and licensed local render fonts live in `tools/branding/`; the Odoo interface does not load them. See `tools/branding/README.md` for provenance.
+
+Regenerate with `node tools/render_marketplace.cjs`, build with `python3 tools/build_release.py`, then validate all scenes and encoded animations with `node tools/check_marketplace.cjs` (Playwright, Chrome and FFmpeg required). The renderer reads the Odoo version from the manifest and uses that checkout’s own real screenshots.
