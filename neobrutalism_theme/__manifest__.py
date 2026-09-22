@@ -1,7 +1,7 @@
 {
     "name": "Neo Brutal Backend Theme",
     "summary": "Odoo 16 Community backend theme with dark mode and seven accent colors",
-    "version": "16.0.1.0.2",
+    "version": "16.0.1.0.3",
     "category": "Themes/Backend",
     "author": "RivetFox",
     "website": "https://rivetfox.pro",

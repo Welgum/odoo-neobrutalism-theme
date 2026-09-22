@@ -27,3 +27,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## Marketplace publisher artwork and render font
+
+The fox mark and wordmark treatment come from the publisher’s own [RivetFox website](https://rivetfox.pro/) and were added at the publisher’s request. The source is retained under `tools/branding/`. Space Grotesk is used only to rasterize promotional artwork; its SIL Open Font License is included at `tools/branding/OFL-Space-Grotesk.txt`. Neither the font nor a new font request is added to Odoo runtime assets.

@@ -1,0 +1,9 @@
+/* Publisher identity shared by all RivetFox marketplace compositions. */
+@font-face{font-family:"RivetFox Brand";font-style:normal;font-weight:300 700;font-display:block;src:url("space-grotesk-latin.woff2") format("woff2")}
+.rf-lockup{--rf-logo:42px;--rf-type:30px;display:inline-flex;align-items:center;gap:9px;padding:7px 15px 7px 8px;border:1px solid #25252020;border-radius:13px;background:#fff8ed;color:#252520;line-height:1;white-space:nowrap}
+.rf-lockup img{display:block;flex:none;width:var(--rf-logo);height:var(--rf-logo)}
+.rf-wordmark{font-family:"RivetFox Brand",Arial,sans-serif;font-weight:700;font-size:var(--rf-type);letter-spacing:-1.6px}
+.rf-period{color:#da542a}
+.thumbnail .rf-lockup,.portrait .rf-lockup{--rf-logo:60px;--rf-type:42px;gap:12px;padding:8px 21px 8px 10px;border-radius:17px}
+.rf-mini{--rf-logo:28px;--rf-type:21px;padding:4px 10px 4px 5px;gap:6px;border-radius:10px}
+.rf-mini .rf-wordmark{letter-spacing:-1px}
