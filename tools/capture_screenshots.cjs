@@ -152,7 +152,9 @@ const output = path.resolve(__dirname, '../neobrutalism_theme/static/description
         await rpc('res.config.settings', 'set_values', [[restore]]);
         assert.deepEqual(errors, []);
         await page.setViewportSize({width: 1120, height: 560});
-        await page.goto(pathToFileURL(path.join(__dirname, 'cover.html')).href);
+        const coverURL = pathToFileURL(path.join(__dirname, 'cover.html'));
+        coverURL.searchParams.set('odoo', String(major));
+        await page.goto(coverURL.href);
         assert.ok(await page.locator('img').evaluateAll(images =>
             images.every(image => image.complete && image.naturalWidth > 0)));
         await capture('cover.png');

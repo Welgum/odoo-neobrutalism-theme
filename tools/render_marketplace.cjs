@@ -20,6 +20,8 @@ const jobs = [
 const requested = process.argv.slice(2);
 assert.ok(requested.every(name => jobs.some(job => job.name === name)), 'Unknown animation name');
 (async()=>{
+    const manifest = await fs.readFile(path.join(root, "neobrutalism_theme/__manifest__.py"), "utf8");
+    const major = manifest.match(/"version":\s*"(\d+)\./)[1];
     const browser = await chromium.launch({headless:true,...(process.env.NEO_CHROME_PATH
         ? {executablePath:process.env.NEO_CHROME_PATH}: {})});
     try {
@@ -32,8 +34,14 @@ assert.ok(requested.every(name => jobs.some(job => job.name === name)), 'Unknown
             const frames=path.join(scratch,job.name);
             await fs.mkdir(frames,{recursive:true});
             await page.setViewportSize({width:job.width,height:job.height});
-            await page.goto(pathToFileURL(path.join(root,job.source)).href+(job.query||''));
-            await page.evaluate(()=>document.fonts.ready);
+            const url = new URL(pathToFileURL(path.join(root,job.source)));
+            url.search = job.query || '';
+            url.searchParams.set('odoo', major);
+            await page.goto(url.href);
+            await page.evaluate(async()=>{
+                await document.fonts.ready;
+                await Promise.all([...document.images].filter(img=>img.getAttribute('src')).map(img=>img.decode()));
+            });
             for(let frame=0;frame<frameCount;frame++){
                 await page.evaluate(t=>window.renderFrame(t),frame/fps*speed);
                 await page.screenshot({path:path.join(frames,`${String(frame).padStart(4,'0')}.png`)});

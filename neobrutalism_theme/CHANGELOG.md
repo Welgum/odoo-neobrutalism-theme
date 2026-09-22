@@ -1,5 +1,11 @@
 # Changelog
 
+## 18.0.1.0.3 — 2026-09-22
+
+- Add the RivetFox website fox and wordmark consistently to marketplace covers, portrait thumbnails and feature GIFs.
+- Keep local, licensed brand assets with the reproducible renderers; derive version badges from the manifest.
+- Preserve each Odoo version’s real source screenshots and the unique animated theme-card image selector.
+
 ## 18.0.1.0.2 — 2026-09-21
 
 - Fix the Odoo Apps theme-card image selector: use the animated `theme_screenshot.gif` instead of the static Contacts screenshot.
